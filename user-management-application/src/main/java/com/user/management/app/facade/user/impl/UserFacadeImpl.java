@@ -44,7 +44,7 @@ public class UserFacadeImpl implements UserFacade {
             if(targetUser == null) {
                 throw new Exception("Customer to update not found. ");
             }
-            result = userDao.addUser(user);
+            result = userDao.updateUser(user);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
