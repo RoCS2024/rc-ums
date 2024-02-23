@@ -12,7 +12,6 @@ import com.user.management.app.model.user.User;
 import com.user.management.data.user.dao.impl.UserDaoImpl;
 
 import java.sql.Timestamp;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {

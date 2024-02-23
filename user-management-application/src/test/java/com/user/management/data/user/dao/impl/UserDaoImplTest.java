@@ -66,57 +66,6 @@ class UserDaoImplTest {
     }
 
     @Test
-    void addUser_shouldReturnTrue_whenAdditionSuccessful() throws SQLException {
-        mockConnectionHelper();
-        User mockUser = new User(1, "john_doe", "password123", "entity123", null, null);
-        when(resultSet.next()).thenReturn(false);
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeUpdate()).thenReturn(1);
-
-        boolean result = userDao.addUser(mockUser);
-        verify(preparedStatement).setString(1, mockUser.getUsername());
-        verify(preparedStatement).setString(2, mockUser.getPassword());
-        verify(preparedStatement).setString(3, mockUser.getEntity_id());
-        verify(preparedStatement).setTimestamp(4, any(Timestamp.class));
-        verify(preparedStatement).setTimestamp(5, any(Timestamp.class));
-
-        verify(preparedStatement).executeUpdate();
-        assertTrue(result);
-    }
-
-    @Test
-    void addUser_shouldReturnFalse_whenAdditionFails() throws SQLException {
-        mockConnectionHelper();
-
-        User mockUser = new User(1, "john_doe", "password123", "entity123", null, null);
-        when(resultSet.next()).thenReturn(false);
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeUpdate()).thenReturn(0);
-        boolean result = userDao.addUser(mockUser);
-
-        verify(preparedStatement).setString(1, mockUser.getUsername());
-        verify(preparedStatement).setString(2, mockUser.getPassword());
-        verify(preparedStatement).setString(3, mockUser.getEntity_id());
-        verify(preparedStatement).setTimestamp(4, any(Timestamp.class));
-        verify(preparedStatement).setTimestamp(5, any(Timestamp.class));
-
-        verify(preparedStatement).executeUpdate();
-        assertFalse(result);
-    }
-
-    @Test
-    void addUser_shouldReturnFalse_whenUserAlreadyExists() throws SQLException {
-        mockConnectionHelper();
-        User mockUser = new User(1, "john_doe", "password123", "entity123", null, null);
-        when(resultSet.next()).thenReturn(true);
-        boolean result = userDao.addUser(mockUser);
-        verify(preparedStatement, never()).setString(anyInt(), anyString());
-        verify(preparedStatement, never()).setTimestamp(anyInt(), any(Timestamp.class));
-        verify(preparedStatement, never()).executeUpdate();
-        assertFalse(result);
-    }
-
-    @Test
     void updateUser_shouldReturnTrue_whenUpdateSuccessful() throws SQLException {
         mockConnectionHelper();
         User mockUser = new User(1, "john_doe", "password123", "entity123", null, null);

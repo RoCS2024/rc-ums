@@ -27,26 +27,6 @@ class UserFacadeImplTest {
     }
 
     @Test
-    void addUser_shouldReturnTrue_whenUserNotExistsAndAddedSuccessfully() {
-        User newUser = new User(1, "john_doe", "password123", "entity123", null, null);
-        when(userDao.getUserById(1)).thenReturn(null);
-        when(userDao.addUser(newUser)).thenReturn(true);
-        boolean result = userFacade.addUser(newUser);
-        verify(userDao).getUserById(1);
-        verify(userDao).addUser(newUser);
-        assertTrue(result);
-    }
-
-    @Test
-    void addUser_shouldThrowRuntimeException_whenUserExists() {
-        User existingUser = new User(1, "john_doe", "password123", "entity123", null, null);
-        when(userDao.getUserById(1)).thenReturn(existingUser);
-        assertThrows(RuntimeException.class, () -> userFacade.addUser(existingUser));
-        verify(userDao).getUserById(1);
-        verify(userDao, never()).addUser(existingUser);
-    }
-
-    @Test
     void updateUser_shouldReturnTrue_whenUserExistsAndUpdateSuccessful() {
         User existingUser = new User(1, "john_doe", "password123", "entity123", null, null);
         when(userDao.getUserById(1)).thenReturn(existingUser);

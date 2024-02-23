@@ -22,21 +22,6 @@ public class UserFacadeImpl implements UserFacade {
     public User getUserById(int id) { return userDao.getUserById(id);}
 
     @Override
-    public boolean addUser(User user) {
-        boolean result = false;
-        try {
-            User targetUser = getUserById(user.getId());
-            if(targetUser != null) {
-                throw new Exception("User to add already exists. ");
-            }
-            result = userDao.addUser(user);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        return result;
-    }
-
-    @Override
     public boolean updateUser(User user) {
         boolean result = false;
         try {

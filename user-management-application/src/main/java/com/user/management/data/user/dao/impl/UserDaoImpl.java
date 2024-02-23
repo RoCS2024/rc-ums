@@ -32,26 +32,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean addUser(User user) {
-        String sql = "INSERT INTO login (username, password, entity_id, date_created, date_modified) VALUES (?, ?, ?, ?, ?)";
-        try (Connection con = ConnectionHelper.getConnection();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-            //stmt.setInt(1, user.getId());
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getPassword());
-            stmt.setString(3, user.getEntity_id());
-            Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-            stmt.setTimestamp(4, currentTimestamp);
-            stmt.setTimestamp(5, currentTimestamp);
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
     public boolean updateUser(User user) {
         String sql = "UPDATE login SET username = ?, password = ?, entity_id = ?, date_modified = ? WHERE id = ?";
         try (Connection con = ConnectionHelper.getConnection();
