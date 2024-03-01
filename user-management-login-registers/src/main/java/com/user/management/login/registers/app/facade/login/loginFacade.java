@@ -6,5 +6,5 @@ import java.sql.SQLException;
 
 public interface loginFacade {
     Login checkUsername(String username, String password) throws SQLException;
-    boolean registerUser(String username, String password) throws SQLException;
+    Login saveUser(Login login) throws SQLException;
 }

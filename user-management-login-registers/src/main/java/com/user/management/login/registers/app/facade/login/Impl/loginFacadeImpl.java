@@ -25,28 +25,7 @@ public class loginFacadeImpl implements loginFacade {
     }
 
     @Override
-    public boolean registerUser(String username, String password) throws SQLException {
-        Login existingUser = loginDao.checkUsername(username, password);
-        if (existingUser != null) {
-            System.out.println("Username already exists. Registration failed.");
-            return false;
-        }
-
-        Login newUser = new Login();
-        long nextId = getNextUserId();
-        newUser.setId(nextId);
-        newUser.setUsername(username);
-        newUser.setPassword(password);
-        Timestamp currentTimestamp = new Timestamp(new Date().getTime());
-        newUser.setDateCreated(currentTimestamp);
-        newUser.setDateModified(currentTimestamp);
-        loginDao.saveUser(newUser);
-
-        return true;
-    }
-
-    private long getNextUserId() throws SQLException {
-        long maxId = loginDao.getMaxUserId();
-        return maxId + 1;
+    public Login saveUser(Login login) throws SQLException {
+        return loginDao.saveUser(login);
     }
 }

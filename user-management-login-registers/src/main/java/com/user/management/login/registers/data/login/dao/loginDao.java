@@ -6,6 +6,6 @@ import java.sql.SQLException;
 
 public interface loginDao {
     Login checkUsername(String username, String password) throws SQLException;
-    void saveUser(Login login) throws SQLException;
+    Login saveUser(Login login) throws SQLException;
     long getMaxUserId() throws SQLException;
 }

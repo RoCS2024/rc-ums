@@ -34,11 +34,13 @@ public class loginDaoImpl implements loginDao {
     }
 
     @Override
-    public void saveUser(Login login) throws SQLException {
+    public Login saveUser(Login login) throws SQLException {
         String insertQuery = "INSERT INTO LOGIN (ID, USERNAME, PASSWORD, ENTITY_ID, DATE_CREATED, DATE_MODIFIED) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-            preparedStatement.setLong(1, login.getId());
+            long MaxId = getMaxUserId();
+
+            preparedStatement.setLong(1, MaxId + 1);
             preparedStatement.setString(2, login.getUsername());
             preparedStatement.setString(3, login.getPassword());
             preparedStatement.setString(4, login.getEntityId());
@@ -46,6 +48,7 @@ public class loginDaoImpl implements loginDao {
             preparedStatement.setTimestamp(6, login.getDateModified());
             preparedStatement.executeUpdate();
         }
+        return login;
     }
 
     @Override
