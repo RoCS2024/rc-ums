@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<project name="View User List" default="info">
+    <property name="dst.dir" value="out"/>
+    <property name="source" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="src.dir" value="src/main/java"/>
+    <property name="classes.dir" value="classes"/>
+    <property name="doc.dir" value="doc"/>
+    <property name="jar.dir" value="build/jar"/>
+    <property name="main-class" value="Main"/>
+
+    <target name="info">
+        <echo>View User List</echo>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dst.dir}"/>
+        <delete dir="${doc.dir}"/>
+        <delete dir="${classes.dir}"/>
+
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/> <!-- Set includeantruntime to false -->
+    </target>
+
+    <target name="generate-java-doc">
+        <mkdir dir="${doc.dir}"/>
+        <javadoc packagenames="com.view.user.list.*" sourcepath="${src.dir}" destdir="${doc.dir}" version="${ant.java.version}" windowtitle="Test ANT Documentation">
+            <fileset dir="${src.dir}">
+                <include name="**/*.java"/>
+            </fileset>
+            <doctitle><![CDATA[= Test Documentation =]]></doctitle>
+            <bottom>
+                <![CDATA[Copyright © ${copyright.year}. All Rights Reserved.]]>
+            </bottom>
+        </javadoc>
+        <echo message="java doc has been generated!" />
+    </target>
+
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+    </target>
+
+    <target name="clean-build" depends="clean,jar"/>
+
+    <target name="main" depends="clean,run"/>
+
+</project>
