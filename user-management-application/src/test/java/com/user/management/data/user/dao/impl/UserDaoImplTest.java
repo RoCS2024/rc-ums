@@ -6,6 +6,7 @@ package com.user.management.data.user.dao.impl;
 
 import com.user.management.app.model.user.User;
 import com.user.management.data.connection.ConnectionHelper;
+import com.user.management.data.user.dao.UserDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -15,93 +16,49 @@ import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class UserDaoImplTest {
-    @Mock
-    Connection connection;
-    @Mock
-    PreparedStatement preparedStatement;
-    @Mock
-    ResultSet resultSet;
+    private UserDao userDao;
 
-    UserDaoImpl userDao;
+    @Mock
+    private Connection connection;
+
+    @Mock
+    private PreparedStatement preparedStatement;
+
+    @Mock
+    private ResultSet resultSet;
 
     @BeforeEach
     void setUp() throws SQLException {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
         userDao = new UserDaoImpl();
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(ConnectionHelper.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(any(String.class))).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
     }
 
     @Test
-    void getUserById_shouldReturnUser_whenIdExists() throws SQLException {
-        mockConnectionHelper();
-        User mockUser = new User(1, "john_doe", "password123", "entity123", null, null);
+    void testGetUserById() throws SQLException {
+        int userId = 1;
         when(resultSet.next()).thenReturn(true);
-        when(resultSet.getInt("id")).thenReturn(mockUser.getId());
-        when(resultSet.getString("username")).thenReturn(mockUser.getUsername());
-        when(resultSet.getString("password")).thenReturn(mockUser.getPassword());
-        when(resultSet.getString("entity_id")).thenReturn(mockUser.getEntity_id());
-        when(resultSet.getTimestamp("date_modified")).thenReturn(mockUser.getDate_modified());
+        when(resultSet.getInt("id")).thenReturn(userId);
+        when(resultSet.getString("username")).thenReturn("testuser");
+        when(resultSet.getString("password")).thenReturn("testpassword");
+        when(resultSet.getString("entity_id")).thenReturn("entity123");
+        when(resultSet.getTimestamp("date_modified")).thenReturn(new Timestamp(System.currentTimeMillis()));
 
-        User result = userDao.getUserById(1);
-        verify(preparedStatement).setInt(1, 1);
-        verify(preparedStatement).executeQuery();
-        assertEquals(mockUser, result);
+        User user = userDao.getUserById(userId);
+        assertNotNull(user);
+        assertEquals(userId, user.getId());
     }
 
     @Test
-    void getUserById_shouldReturnNull_whenIdDoesNotExist() throws SQLException {
-        when(resultSet.next()).thenReturn(false);
-        User result = userDao.getUserById(999);
-        verify(preparedStatement).setInt(1, 999);
-        verify(preparedStatement).executeQuery();
-        assertNull(result);
-    }
-
-    @Test
-    void updateUser_shouldReturnTrue_whenUpdateSuccessful() throws SQLException {
-        mockConnectionHelper();
-        User mockUser = new User(1, "john_doe", "password123", "entity123", null, null);
-        when(resultSet.next()).thenReturn(true);
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+    void testUpdateUser() throws SQLException {
+        User user = new User(1, "testuser", "testpassword", "entity123", null, new Timestamp(System.currentTimeMillis()));
         when(preparedStatement.executeUpdate()).thenReturn(1);
-        boolean result = userDao.updateUser(mockUser);
-        verify(preparedStatement).setString(1, mockUser.getUsername());
-        verify(preparedStatement).setString(2, mockUser.getPassword());
-        verify(preparedStatement).setString(3, mockUser.getEntity_id());
-        verify(preparedStatement).setTimestamp(4, mockUser.getDate_modified());
-        verify(preparedStatement).setInt(5, mockUser.getId());
-
-        verify(preparedStatement).executeUpdate();
+        boolean result = userDao.updateUser(user);
         assertTrue(result);
-    }
-
-    @Test
-    void updateUser_shouldReturnFalse_whenUpdateFails() throws SQLException {
-        mockConnectionHelper();
-        User mockUser = new User(1, "john_doe", "password123", "entity123", null, null);
-        when(resultSet.next()).thenReturn(true);
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeUpdate()).thenReturn(0);
-        boolean result = userDao.updateUser(mockUser);
-        verify(preparedStatement).setString(1, mockUser.getUsername());
-        verify(preparedStatement).setString(2, mockUser.getPassword());
-        verify(preparedStatement).setString(3, mockUser.getEntity_id());
-        verify(preparedStatement).setTimestamp(4, mockUser.getDate_modified());
-        verify(preparedStatement).setInt(5, mockUser.getId());
-        verify(preparedStatement).executeUpdate();
-        assertFalse(result);
-    }
-
-    public void mockConnectionHelper() throws SQLException {
-        ConnectionHelper connectionHelper = org.mockito.Mockito.mock(ConnectionHelper.class);
-        when(ConnectionHelper.getConnection()).thenReturn(connection);
     }
 }

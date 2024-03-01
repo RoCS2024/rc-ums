@@ -3,7 +3,6 @@
  *
  */
 
-
 package com.user.management.data.user.dao.impl;
 
 import com.user.management.app.model.user.User;
@@ -22,10 +21,18 @@ public class UserDaoImpl implements UserDao {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return extractUserFromResultSet(rs);
+                    int idNum = rs.getInt("id");
+                    String username = rs.getString("username");
+                    String password = rs.getString("password");
+                    String entity_id = rs.getString("entity_id");
+                    Timestamp date_modified = rs.getTimestamp("date_modified");
+                    return new User(idNum, username, password, entity_id, null, date_modified);
+                } else {
+                    System.err.println("No user found with ID: " + id);
                 }
             }
         } catch (SQLException ex) {
+            System.err.println("Error retrieving user with ID " + id + ": " + ex.getMessage());
             ex.printStackTrace();
         }
         return null;
@@ -44,17 +51,9 @@ public class UserDaoImpl implements UserDao {
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException ex) {
+            System.err.println("Error updating user with ID " + user.getId() + ": " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
-    }
-
-    private User extractUserFromResultSet(ResultSet rs) throws SQLException {
-        int id = rs.getInt("id");
-        String username = rs.getString("username");
-        String password = rs.getString("password");
-        String entity_id = rs.getString("entity_id");
-        Timestamp date_modified = rs.getTimestamp("date_modified");
-        return new User(id, username, password, entity_id, null, date_modified);
     }
 }

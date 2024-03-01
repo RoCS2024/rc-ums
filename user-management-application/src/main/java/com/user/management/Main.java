@@ -53,13 +53,19 @@ public class Main {
 
     private static void updateUserInformation() {
         try {
-            System.out.print("Enter User-ID: ");
-            int userId = scanner.nextInt();
-
-            if (userId <= 0) {
-                System.out.println("Invalid user ID. Please enter a positive integer.");
-                return;
-            }
+            int userId = 0;
+            do {
+                System.out.print("Enter User-ID: ");
+                if (!scanner.hasNextInt()) {
+                    System.out.println("Invalid input. Please enter an integer.");
+                    scanner.next();
+                    continue;
+                }
+                userId = scanner.nextInt();
+                if (userId < 0) {
+                    System.out.println("Invalid user ID. Please enter a non-negative integer.");
+                }
+            } while (userId < 0);
 
             System.out.print("Enter New Username: ");
             String username = scanner.next();

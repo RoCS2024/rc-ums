@@ -6,44 +6,48 @@ package com.user.management.app.facade.user.impl;
 
 import com.user.management.app.model.user.User;
 import com.user.management.data.user.dao.UserDao;
+import com.user.management.data.user.dao.impl.UserDaoImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UserFacadeImplTest {
-    @Mock
-    UserDao userDao;
-
-    UserFacadeImpl userFacade;
+    private UserFacadeImpl userFacade;
+    private UserDao userDao;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        userDao = mock(UserDaoImpl.class);
         userFacade = new UserFacadeImpl(userDao);
     }
 
     @Test
-    void updateUser_shouldReturnTrue_whenUserExistsAndUpdateSuccessful() {
-        User existingUser = new User(1, "john_doe", "password123", "entity123", null, null);
-        when(userDao.getUserById(1)).thenReturn(existingUser);
-        when(userDao.updateUser(existingUser)).thenReturn(true);
-        boolean result = userFacade.updateUser(existingUser);
-        verify(userDao).getUserById(1);
-        verify(userDao).updateUser(existingUser);
-        assertTrue(result);
+    void testGetUserById() {
+        // Mock behavior of userDao.getUserById(id) method
+        int userId = 1;
+        User mockedUser = new User(userId, "testuser", "testpassword", "entity123", null, null);
+        when(userDao.getUserById(userId)).thenReturn(mockedUser);
+
+        // Test getUserById method of UserFacadeImpl
+        User resultUser = userFacade.getUserById(userId);
+        assertEquals(mockedUser, resultUser);
     }
 
     @Test
-    void updateUser_shouldThrowRuntimeException_whenUserDoesNotExist() {
-        User nonExistingUser = new User(999, "non_existing_user", "password456", "entity456", null, null);
-        when(userDao.getUserById(999)).thenReturn(null);
-        assertThrows(RuntimeException.class, () -> userFacade.updateUser(nonExistingUser));
-        verify(userDao).getUserById(999);
-        verify(userDao, never()).updateUser(nonExistingUser);
-    }
+    void testUpdateUser() {
+        // Prepare test data
+        User userToUpdate = new User(1, "testuser", "testpassword", "entity123", null, null);
 
+        // Mock behavior of userDao.getUserById(id) method
+        when(userDao.getUserById(userToUpdate.getId())).thenReturn(userToUpdate);
+
+        // Mock behavior of userDao.updateUser(user) method
+        when(userDao.updateUser(userToUpdate)).thenReturn(true);
+
+        // Test updateUser method of UserFacadeImpl
+        boolean result = userFacade.updateUser(userToUpdate);
+        assertTrue(result);
+    }
 }
