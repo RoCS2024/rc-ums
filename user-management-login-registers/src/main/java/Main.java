@@ -12,13 +12,18 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Scanner;
-
+/**
+ * This class represents the main class for the login and registration system.
+ */
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final loginFacade loginFacade = new loginFacadeImpl();
     private static final employeeFacade employeeFacade = new employeeFacadeImpl();
     private static final studentFacade studentFacade = new studentFacadeImpl();
-
+    /**
+     * The entry point of the application.
+     * param args The command line arguments.
+     */
     public static void main(String[] args) {
         int choice;
         do {
@@ -43,14 +48,19 @@ public class Main {
             }
         } while (choice != 0);
     }
-
+    /**
+     * Displays the main menu options.
+     */
     private static void displayMenu() {
         System.out.println("Login Options");
         System.out.println("1. Login");
         System.out.println("2. Register user");
         System.out.println("0. Exit");
     }
-
+    /**
+     * Handles the login functionality.
+     * return True if login is successful, otherwise false.
+     */
     private static boolean login() {
         try {
             System.out.print("Enter Username: ");
@@ -70,7 +80,9 @@ public class Main {
             return false;
         }
     }
-
+    /**
+     * Handles the user registration process.
+     */
     private static void registerUser() {
         try {
             System.out.print("Enter Username: ");
