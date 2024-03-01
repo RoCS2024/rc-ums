@@ -24,14 +24,8 @@ class studentDaoImplTest {
         studentDao = new studentDaoImpl();
     }
 
-    @AfterAll
-    static void tearDown() {
-        // Clean up any test data if necessary
-    }
-
     @Test
     void saveStudent_ValidStudent_ReturnsStudentWithId() {
-        // Prepare test data
         Student testStudent = new Student();
         testStudent.setStudentId("CT21-0143");
         testStudent.setLastName("Magnaye");
@@ -44,7 +38,6 @@ class studentDaoImplTest {
         testStudent.setAddress("123 Pulong Bunga");
         testStudent.setContactNumber("1234567890");
 
-        // Perform the test
         try {
             Student savedStudent = studentDao.saveStudent(testStudent);
 
@@ -65,10 +58,8 @@ class studentDaoImplTest {
 
     @Test
     void checkStudentId_ValidStudentId_ReturnsStudent() {
-        // Prepare test data
         String studentId = "CT21-0144";
 
-        // Insert test data into the database
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "INSERT INTO STUDENT (student_id, last_name, first_name, middle_name, sex, birthday, religion, email, address, contact_number) VALUES (?, ?, ?, ?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?, ?)")) {
@@ -87,7 +78,6 @@ class studentDaoImplTest {
             fail("Error inserting test data: " + e.getMessage());
         }
 
-        // Perform the test
         try {
             Student retrievedStudent = studentDao.checkStudentId(studentId);
 

@@ -22,14 +22,8 @@ class employeeDaoImplTest {
         employeeDao = new employeeDaoImpl();
     }
 
-    @AfterAll
-    static void tearDown() {
-        // Clean up any test data if necessary
-    }
-
     @Test
     void saveEmployee_ValidEmployee_ReturnsEmployeeWithId() {
-        // Prepare test data
         Employee testEmployee = new Employee();
         testEmployee.setLastName("Magnaye");
         testEmployee.setFirstName("Justine");
@@ -50,7 +44,6 @@ class employeeDaoImplTest {
         testEmployee.setPagibigNo("ABC-123");
         testEmployee.setEmployeeNo("EMP0001");
 
-        // Perform the test
         try {
             Employee savedEmployee = employeeDao.saveEmployee(testEmployee);
 
@@ -80,10 +73,8 @@ class employeeDaoImplTest {
 
     @Test
     void checkEmployeeId_ValidEmployeeId_ReturnsEmployee() {
-        // Prepare test data
         String employeeId = "EMP0002";
 
-        // Insert test data into the database
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "INSERT INTO EMPLOYEE (employee_no, last_name, first_name, middle_name, position_in_rc, birthplace, sex, civil_status, citizenship, religion, height, weight, email, sss_no, tin_no, pagibig_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
@@ -108,7 +99,6 @@ class employeeDaoImplTest {
             fail("Error inserting test data: " + e.getMessage());
         }
 
-        // Perform the test
         try {
             Employee retrievedEmployee = employeeDao.checkEmployeeId(employeeId);
 

@@ -46,7 +46,6 @@ class studentFacadeImplTest {
         studentFacadeImpl studentFacade = new studentFacadeImpl(studentDao);
         Student result = studentFacade.saveStudent(student);
 
-        // Assert
         assertNotNull(result, "Saved student should not be null.");
         assertEquals(student, result, "Saved student should match input student.");
         verify(studentDao, times(1)).saveStudent(student);

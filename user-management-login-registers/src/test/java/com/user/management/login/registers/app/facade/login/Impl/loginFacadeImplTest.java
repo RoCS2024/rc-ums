@@ -15,7 +15,6 @@ class loginFacadeImplTest {
 
     @Test
     void checkUsername_Returns_Login() throws SQLException {
-        // Arrange
         String username = "testUser";
         String password = "testPassword";
         String entityId = "entityId";
@@ -28,17 +27,14 @@ class loginFacadeImplTest {
 
         loginFacadeImpl loginFacade = new loginFacadeImpl(mockLoginDao);
 
-        // Act
         Login result = loginFacade.checkUsername(username, password);
 
-        // Assert
         assertEquals(expectedLogin, result);
         verify(mockLoginDao, times(1)).checkUsername(username, password);
     }
 
     @Test
     void saveUser_Returns_Login() throws SQLException {
-        // Arrange
         String username = "testUser";
         String password = "testPassword";
         String entityId = "entityId";
@@ -52,10 +48,8 @@ class loginFacadeImplTest {
 
         loginFacadeImpl loginFacade = new loginFacadeImpl(mockLoginDao);
 
-        // Act
         Login result = loginFacade.saveUser(login);
 
-        // Assert
         assertEquals(expectedSavedLogin, result);
         verify(mockLoginDao, times(1)).saveUser(login);
     }
