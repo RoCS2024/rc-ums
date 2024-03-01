@@ -64,50 +64,53 @@ public class Main {
                 userId = scanner.nextInt();
                 if (userId < 0) {
                     System.out.println("Invalid user ID. Please enter a non-negative integer.");
+                    continue;
                 }
-            } while (userId < 0);
 
-            System.out.print("Enter New Username: ");
-            String username = scanner.next();
+                System.out.print("Enter New Username: ");
+                String username = scanner.next();
 
-            if (username.isEmpty()) {
-                System.out.println("Username cannot be empty.");
-                return;
-            }
+                if (username.isEmpty()) {
+                    System.out.println("Username cannot be empty.");
+                    return;
+                }
 
-            System.out.print("Enter New Password: ");
-            String password = scanner.next();
+                System.out.print("Enter New Password: ");
+                String password = scanner.next();
 
-            if (password.isEmpty()) {
-                System.out.println("Password cannot be empty.");
-                return;
-            }
+                if (password.isEmpty()) {
+                    System.out.println("Password cannot be empty.");
+                    return;
+                }
 
-            System.out.print("Enter New Entity-ID: ");
-            String entityId = scanner.next();
+                System.out.print("Enter New Entity-ID: ");
+                String entityId = scanner.next();
 
-            if (entityId.isEmpty()) {
-                System.out.println("Entity ID cannot be empty.");
-                return;
-            }
+                if (entityId.isEmpty()) {
+                    System.out.println("Entity ID cannot be empty.");
+                    return;
+                }
 
-            User existingUser = userFacade.getUserById(userId);
-            if (existingUser != null) {
-                existingUser.setUsername(username);
-                existingUser.setPassword(password);
-                existingUser.setEntity_id(entityId);
-                existingUser.setDate_modified(new Timestamp(System.currentTimeMillis()));
+                User existingUser = userFacade.getUserById(userId);
+                if (existingUser != null) {
+                    existingUser.setUsername(username);
+                    existingUser.setPassword(password);
+                    existingUser.setEntity_id(entityId);
+                    existingUser.setDate_modified(new Timestamp(System.currentTimeMillis()));
 
-                boolean updated = userFacade.updateUser(existingUser);
+                    boolean updated = userFacade.updateUser(existingUser);
 
-                if (updated) {
-                    System.out.println("User information updated successfully!");
+                    if (updated) {
+                        System.out.println("User information updated successfully!");
+                    } else {
+                        System.out.println("Failed to update user information.");
+                    }
                 } else {
-                    System.out.println("Failed to update user information.");
+                    System.out.println("User with ID " + userId + " does not exist.");
                 }
-            } else {
-                System.out.println("User with ID " + userId + " does not exist.");
-            }
+
+            } while (userId != 0);
+
         } catch (Exception e) {
             System.err.println("An error occurred while updating user information: " + e.getMessage());
         }
