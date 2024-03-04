@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.integrated.user.management.app.model"},{"l":"com.integrated.user.management.data.connection"}];updateSearchResults();
