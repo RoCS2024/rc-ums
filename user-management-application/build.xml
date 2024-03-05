@@ -1,36 +1,34 @@
 <?xml version="1.0"?>
-<project name="user-management-app">
-    <property name="build.dir" value="build"/>
-    <property name="classes.dir" value="build/classes"/>
-    <property name="src.dir" value="src/main/java"/>
-    <property name="jar.dir" value="build/jar"/>
-    <property name="main-class" value="Main"/>
-    <property name="doc.dir" value="build/doc"/>
+<project name="Ant Test Project" default="build">
+    <property name="dst.dir" value="out"/>
+    <property name="source" value="src/main/java"/>
+    <property file="build.properties"/>
+    <property name="build.dir" value="target"/>
+    <property name="doc.dir" value="doc"/>
 
-    <target name="clean">
-        <delete dir="${build.dir}"/>
+    <target name="copy-files">
+        <copy todir="${dst.dir}">
+            <fileset dir="${source}">
+                <patternset refid="java.files.without.text.files"/>
+                <include name="**/*.docx"/>
+            </fileset>
+        </copy>
     </target>
 
-    <target name="compile">
-        <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
-    </target>
+    <patternset id="java.files.without.text.files">
+        <include name="**/*.java"/>
+        <exclude name="**/**.txt"/>
+    </patternset>
 
-    <target name="jar" depends="compile">
-        <mkdir dir="${jar.dir}"/>
-        <jar destfile="${jar.dir}/${user.management.app}.jar" basedir="${classes.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="${main-class}"/>
-            </manifest>
-        </jar>
-    </target>
-
-    <target name="run" depends="jar">
-        <java jar="${jar.dir}/user.management.app.jar" fork="true"/>
+    <target name="build">
+        <mkdir dir="${build.dir}"/>
+        <javac includeantruntime="false" destdir="${build.dir}" source="1.8" target="1.8">
+            <src path="${source}"/>
+        </javac>
     </target>
 
     <target name="generate-javadoc">
-        <javadoc packagenames="com.user.management.app.*" sourcepath="${src.dir}" destdir="${doc.dir}" version="${version}" windowtitle="Test User Management App">
+        <javadoc packagenames="com.ant.test.project.*" sourcepath="${source}" destdir="${doc.dir}" version="${version}" windowtitle="Test ANT Documentation">
             <fileset dir="."></fileset>
             <doctitle><![CDATA[= Test Documentation =]]></doctitle>
             <bottom>
@@ -39,9 +37,5 @@
         </javadoc>
         <echo message="java doc has been generated!" />
     </target>
-
-    <target name="clean-build" depends="clean,jar"/>
-
-    <target name="main" depends="clean,run"/>
 
 </project>
