@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info
+            organisation="com.rogationist.college"
+            module="ivy-test"
+            status="integration">
+    </info>
+    <dependencies>
+        <dependency org="com.oracle.database.jdbc" name="ojdbc11" rev="23.3.0.23.09"/>
+    </dependencies>
+</ivy-module>
