@@ -43,6 +43,9 @@ public class Main {
                 case 3:
                     registerUser();
                     break;
+                case 4:
+                    updateUserInformation();
+                    break;
                 case 0:
                     System.out.println("Exiting the Login System. Goodbye!");
                     break;
@@ -60,6 +63,7 @@ public class Main {
         System.out.println("1. View User List");
         System.out.println("2. Login");
         System.out.println("3. Register user");
+        System.out.println("4. Update user");
         System.out.println("0. Exit");
     }
 
@@ -257,6 +261,70 @@ public class Main {
             }
         } catch (SQLException e) {
             System.out.println("Error registering user. Please try again.");
+        }
+    }
+    private static void updateUserInformation() {
+        try {
+            int userId = 0;
+            do {
+                System.out.print("Enter User-ID: ");
+                if (!scanner.hasNextInt()) {
+                    System.out.println("Invalid input. Please enter an integer.");
+                    scanner.next();
+                    continue;
+                }
+                userId = scanner.nextInt();
+                if (userId < 0) {
+                    System.out.println("Invalid user ID. Please enter a non-negative integer.");
+                    continue;
+                }
+
+                System.out.print("Enter New Username: ");
+                String username = scanner.next();
+
+                if (username.isEmpty()) {
+                    System.out.println("Username cannot be empty.");
+                    return;
+                }
+
+                System.out.print("Enter New Password: ");
+                String password = scanner.next();
+
+                if (password.isEmpty()) {
+                    System.out.println("Password cannot be empty.");
+                    return;
+                }
+
+                System.out.print("Enter New Entity-ID: ");
+                String entityId = scanner.next();
+
+                if (entityId.isEmpty()) {
+                    System.out.println("Entity ID cannot be empty.");
+                    return;
+                }
+
+                User existingUser = userFacade.getUserById(userId);
+                if (existingUser != null) {
+                    existingUser.setUsername(username);
+                    existingUser.setPassword(password);
+                    existingUser.setEntity_id(entityId);
+                    existingUser.setDate_modified(new Timestamp(System.currentTimeMillis()));
+
+                    boolean updated = userFacade.updateUser(existingUser);
+
+                    if (updated) {
+                        System.out.println("User information updated successfully!");
+                    } else {
+                        System.out.println("Failed to update user information.");
+                    }
+                } else {
+                    System.out.println("User with ID " + userId + " does not exist.");
+                }
+
+            } while (userId != 0);
+
+        } catch (Exception e) {
+            System.err.println("An error occurred while updating user information: " + e.getMessage());
         }
     }
 }

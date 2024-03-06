@@ -38,4 +38,21 @@ public class UserFacadeImpl implements UserFacade {
     public List<User> getAllUsers() throws SQLException {
         return userDao.getAllUsers();
     }
+    @Override
+    public User getUserById(int id) { return userDao.getUserById(id);}
+
+    @Override
+    public boolean updateUser(User user) {
+        boolean result = false;
+        try {
+            User targetUser = getUserById(user.getId());
+            if(targetUser == null) {
+                throw new Exception("Customer to update not found. ");
+            }
+            result = userDao.updateUser(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return result;
+    }
 }

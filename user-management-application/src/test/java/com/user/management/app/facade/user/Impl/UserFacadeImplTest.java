@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class UserFacadeImplTest {
@@ -31,6 +32,9 @@ class UserFacadeImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
+
+
+    private UserDao userDao;
 
     /**
      * Tests the getAllUsers method of UserFacadeImpl.
@@ -94,6 +98,37 @@ class UserFacadeImplTest {
 
         assertEquals(expectedSavedUser, result);
         verify(mockUserDao, times(1)).saveUser(user);
+    }
+
+
+
+
+    @Test
+    void testGetUserById() {
+        // Mock behavior of userDao.getUserById(id) method
+        int userId = 1;
+        User mockedUser = new User(userId, "testuser", "testpassword", "entity123", null, null);
+        when(userDao.getUserById(userId)).thenReturn(mockedUser);
+
+        // Test getUserById method of UserFacadeImpl
+        User resultUser = userFacade.getUserById(userId);
+        assertEquals(mockedUser, resultUser);
+    }
+
+    @Test
+    void testUpdateUser() {
+        // Prepare test data
+        User userToUpdate = new User(1, "testuser", "testpassword", "entity123", null, null);
+
+        // Mock behavior of userDao.getUserById(id) method
+        when(userDao.getUserById(userToUpdate.getId())).thenReturn(userToUpdate);
+
+        // Mock behavior of userDao.updateUser(user) method
+        when(userDao.updateUser(userToUpdate)).thenReturn(true);
+
+        // Test updateUser method of UserFacadeImpl
+        boolean result = userFacade.updateUser(userToUpdate);
+        assertTrue(result);
     }
 
 

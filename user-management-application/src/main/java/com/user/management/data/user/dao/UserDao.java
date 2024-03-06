@@ -15,4 +15,6 @@ public interface UserDao {
      *
      */
     List<User> getAllUsers() throws SQLException;
+    User getUserById(int id);
+    boolean updateUser(User user);
 }
