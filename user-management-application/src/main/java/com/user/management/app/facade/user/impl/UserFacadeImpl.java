@@ -6,6 +6,7 @@ import com.user.management.data.user.dao.UserDao;
 import com.user.management.data.user.dao.impl.UserDaoImpl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserFacadeImpl implements UserFacade {
     private final UserDao userDao;
@@ -26,5 +27,15 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public User saveUser(User user) throws SQLException {
         return userDao.saveUser(user);
+    }
+
+
+    /**
+     * Retrieves a list of all users from the database.
+     * A List of User objects representing all users in the system.
+     */
+    @Override
+    public List<User> getAllUsers() throws SQLException {
+        return userDao.getAllUsers();
     }
 }

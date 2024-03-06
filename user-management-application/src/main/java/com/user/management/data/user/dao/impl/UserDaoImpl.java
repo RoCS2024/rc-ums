@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDaoImpl implements UserDao {
     @Override
@@ -62,5 +64,29 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return 0;
+    }
+
+    @Override
+    public List<User> getAllUsers() throws SQLException {
+        List<User> userList = new ArrayList<>();
+        String query = "SELECT * FROM LOGIN";
+
+        try (Connection connection = ConnectionHelper.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("ID"));
+                user.setUsername(resultSet.getString("USERNAME"));
+                user.setPassword(resultSet.getString("PASSWORD"));
+                user.setEntity_id(resultSet.getString("ENTITY_ID"));
+                user.setDate_created(resultSet.getTimestamp("DATE_CREATED"));
+                user.setDate_modified(resultSet.getTimestamp("DATE_MODIFIED"));
+                userList.add(user);
+            }
+        }
+
+        return userList;
     }
 }
