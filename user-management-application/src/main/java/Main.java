@@ -46,6 +46,9 @@ public class Main {
                 case 4:
                     updateUserInformation();
                     break;
+                case 5:
+                    updatePassword();
+                    break;
                 case 0:
                     System.out.println("Exiting the Login System. Goodbye!");
                     break;
@@ -64,6 +67,7 @@ public class Main {
         System.out.println("2. Login");
         System.out.println("3. Register user");
         System.out.println("4. Update user");
+        System.out.println("5. Change password");
         System.out.println("0. Exit");
     }
 
@@ -325,6 +329,44 @@ public class Main {
 
         } catch (Exception e) {
             System.err.println("An error occurred while updating user information: " + e.getMessage());
+        }
+    }
+    private static void updatePassword() {
+        try {
+            System.out.print("Enter username: ");
+            String username = scanner.next();
+
+            User existingUser = userFacade.getUsername(username);
+
+            if (existingUser != null) {
+
+                System.out.print("Enter current password: ");
+                String enteredPassword = scanner.next();
+
+                if(enteredPassword.equals(existingUser.getPassword())) {
+
+                    System.out.print("Enter new password: ");
+                    String newPasswordd = scanner.next();
+                    System.out.print("Confirm new password: ");
+                    String newPassword = scanner.next();
+
+                    if(newPasswordd.equals(newPassword)) {
+
+                        existingUser.setPassword(newPassword);
+                        Timestamp currentTimestamp = new Timestamp(new Date().getTime());
+                        existingUser.setDate_modified(currentTimestamp);
+                        userFacade.updatePassword(existingUser);
+
+                        System.out.println("Password updated successfully.");
+
+                    } else System.out.println("Password does not match.");
+
+                } else System.out.println("Incorrect password. Password update failed.");
+
+            } else System.out.println(username + " not found. Please input a valid username.");
+
+        } catch (Exception e) {
+            System.out.println("Error updating password. Please try again.");
         }
     }
 }

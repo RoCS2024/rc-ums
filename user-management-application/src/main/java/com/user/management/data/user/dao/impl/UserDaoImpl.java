@@ -129,4 +129,42 @@ public class UserDaoImpl implements UserDao {
             return false;
         }
     }
+
+    @Override
+    public User getUsername(String username) throws SQLException {
+        String selectUsernameQuery = "SELECT * FROM login WHERE username=?";
+        User login = null;
+        try (Connection connection = ConnectionHelper.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectUsernameQuery)) {
+
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    login = new User();
+                    login.setId(resultSet.getInt("id"));
+                    login.setUsername(resultSet.getString("username"));
+                    login.setPassword(resultSet.getString("password"));
+                }
+            }
+        }
+        return login;
+    }
+
+    @Override
+    public User updatePassword(User login) throws SQLException {
+        String updateQuery = "UPDATE login SET password=?, date_modified=? WHERE username=?";
+        try (Connection connection = ConnectionHelper.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+            preparedStatement.setString(1, login.getPassword());
+            preparedStatement.setTimestamp(2, login.getDate_modified());
+            preparedStatement.setString(3, login.getUsername());
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Password update failed.");
+            }
+        }
+        return login;
+    }
 }
