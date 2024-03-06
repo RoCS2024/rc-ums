@@ -11,6 +11,7 @@ import com.user.management.app.model.student.Student;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 /**
  * This class represents the main class for the login and registration system.
@@ -32,11 +33,14 @@ public class Main {
             choice = scanner.nextInt();
             switch (choice) {
                 case 1:
+                    viewUserList(userFacade);
+                    break;
+                case 2:
                     if(login()){
                         choice = 0;
                     }
                     break;
-                case 2:
+                case 3:
                     registerUser();
                     break;
                 case 0:
@@ -53,9 +57,33 @@ public class Main {
      */
     private static void displayMenu() {
         System.out.println("Login Options");
-        System.out.println("1. Login");
-        System.out.println("2. Register user");
+        System.out.println("1. View User List");
+        System.out.println("2. Login");
+        System.out.println("3. Register user");
         System.out.println("0. Exit");
+    }
+
+    /**
+     * Displays the list of users to the console.
+     * Retrieves user data using the provided UserFacade and prints it.
+     *
+     * @param userFacade The facade object used to interact with user data.
+     */
+    private static void viewUserList(UserFacade userFacade) {
+        try {
+            List<User> userList = userFacade.getAllUsers();
+            System.out.println("----- User List -----");
+            for (User user : userList) {
+                System.out.println("User ID: " + user.getId());
+                System.out.println("Username: " + user.getUsername());
+                System.out.println("Entity ID: " + user.getEntity_id());
+                System.out.println("Date Created: " + user.getDate_created());
+                System.out.println("Date Modified: " + user.getDate_modified());
+                System.out.println();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error occurred while retrieving user list: " + e.getMessage());
+        }
     }
     /**
      * Handles the login functionality.

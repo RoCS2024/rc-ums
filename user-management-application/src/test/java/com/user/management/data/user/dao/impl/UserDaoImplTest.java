@@ -12,8 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 class UserDaoImplTest {
 
@@ -22,6 +26,48 @@ class UserDaoImplTest {
     @BeforeAll
     static void setUp() {
         UserDao = new UserDaoImpl();
+    }
+
+    @Mock
+    private Connection mockConnection;
+
+    @Mock
+    private PreparedStatement mockPreparedStatement;
+
+    @Mock
+    private ResultSet mockResultSet;
+
+    @InjectMocks
+    private UserDaoImpl userDao;
+
+    @Test
+    public void testGetAllUsers() throws SQLException {
+        List<User> expectedUserList = new ArrayList<>();
+        User user1 = new User();
+        user1.setId(1);
+        user1.setUsername("testUser1");
+        user1.setPassword("password1");
+        user1.setEntity_id("entity1");
+        user1.setDate_created(new Timestamp(System.currentTimeMillis()));
+        user1.setDate_modified(new Timestamp(System.currentTimeMillis()));
+        expectedUserList.add(user1);
+
+        // Mocking database interaction
+        when(mockConnection.prepareStatement(any())).thenReturn(mockPreparedStatement);
+        when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(true).thenReturn(false);
+        when(mockResultSet.getInt("ID")).thenReturn(user1.getId());
+        when(mockResultSet.getString("USERNAME")).thenReturn(user1.getUsername());
+        when(mockResultSet.getString("PASSWORD")).thenReturn(user1.getPassword());
+        when(mockResultSet.getString("ENTITY_ID")).thenReturn(user1.getEntity_id());
+        when(mockResultSet.getTimestamp("DATE_CREATED")).thenReturn(user1.getDate_created());
+        when(mockResultSet.getTimestamp("DATE_MODIFIED")).thenReturn(user1.getDate_modified());
+
+        // Calling the method under test
+        List<User> resultUserList = UserDao.getAllUsers();
+
+        // Asserting the result
+        assertEquals(expectedUserList.size(), resultUserList.size());
     }
 
     @Test
