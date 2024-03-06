@@ -5,7 +5,7 @@ import com.user.management.app.model.student.Student;
 
 import java.sql.SQLException;
 
-public interface studentDao {
+public interface StudentDao {
     Student saveStudent(Student student) throws SQLException;
-    Student checkStudentId(String studentId) throws SQLException;
+    Student findStudentById(String studentId) throws SQLException;
 }

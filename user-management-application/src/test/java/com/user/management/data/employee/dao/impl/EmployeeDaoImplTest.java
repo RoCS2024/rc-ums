@@ -2,7 +2,7 @@ package com.user.management.data.employee.dao.impl;
 
 import com.user.management.app.model.employee.Employee;
 import com.user.management.data.connection.ConnectionHelper;
-import com.user.management.data.employee.dao.employeeDao;
+import com.user.management.data.employee.dao.EmployeeDao;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeDaoImplTest {
 
-    private static employeeDao employeeDao;
+    private static EmployeeDao employeeDao;
 
     @BeforeAll
     static void setUp() {
-        employeeDao = new employeeDaoImpl();
+        employeeDao = new EmployeeDaoImpl();
     }
 
     @Test

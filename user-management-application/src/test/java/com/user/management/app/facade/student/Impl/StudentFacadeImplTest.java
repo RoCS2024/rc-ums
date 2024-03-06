@@ -1,7 +1,7 @@
 package com.user.management.app.facade.student.Impl;
 
 import com.user.management.app.model.student.Student;
-import com.user.management.data.student.dao.studentDao;
+import com.user.management.data.student.dao.StudentDao;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -20,17 +20,17 @@ class StudentFacadeImplTest {
         expectedStudent.setLastName("Magnaye");
         expectedStudent.setFirstName("Justine");
 
-        studentDao studentDao = mock(studentDao.class);
-        when(studentDao.checkStudentId(studentId)).thenReturn(expectedStudent);
+        StudentDao studentDao = mock(StudentDao.class);
+        when(studentDao.findStudentById(studentId)).thenReturn(expectedStudent);
 
 
         StudentFacadeImpl studentFacade = new StudentFacadeImpl(studentDao);
-        Student result = studentFacade.checkStudentId(studentId);
+        Student result = studentFacade.findStudentById(studentId);
 
 
         assertNotNull(result, "Returned student should not be null.");
         assertEquals(expectedStudent, result, "Returned student should match expected student.");
-        verify(studentDao, times(1)).checkStudentId(studentId);
+        verify(studentDao, times(1)).findStudentById(studentId);
     }
 
     @Test
@@ -41,7 +41,7 @@ class StudentFacadeImplTest {
         student.setLastName("Magnaye");
         student.setFirstName("Justine");
 
-        studentDao studentDao = mock(studentDao.class);
+        StudentDao studentDao = mock(StudentDao.class);
         when(studentDao.saveStudent(student)).thenReturn(student);
 
 

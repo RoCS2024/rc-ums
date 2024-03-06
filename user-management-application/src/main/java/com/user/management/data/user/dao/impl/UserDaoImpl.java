@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class UserDaoImpl implements UserDao {
     @Override
-    public User checkUsername(String username, String password) throws SQLException {
+    public User findUserByUsernameAndPassword(String username, String password) throws SQLException {
         String selectByIdQuery = "SELECT * FROM login WHERE username=?";
         User User = null;
 

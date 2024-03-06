@@ -5,7 +5,7 @@ import com.user.management.app.model.user.User;
 import java.sql.SQLException;
 
 public interface UserDao {
-    User checkUsername(String username, String password) throws SQLException;
+    User findUserByUsernameAndPassword(String username, String password) throws SQLException;
     User saveUser(User user) throws SQLException;
     long getMaxUserId() throws SQLException;
 }

@@ -2,8 +2,8 @@ package com.user.management.app.facade.user.impl;
 
 import com.user.management.app.facade.user.UserFacade;
 import com.user.management.app.model.user.User;
-import com.user.management.data.user.dao.impl.UserDaoImpl;
 import com.user.management.data.user.dao.UserDao;
+import com.user.management.data.user.dao.impl.UserDaoImpl;
 
 import java.sql.SQLException;
 
@@ -19,12 +19,12 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public User checkUsername(String username, String password) throws SQLException {
-        return userDao.checkUsername(username, password);
+    public User findUserByUsernameAndPassword(String username, String password) throws SQLException {
+        return userDao.findUserByUsernameAndPassword(username, password);
     }
 
     @Override
-    public User saveUser(User login) throws SQLException {
-        return userDao.saveUser(login);
+    public User saveUser(User user) throws SQLException {
+        return userDao.saveUser(user);
     }
 }

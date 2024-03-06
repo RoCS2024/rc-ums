@@ -3,14 +3,14 @@ package com.user.management.data.student.dao.impl;
 
 import com.user.management.app.model.student.Student;
 import com.user.management.data.connection.ConnectionHelper;
-import com.user.management.data.student.dao.studentDao;
+import com.user.management.data.student.dao.StudentDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class studentDaoImpl implements studentDao {
+public class StudentDaoImpl implements StudentDao {
 
         @Override
         public Student saveStudent(Student student) throws SQLException {
@@ -44,7 +44,7 @@ public class studentDaoImpl implements studentDao {
         }
 
     @Override
-    public Student checkStudentId(String studentId) throws SQLException {
+    public Student findStudentById(String studentId) throws SQLException {
         String selectByIdQuery = "SELECT * FROM STUDENT WHERE student_id=?";
         Student student = null;
 

@@ -1,26 +1,28 @@
 package com.user.management.app.facade.student.Impl;
 
-
 import com.user.management.app.facade.student.StudentFacade;
 import com.user.management.app.model.student.Student;
-import com.user.management.data.student.dao.impl.studentDaoImpl;
+import com.user.management.data.student.dao.StudentDao;
+import com.user.management.data.student.dao.impl.StudentDaoImpl;
 
 import java.sql.SQLException;
 
 public class StudentFacadeImpl implements StudentFacade {
-    private final com.user.management.data.student.dao.studentDao studentDao;
+    private final StudentDao studentDao;
 
-    public StudentFacadeImpl(com.user.management.data.student.dao.studentDao studentDao) {
+    public StudentFacadeImpl(StudentDao studentDao) {
         this.studentDao = studentDao;
     }
 
     public StudentFacadeImpl() {
-        this.studentDao = new studentDaoImpl();
+        this.studentDao = new StudentDaoImpl();
     }
+
     @Override
-    public Student checkStudentId(String studentId) throws SQLException {
-        return studentDao.checkStudentId(studentId);
+    public Student findStudentById(String studentId) throws SQLException {
+        return studentDao.findStudentById(studentId);
     }
+
     @Override
     public Student saveStudent(Student student) throws SQLException {
         return studentDao.saveStudent(student);

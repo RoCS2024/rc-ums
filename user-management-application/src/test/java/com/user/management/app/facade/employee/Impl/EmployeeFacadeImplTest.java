@@ -1,7 +1,7 @@
 package com.user.management.app.facade.employee.Impl;
 
 import com.user.management.app.model.employee.Employee;
-import com.user.management.data.employee.dao.employeeDao;
+import com.user.management.data.employee.dao.EmployeeDao;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ class EmployeeFacadeImplTest {
         employee.setEmployeeNo("EMP21-0143");
         employee.setLastName("Magnaye");
         employee.setFirstName("Justine");
-        employeeDao employeeDao = mock(employeeDao.class);
+        EmployeeDao employeeDao = mock(EmployeeDao.class);
         when(employeeDao.saveEmployee(employee)).thenReturn(employee);
 
         EmployeeFacadeImpl employeeFacade = new EmployeeFacadeImpl(employeeDao);
@@ -35,14 +35,14 @@ class EmployeeFacadeImplTest {
         expectedEmployee.setEmployeeNo(employeeId);
         expectedEmployee.setLastName("Magnaye");
         expectedEmployee.setFirstName("Justine");
-        employeeDao employeeDao = mock(employeeDao.class);
-        when(employeeDao.checkEmployeeId(employeeId)).thenReturn(expectedEmployee);
+        EmployeeDao employeeDao = mock(EmployeeDao.class);
+        when(employeeDao.findEmployeeById(employeeId)).thenReturn(expectedEmployee);
 
         EmployeeFacadeImpl employeeFacade = new EmployeeFacadeImpl(employeeDao);
-        Employee result = employeeFacade.checkEmployeeId(employeeId);
+        Employee result = employeeFacade.findEmployeeById(employeeId);
 
         assertNotNull(result, "Returned employee should not be null.");
         assertEquals(expectedEmployee, result, "Returned employee should match expected employee.");
-        verify(employeeDao, times(1)).checkEmployeeId(employeeId);
+        verify(employeeDao, times(1)).findEmployeeById(employeeId);
     }
 }

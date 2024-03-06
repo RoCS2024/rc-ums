@@ -6,5 +6,5 @@ import java.sql.SQLException;
 
 public interface EmployeeFacade {
     Employee saveEmployee(Employee employee) throws SQLException;
-    Employee checkEmployeeId(String employeeId) throws SQLException;
+    Employee findEmployeeById(String employeeId) throws SQLException;
 }

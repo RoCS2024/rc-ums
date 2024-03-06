@@ -67,7 +67,7 @@ public class Main {
             String username = scanner.next();
             System.out.print("Enter Password: ");
             String password = scanner.next();
-            User currentUser = userFacade.checkUsername(username, password);
+            User currentUser = userFacade.findUserByUsernameAndPassword(username, password);
             if (currentUser != null && password.equals(currentUser.getPassword())) {
                 System.out.println("Login Successful");
                 return true;
@@ -89,7 +89,7 @@ public class Main {
             String username = scanner.next();
             System.out.print("Enter Password: ");
             String password = scanner.next();
-            User currentUser = userFacade.checkUsername(username,password);
+            User currentUser = userFacade.findUserByUsernameAndPassword(username,password);
             if(currentUser == null){
                 int check = 0;
                 do {
@@ -102,7 +102,7 @@ public class Main {
                             System.out.println("Student Form: ");
                             System.out.println("Enter Student Id: ");
                             String studentId = scanner.next();
-                            while (studentFacade.checkStudentId(studentId) != null) {
+                            while (studentFacade.findStudentById(studentId) != null) {
                                 System.out.println("Student Id Already Exist!");
                                 System.out.println("Enter a new Student Id: ");
                                 studentId = scanner.next();
@@ -185,7 +185,7 @@ public class Main {
                             String pagibigNo = scanner.next();
                             System.out.println("Enter Employee No: ");
                             String eNo = scanner.next();
-                            while (employeeFacade.checkEmployeeId(eNo) != null) {
+                            while (employeeFacade.findEmployeeById(eNo) != null) {
                                 System.out.println("Employee No. Already Exist!");
                                 System.out.println("Enter a new Employee No: ");
                                 eNo = scanner.next();

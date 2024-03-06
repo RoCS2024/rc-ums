@@ -2,26 +2,22 @@ package com.user.management.data.student.dao.impl;
 
 import com.user.management.app.model.student.Student;
 import com.user.management.data.connection.ConnectionHelper;
-import com.user.management.data.student.dao.studentDao;
-import com.user.management.data.student.dao.impl.studentDaoImpl;
+import com.user.management.data.student.dao.StudentDao;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentDaoImplTest {
 
-    private static studentDao studentDao;
+    private static StudentDao studentDao;
 
     @BeforeAll
     static void setUp() {
-        studentDao = new studentDaoImpl();
+        studentDao = new StudentDaoImpl();
     }
 
     @Test

@@ -3,14 +3,14 @@ package com.user.management.data.employee.dao.impl;
 
 import com.user.management.app.model.employee.Employee;
 import com.user.management.data.connection.ConnectionHelper;
-import com.user.management.data.employee.dao.employeeDao;
+import com.user.management.data.employee.dao.EmployeeDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class employeeDaoImpl implements employeeDao {
+public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Employee saveEmployee(Employee employee) throws SQLException {
@@ -40,7 +40,7 @@ public class employeeDaoImpl implements employeeDao {
         return employee;
     }
     @Override
-    public Employee checkEmployeeId(String employeeId) throws SQLException {
+    public Employee findEmployeeById(String employeeId) throws SQLException {
         String selectByIdQuery = "SELECT * FROM EMPLOYEE WHERE employee_no=?";
         Employee employee = null;
 

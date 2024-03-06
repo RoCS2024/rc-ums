@@ -25,14 +25,14 @@ class UserFacadeImplTest {
         User expectedUser= new User(1, username, password, entityId, dateCreated, dateModified);
 
         UserDao mockUserDao = mock(UserDao.class);
-        when(mockUserDao.checkUsername(username, password)).thenReturn(expectedUser);
+        when(mockUserDao.findUserByUsernameAndPassword(username, password)).thenReturn(expectedUser);
 
         UserFacadeImpl UserFacade = new UserFacadeImpl(mockUserDao);
 
-        User result = UserFacade.checkUsername(username, password);
+        User result = UserFacade.findUserByUsernameAndPassword(username, password);
 
         assertEquals(expectedUser, result);
-        verify(mockUserDao, times(1)).checkUsername(username, password);
+        verify(mockUserDao, times(1)).findUserByUsernameAndPassword(username, password);
     }
 
     @Test

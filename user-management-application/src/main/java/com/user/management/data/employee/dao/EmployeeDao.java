@@ -4,7 +4,7 @@ import com.user.management.app.model.employee.Employee;
 
 import java.sql.SQLException;
 
-public interface employeeDao {
+public interface EmployeeDao {
     Employee saveEmployee(Employee employee) throws SQLException;
-    Employee checkEmployeeId(String employeeId) throws SQLException;
+    Employee findEmployeeById(String employeeId) throws SQLException;
 }
