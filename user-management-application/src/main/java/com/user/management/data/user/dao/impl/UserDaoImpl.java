@@ -1,4 +1,6 @@
 package com.user.management.data.user.dao.impl;
 
-public class UserDaoImpl {
+import com.user.management.data.user.dao.UserDao;
+
+public class UserDaoImpl implements UserDao {
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Ant Test Project" default="build">
+<project name="User Management" default="build">
     <property name="dst.dir" value="out"/>
     <property name="source" value="src/main/java"/>
     <property file="build.properties"/>
@@ -28,7 +28,7 @@
     </target>
 
     <target name="generate-javadoc">
-        <javadoc packagenames="com.ant.test.project.*" sourcepath="${source}" destdir="${doc.dir}" version="${version}" windowtitle="Test ANT Documentation">
+        <javadoc packagenames="com.user.management.*" sourcepath="${source}" destdir="${doc.dir}" version="${version}" windowtitle="Test ANT Documentation">
             <fileset dir="."></fileset>
             <doctitle><![CDATA[= Test Documentation =]]></doctitle>
             <bottom>
