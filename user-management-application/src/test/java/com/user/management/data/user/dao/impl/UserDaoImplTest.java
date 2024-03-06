@@ -40,6 +40,11 @@ class UserDaoImplTest {
     @InjectMocks
     private UserDaoImpl userDao;
 
+    @Mock
+    private ResultSet resultSet;
+    @Mock
+    private PreparedStatement preparedStatement;
+
     @Test
     public void testGetAllUsers() throws SQLException {
         List<User> expectedUserList = new ArrayList<>();
@@ -134,5 +139,28 @@ class UserDaoImplTest {
         } catch (SQLException e) {
             fail("Exception thrown: " + e.getMessage());
         }
+    }
+
+    @Test
+    void testGetUserById() throws SQLException {
+        int userId = 1;
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("id")).thenReturn(userId);
+        when(resultSet.getString("username")).thenReturn("testuser");
+        when(resultSet.getString("password")).thenReturn("testpassword");
+        when(resultSet.getString("entity_id")).thenReturn("entity123");
+        when(resultSet.getTimestamp("date_modified")).thenReturn(new Timestamp(System.currentTimeMillis()));
+
+        User user = userDao.getUserById(userId);
+        assertNotNull(user);
+        assertEquals(userId, user.getId());
+    }
+
+    @Test
+    void testUpdateUser() throws SQLException {
+        User user = new User(1, "testuser", "testpassword", "entity123", null, new Timestamp(System.currentTimeMillis()));
+        when(preparedStatement.executeUpdate()).thenReturn(1);
+        boolean result = userDao.updateUser(user);
+        assertTrue(result);
     }
 }
