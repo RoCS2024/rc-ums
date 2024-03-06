@@ -15,6 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyString;
 
 class UserFacadeImplTest {
 
@@ -131,5 +132,32 @@ class UserFacadeImplTest {
         assertTrue(result);
     }
 
+    @Test
+    public void testGetUsername() throws SQLException {
 
+        User testLogin = new User();
+        testLogin.setId(1);
+        testLogin.setUsername("testuser");
+        testLogin.setPassword("testpassword");
+
+        when(userDao.getUsername(anyString())).thenReturn(testLogin);
+
+        User result = userFacade.getUsername("testuser");
+
+        assertEquals(testLogin, result);
+    }
+
+    @Test
+    public void testUpdatePassword() throws SQLException {
+
+        User testLogin = new User();
+        testLogin.setUsername("testuser");
+        testLogin.setPassword("newpassword");
+
+        when(userDao.updatePassword(testLogin)).thenReturn(testLogin);
+
+        User result = userFacade.updatePassword(testLogin);
+
+        assertEquals(testLogin, result);
+    }
 }

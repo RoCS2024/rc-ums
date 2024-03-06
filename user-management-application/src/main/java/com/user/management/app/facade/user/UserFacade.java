@@ -18,4 +18,8 @@ public interface UserFacade {
     List<User> getAllUsers() throws SQLException;
     User getUserById(int id);
     boolean updateUser(User user);
+
+    User getUsername(String username) throws SQLException;
+
+    User updatePassword(User existingUser) throws SQLException;
 }
