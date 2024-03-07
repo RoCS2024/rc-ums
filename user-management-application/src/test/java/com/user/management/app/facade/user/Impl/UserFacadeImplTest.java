@@ -4,9 +4,12 @@ import com.user.management.app.facade.user.impl.UserFacadeImpl;
 import com.user.management.app.model.user.User;
 import com.user.management.data.user.dao.UserDao;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,8 +18,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.anyString;
-
+/**
+ * This is the User Facade Impl Test.
+ * */
 class UserFacadeImplTest {
 
     @Mock
@@ -42,7 +46,7 @@ class UserFacadeImplTest {
      *
      */
     @Test
-    public void testGetAllUsers() throws SQLException {
+    public void testGetAllUsers() {
 
         List<User> expectedUsers = new ArrayList<>();
         User user1 = new User();
@@ -50,18 +54,15 @@ class UserFacadeImplTest {
         user1.setUsername("testUser1");
         expectedUsers.add(user1);
 
-        // Mocking UserDao behavior
         when(mockUserDao.getAllUsers()).thenReturn(expectedUsers);
 
-        // Calling the method under test
         List<User> actualUsers = userFacade.getAllUsers();
 
-        // Asserting the result
         assertEquals(expectedUsers.size(), actualUsers.size());
     }
 
     @Test
-    void checkUsername_Returns_User() throws SQLException {
+    void checkUsername_Returns_User() {
         String username = "testUser";
         String password = "testPassword";
         String entityId = "entityId";
@@ -81,7 +82,7 @@ class UserFacadeImplTest {
     }
 
     @Test
-    void saveUser_Returns_Login() throws SQLException {
+    void saveUser_Returns_Login() {
         String username = "testUser";
         String password = "testPassword";
         String entityId = "entityId";
@@ -101,46 +102,38 @@ class UserFacadeImplTest {
         verify(mockUserDao, times(1)).saveUser(user);
     }
 
-
-
-
     @Test
     void testGetUserById() {
-        // Mock behavior of userDao.getUserById(id) method
         int userId = 1;
         User mockedUser = new User(userId, "testuser", "testpassword", "entity123", null, null);
         when(userDao.getUserById(userId)).thenReturn(mockedUser);
 
-        // Test getUserById method of UserFacadeImpl
         User resultUser = userFacade.getUserById(userId);
         assertEquals(mockedUser, resultUser);
     }
 
     @Test
     void testUpdateUser() {
-        // Prepare test data
+
         User userToUpdate = new User(1, "testuser", "testpassword", "entity123", null, null);
 
-        // Mock behavior of userDao.getUserById(id) method
         when(userDao.getUserById(userToUpdate.getId())).thenReturn(userToUpdate);
 
-        // Mock behavior of userDao.updateUser(user) method
-        when(userDao.updateUser(userToUpdate)).thenReturn(true);
+        when(userDao.updateUser()).thenReturn(true);
 
-        // Test updateUser method of UserFacadeImpl
         boolean result = userFacade.updateUser(userToUpdate);
         assertTrue(result);
     }
 
     @Test
-    public void testGetUsername() throws SQLException {
+    public void testGetUsername(String username) {
 
         User testLogin = new User();
         testLogin.setId(1);
         testLogin.setUsername("testuser");
         testLogin.setPassword("testpassword");
 
-        when(userDao.getUsername(anyString())).thenReturn(testLogin);
+        when(userDao.getUsername(username)).thenReturn(testLogin);
 
         User result = userFacade.getUsername("testuser");
 
@@ -148,13 +141,13 @@ class UserFacadeImplTest {
     }
 
     @Test
-    public void testUpdatePassword() throws SQLException {
+    public void testUpdatePassword(User user) {
 
         User testLogin = new User();
         testLogin.setUsername("testuser");
         testLogin.setPassword("newpassword");
 
-        when(userDao.updatePassword(testLogin)).thenReturn(testLogin);
+        when(userDao.updatePassword(user)).thenReturn(testLogin);
 
         User result = userFacade.updatePassword(testLogin);
 

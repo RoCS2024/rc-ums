@@ -1,8 +1,13 @@
 package com.user.management.app.model.employee;
 
 import java.sql.Timestamp;
-
+/**
+ * This is the Employee Model.
+ * */
 public class Employee {
+    /**
+     * This is the Employee Field.
+     * */
     private String lastName;
     private String firstName;
     private String middleName;
@@ -20,9 +25,11 @@ public class Employee {
     private String sssNo;
     private String tinNo;
     private String pagibigNo;
-    private String employeeNo;
+    private String employeeId;
 
-    // Setters and Getters
+    /**
+     * This is the Employee getter and setter.
+     * */
 
     public String getLastName() {
         return lastName;
@@ -160,12 +167,12 @@ public class Employee {
         this.pagibigNo = pagibigNo;
     }
 
-    public String getEmployeeNo() {
-        return employeeNo;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployeeNo(String employeeNo) {
-        this.employeeNo = employeeNo;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
 }

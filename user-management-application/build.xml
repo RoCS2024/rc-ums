@@ -1,10 +1,15 @@
 <?xml version="1.0"?>
-<project name="User Management" default="build">
+<project name="User Management" default="resolve" xmlns:ivy = "antlib:org.apache.ivy.ant">
     <property name="dst.dir" value="out"/>
     <property name="source" value="src/main/java"/>
     <property file="build.properties"/>
     <property name="build.dir" value="target"/>
     <property name="doc.dir" value="doc"/>
+
+    <target name="resolve" description="resolve dependencies">
+        <ivy:resolve/>
+        <ivy:retrieve/>
+    </target>
 
     <target name="copy-files">
         <copy todir="${dst.dir}">

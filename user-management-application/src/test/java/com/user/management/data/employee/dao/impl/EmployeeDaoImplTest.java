@@ -11,7 +11,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This is the Employee Dao Impl Test.
+ * */
 class EmployeeDaoImplTest {
 
     private static EmployeeDao employeeDao;
@@ -41,12 +43,12 @@ class EmployeeDaoImplTest {
         testEmployee.setSssNo("123-456-789");
         testEmployee.setTinNo("987-654-321");
         testEmployee.setPagibigNo("ABC-123");
-        testEmployee.setEmployeeNo("EMP0001");
+        testEmployee.setEmployeeId("EMP0001");
 
         try {
             Employee savedEmployee = employeeDao.saveEmployee(testEmployee);
 
-            assertNotNull(savedEmployee.getEmployeeNo());
+            assertNotNull(savedEmployee.getEmployeeId());
             assertEquals(testEmployee.getLastName(), savedEmployee.getLastName());
             assertEquals(testEmployee.getFirstName(), savedEmployee.getFirstName());
             assertEquals(testEmployee.getMiddleName(), savedEmployee.getMiddleName());
@@ -64,8 +66,8 @@ class EmployeeDaoImplTest {
             assertEquals(testEmployee.getSssNo(), savedEmployee.getSssNo());
             assertEquals(testEmployee.getTinNo(), savedEmployee.getTinNo());
             assertEquals(testEmployee.getPagibigNo(), savedEmployee.getPagibigNo());
-            assertEquals(testEmployee.getEmployeeNo(), savedEmployee.getEmployeeNo());
-        } catch (SQLException e) {
+            assertEquals(testEmployee.getEmployeeId(), savedEmployee.getEmployeeId());
+        } catch (Exception e) {
             fail("Exception thrown: " + e.getMessage());
         }
     }
@@ -76,7 +78,7 @@ class EmployeeDaoImplTest {
 
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO EMPLOYEE (employee_no, last_name, first_name, middle_name, position_in_rc, birthplace, sex, civil_status, citizenship, religion, height, weight, email, sss_no, tin_no, pagibig_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                     "INSERT INTO EMPLOYEE (employee_id, last_name, first_name, middle_name, position_in_rc, birthplace, sex, civil_status, citizenship, religion, height, weight, email, sss_no, tin_no, pagibig_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
             preparedStatement.setString(1, employeeId);
             preparedStatement.setString(2, "Magnaye");
             preparedStatement.setString(3, "Justine");
@@ -94,15 +96,15 @@ class EmployeeDaoImplTest {
             preparedStatement.setString(15, "123-456-789");
             preparedStatement.setString(16, "XYZ-789");
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail("Error inserting test data: " + e.getMessage());
         }
 
         try {
-            Employee retrievedEmployee = employeeDao.checkEmployeeId(employeeId);
+            Employee retrievedEmployee = employeeDao.findEmployeeById(employeeId);
 
             assertNotNull(retrievedEmployee);
-            assertEquals(employeeId, retrievedEmployee.getEmployeeNo());
+            assertEquals(employeeId, retrievedEmployee.getEmployeeId());
             assertEquals("Magnaye", retrievedEmployee.getLastName());
             assertEquals("Justine", retrievedEmployee.getFirstName());
             assertEquals("Dave", retrievedEmployee.getMiddleName());
@@ -118,7 +120,7 @@ class EmployeeDaoImplTest {
             assertEquals("987-654-321", retrievedEmployee.getSssNo());
             assertEquals("123-456-789", retrievedEmployee.getTinNo());
             assertEquals("XYZ-789", retrievedEmployee.getPagibigNo());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail("Exception thrown: " + e.getMessage());
         }
     }

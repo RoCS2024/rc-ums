@@ -3,15 +3,16 @@ package com.user.management.data.user.dao.impl;
 import com.user.management.app.model.user.User;
 import com.user.management.data.connection.ConnectionHelper;
 import com.user.management.data.user.dao.UserDao;
-import com.user.management.data.user.dao.impl.UserDaoImpl;
 import org.junit.jupiter.api.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,8 +21,12 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * This is the User Dao Impl Test.
+ * */
 class UserDaoImplTest {
 
     private static UserDao UserDao;
@@ -49,7 +54,7 @@ class UserDaoImplTest {
     private PreparedStatement preparedStatement;
 
     @Test
-    public void testGetAllUsers() throws SQLException {
+    public void testGetAllUsers() {
         List<User> expectedUserList = new ArrayList<>();
         User user1 = new User();
         user1.setId(1);
@@ -61,15 +66,20 @@ class UserDaoImplTest {
         expectedUserList.add(user1);
 
         // Mocking database interaction
-        when(mockConnection.prepareStatement(any())).thenReturn(mockPreparedStatement);
-        when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
-        when(mockResultSet.next()).thenReturn(true).thenReturn(false);
-        when(mockResultSet.getInt("ID")).thenReturn(user1.getId());
-        when(mockResultSet.getString("USERNAME")).thenReturn(user1.getUsername());
-        when(mockResultSet.getString("PASSWORD")).thenReturn(user1.getPassword());
-        when(mockResultSet.getString("ENTITY_ID")).thenReturn(user1.getEntity_id());
-        when(mockResultSet.getTimestamp("DATE_CREATED")).thenReturn(user1.getDate_created());
-        when(mockResultSet.getTimestamp("DATE_MODIFIED")).thenReturn(user1.getDate_modified());
+        try {
+            when(mockConnection.prepareStatement(any())).thenReturn(mockPreparedStatement);
+            when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
+            when(mockResultSet.next()).thenReturn(true).thenReturn(false);
+            when(mockResultSet.getInt("ID")).thenReturn(user1.getId());
+            when(mockResultSet.getString("USERNAME")).thenReturn(user1.getUsername());
+            when(mockResultSet.getString("PASSWORD")).thenReturn(user1.getPassword());
+            when(mockResultSet.getString("ENTITY_ID")).thenReturn(user1.getEntity_id());
+            when(mockResultSet.getTimestamp("DATE_CREATED")).thenReturn(user1.getDate_created());
+            when(mockResultSet.getTimestamp("DATE_MODIFIED")).thenReturn(user1.getDate_modified());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
 
         // Calling the method under test
         List<User> resultUserList = UserDao.getAllUsers();
@@ -94,18 +104,18 @@ class UserDaoImplTest {
             preparedStatement.setString(2, username);
             preparedStatement.setString(3, password);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail("Error inserting test data: " + e.getMessage());
         }
 
         try {
-            User retrievedUser = UserDao.checkUsername(username, password);
+            User retrievedUser = UserDao.getUsername(username);
 
             assertNotNull(retrievedUser);
             assertEquals(id, retrievedUser.getId());
             assertEquals(username, retrievedUser.getUsername());
             assertEquals(password, retrievedUser.getPassword());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail("Exception thrown: " + e.getMessage());
         }
     }
@@ -129,7 +139,7 @@ class UserDaoImplTest {
             assertEquals(testLogin.getEntity_id(), savedLogin.getEntity_id());
             assertEquals(testLogin.getDate_created(), savedLogin.getDate_created());
             assertEquals(testLogin.getDate_modified(), savedLogin.getDate_modified());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail("Exception thrown: " + e.getMessage());
         }
     }
@@ -139,79 +149,57 @@ class UserDaoImplTest {
         try {
             long maxId = UserDao.getMaxUserId();
             assertEquals(1, maxId);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail("Exception thrown: " + e.getMessage());
         }
     }
 
     @Test
-    void testGetUserById() throws SQLException {
+    void testGetUserById() {
         int userId = 1;
-        when(resultSet.next()).thenReturn(true);
-        when(resultSet.getInt("id")).thenReturn(userId);
-        when(resultSet.getString("username")).thenReturn("testuser");
-        when(resultSet.getString("password")).thenReturn("testpassword");
-        when(resultSet.getString("entity_id")).thenReturn("entity123");
-        when(resultSet.getTimestamp("date_modified")).thenReturn(new Timestamp(System.currentTimeMillis()));
-
-        User user = userDao.getUserById(userId);
-        assertNotNull(user);
-        assertEquals(userId, user.getId());
-    }
-
-    @Test
-    void testUpdateUser() throws SQLException {
-        User user = new User(1, "testuser", "testpassword", "entity123", null, new Timestamp(System.currentTimeMillis()));
-        when(preparedStatement.executeUpdate()).thenReturn(1);
-        boolean result = userDao.updateUser(user);
-        assertTrue(result);
-    }
-
-    @Test
-    public void testUpdatePassword() throws SQLException {
-        User customer = new User();
         try {
-            when(userDao.updatePassword(user)).thenAnswer(new Answer<Boolean>() {
-                @Override
-                public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
-                    Object[] arguments = invocationOnMock.getArguments();
-                    if (arguments != null && arguments.length > 0 && arguments[0] != null){
-                        Optional<User> searchLogin = users.stream().filter(c -> c.getId() == 1).findFirst();
-                        if(searchLogin != null) {
-                            users.remove(searchLogin.get());
-                            users.add(user);
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-            });
-        } catch (SQLException e) {
+            when(resultSet.next()).thenReturn(true);
+            when(resultSet.getInt("id")).thenReturn(userId);
+            when(resultSet.getString("username")).thenReturn("testuser");
+            when(resultSet.getString("password")).thenReturn("testpassword");
+            when(resultSet.getString("entity_id")).thenReturn("entity123");
+            when(resultSet.getTimestamp("date_modified")).thenReturn(new Timestamp(System.currentTimeMillis()));
+
+            User user = userDao.getUserById(userId);
+            assertNotNull(user);
+            assertEquals(userId, user.getId());
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        User updateResult = userDao.updatePassword(customer);
-        when(userDao.getUsername()).thenReturn((List<User>) users);
-        List<User> loginList = userDao.getUsername();
-        Optional<User> searchLogin = users.stream().filter(c -> c.getId() == 1).findAny();
-        User expectedCustomer = searchLogin.get();
-
-        assertEquals(updateResult, true);
-        assertEquals(loginList.size(), 2);
-        assertNotEquals(expectedCustomer, null);
-        assertEquals(expectedCustomer.getUsername(), "Joshua");
     }
-
     @Test
-    public void deletePassword() {
-        when(userDao.updatePassword("1")).then(new Answer<Boolean>() {
+    void testUpdateUser()  {
+        User user = new User(1, "testuser", "testpassword", "entity123", null, new Timestamp(System.currentTimeMillis()));
+        try {
+            when(preparedStatement.executeUpdate()).thenReturn(1);
+            boolean result = userDao.updateUser();
+            assertTrue(result);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Test
+    public void testUpdatePassword(String username) {
+        User user = new User();
+        user.setId(1);
+        user.setUsername("Joshua");
+
+        UserDao userDao = Mockito.mock(UserDao.class);
+
+        Mockito.when(userDao.updatePassword(user)).thenAnswer(new Answer<Boolean>() {
             @Override
-            public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
-                Object[] arguments = invocationOnMock.getArguments();
-                if (arguments != null && arguments.length > 0 && arguments[0] != null){
-                    Optional<User> searchLogin = users.stream().filter(c -> c.getId() == 1).findFirst();
-                    if(searchLogin != null) {
-                        users.remove(searchLogin.get());
+            public Boolean answer(InvocationOnMock invocation) throws Throwable {
+                Object[] arguments = invocation.getArguments();
+                if (arguments != null && arguments.length > 0 && arguments[0] != null) {
+                    User userToUpdate = (User) arguments[0];
+                    if (userToUpdate.getId() == 1) {
+                        // Assuming updatePassword just returns true if the user ID is 1
                         return true;
                     }
                 }
@@ -219,14 +207,48 @@ class UserDaoImplTest {
             }
         });
 
-        User deleteResult = userDao.updatePassword("1");
-        when(userDao.getUsername()).thenReturn(users);
-        List<User> loginList = userDao.getUsername();
-        Optional<User> searchUsername = users.stream().filter(c -> c.getId() == 1).findAny();
+        User updateResult = userDao.updatePassword(user);
+        List<User> loginList = (List<User>) userDao.getUsername(username);
+        Optional<User> searchLogin = loginList.stream().filter(c -> c.getId() == 1).findAny();
+        User expectedCustomer = searchLogin.get();
 
-        assertEquals(deleteResult, true);
-        assertEquals(loginList.size(), 1);
-        assertEquals(searchUsername, Optional.empty());
+        assertEquals(true, updateResult);
+        assertEquals(1, loginList.size());
+        assertEquals("Joshua", expectedCustomer.getUsername());
     }
+    @Test
+    public void testDeletePassword(String username) {
+        User user = new User();
+        user.setId(1);
+        user.setUsername("Joshua");
 
+        List<User> usersList = new ArrayList<>();
+        usersList.add(user);
+
+        UserDao userDao = Mockito.mock(UserDao.class);
+
+        Mockito.when(userDao.updatePassword(user)).thenAnswer(new Answer<Boolean>() {
+            @Override
+            public Boolean answer(InvocationOnMock invocation) throws Throwable {
+                Object[] arguments = invocation.getArguments();
+                if (arguments != null && arguments.length > 0 && arguments[0] != null) {
+                    String userId = (String) arguments[0];
+                    Optional<User> searchLogin = usersList.stream().filter(c -> c.getId() == Integer.parseInt(userId)).findFirst();
+                    if (searchLogin.isPresent()) {
+                        usersList.remove(searchLogin.get());
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+        User deleteResult = userDao.updatePassword(user);
+        List<User> loginList = (List<User>) userDao.getUsername(username);
+        Optional<User> searchUsername = loginList.stream().filter(c -> c.getId() == 1).findAny();
+
+        assertEquals(true, deleteResult);
+        assertEquals(0, loginList.size());
+        assertEquals(Optional.empty(), searchUsername);
+    }
 }

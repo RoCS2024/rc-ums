@@ -2,23 +2,22 @@ package com.user.management.data.user.dao;
 
 import com.user.management.app.model.user.User;
 
-import java.sql.SQLException;
 import java.util.List;
-
+/**
+ * This is the User Dao.
+ * */
 public interface UserDao {
-    User findUserByUsernameAndPassword(String username, String password) throws SQLException;
-    User saveUser(User user) throws SQLException;
-    long getMaxUserId() throws SQLException;
-
+    User findUserByUsernameAndPassword(String username, String password);
+    User saveUser(User user);
+    long getMaxUserId();
     /**
      * Retrieves a list of all users from the database.
      *
      */
-    List<User> getAllUsers() throws SQLException;
+    List<User> getAllUsers() ;
     User getUserById(int id);
-    boolean updateUser(User user);
+    boolean updateUser();
+    User getUsername(String username);
+    User updatePassword(User user);
 
-    User getUsername(String username) throws SQLException;
-
-    User updatePassword(User login) throws SQLException;
 }

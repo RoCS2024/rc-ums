@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8092e021-80f1-42a9-8cc0-7081cc637028" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/user-management-application/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/.idea/ant.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/build.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/employee/EmployeeFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/employee/EmployeeFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/employee/Impl/EmployeeFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/employee/Impl/EmployeeFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/student/Impl/StudentFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/student/Impl/StudentFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/student/StudentFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/student/StudentFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/user/UserFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/user/UserFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/user/impl/UserFacadeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/app/facade/user/impl/UserFacadeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/employee/dao/EmployeeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/employee/dao/EmployeeDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/employee/dao/impl/EmployeeDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/employee/dao/impl/EmployeeDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/student/dao/StudentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/student/dao/StudentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/student/dao/impl/StudentDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/student/dao/impl/StudentDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/user/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/user/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/user/dao/impl/UserDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/main/java/com/user/management/data/user/dao/impl/UserDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/test/java/com/user/management/app/facade/user/Impl/UserFacadeImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/test/java/com/user/management/app/facade/user/Impl/UserFacadeImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/src/test/java/com/user/management/data/user/dao/impl/UserDaoImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/src/test/java/com/user/management/data/user/dao/impl/UserDaoImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management-application/user-management-application.iml" beforeDir="false" afterPath="$PROJECT_DIR$/user-management-application/user-management-application.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2dLgcmoTCFxySwN44pf5eWFwOtC" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/huawei/OneDrive/Kate Ann Important/ggit/user-management-system",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8092e021-80f1-42a9-8cc0-7081cc637028" name="Changes" comment="" />
+      <created>1709792854915</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1709792854915</updated>
+      <workItem from="1709792856037" duration="10000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

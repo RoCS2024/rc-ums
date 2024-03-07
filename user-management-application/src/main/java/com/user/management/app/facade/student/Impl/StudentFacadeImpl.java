@@ -6,7 +6,9 @@ import com.user.management.data.student.dao.StudentDao;
 import com.user.management.data.student.dao.impl.StudentDaoImpl;
 
 import java.sql.SQLException;
-
+/**
+ * This is the Student Facade Impl.
+ * */
 public class StudentFacadeImpl implements StudentFacade {
     private final StudentDao studentDao;
 
@@ -19,12 +21,12 @@ public class StudentFacadeImpl implements StudentFacade {
     }
 
     @Override
-    public Student findStudentById(String studentId) throws SQLException {
+    public Student findStudentById(String studentId) {
         return studentDao.findStudentById(studentId);
     }
 
     @Override
-    public Student saveStudent(Student student) throws SQLException {
+    public Student saveStudent(Student student) {
         return studentDao.saveStudent(student);
     }
 }

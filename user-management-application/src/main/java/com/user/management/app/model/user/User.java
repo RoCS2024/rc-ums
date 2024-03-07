@@ -5,8 +5,13 @@
 package com.user.management.app.model.user;
 
 import java.sql.Timestamp;
-
+/**
+ * This is the User Model.
+ * */
 public class User {
+    /**
+     * This is the User field.
+     * */
     private int id;
     private String username;
     private String password;
@@ -26,6 +31,9 @@ public class User {
         this.date_created = date_created;
         this.date_modified = date_modified;
     }
+    /**
+     * This is the User getter and setter.
+     * */
 
     public int getId() {
         return id;

@@ -9,11 +9,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * This is the Student Dao Impl.
+ * */
 public class StudentDaoImpl implements StudentDao {
-
+    /**
+     * This is for save student.
+     * */
         @Override
-        public Student saveStudent(Student student) throws SQLException {
+        public Student saveStudent(Student student){
             String insertQuery = "INSERT INTO STUDENT VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             try (Connection connection = ConnectionHelper.getConnection();
@@ -35,16 +39,18 @@ public class StudentDaoImpl implements StudentDao {
                 } else {
                     System.out.println("Failed to insert student.");
                 }
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 System.out.println("Error inserting student: " + e.getMessage());
-                throw e; // rethrow the exception to indicate failure
+                throw new RuntimeException(e); // rethrow the exception to indicate failure
             }
 
             return student;
         }
-
+    /**
+     * This is for find student by id.
+     * */
     @Override
-    public Student findStudentById(String studentId) throws SQLException {
+    public Student findStudentById(String studentId){
         String selectByIdQuery = "SELECT * FROM STUDENT WHERE student_id=?";
         Student student = null;
 
@@ -66,6 +72,8 @@ public class StudentDaoImpl implements StudentDao {
                     student.setContactNumber(resultSet.getString("contact_number"));
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return student;
     }
