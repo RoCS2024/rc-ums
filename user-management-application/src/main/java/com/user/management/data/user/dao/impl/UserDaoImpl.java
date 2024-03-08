@@ -7,33 +7,41 @@ import com.user.management.data.user.dao.UserDao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This is the User Dao Impl.
+ * */
 public class UserDaoImpl implements UserDao {
+    /**
+     * This is for findUserByUsernameAndPassword.
+     * */
     @Override
-    public User findUserByUsernameAndPassword(String username, String password) throws SQLException {
+    public User findUserByUsernameAndPassword(String username, String password)  {
         String selectByIdQuery = "SELECT * FROM login WHERE username=?";
         User User = null;
-
         try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
-            preparedStatement.setString(1, username);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    User = new User();
-                    User.setId((int) resultSet.getLong("id"));
-                    User.setUsername(resultSet.getString("username"));
-                    User.setPassword(resultSet.getString("password"));
-                    User.setEntity_id(resultSet.getString("entity_id"));
-                    User.setDate_created(resultSet.getTimestamp("date_created"));
-                    User.setDate_modified(resultSet.getTimestamp("date_modified"));
+                  PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
+                preparedStatement.setString(1, username);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        User = new User();
+                        User.setId((int) resultSet.getLong("id"));
+                        User.setUsername(resultSet.getString("username"));
+                        User.setPassword(resultSet.getString("password"));
+                        User.setEntity_id(resultSet.getString("entity_id"));
+                        User.setDate_created(resultSet.getTimestamp("date_created"));
+                        User.setDate_modified(resultSet.getTimestamp("date_modified"));
+                    }
                 }
-            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return User;
     }
-
+    /**
+     * This is for save user.
+     * */
     @Override
-    public User saveUser(User User) throws SQLException {
+    public User saveUser(User User)  {
         String insertQuery = "INSERT INTO login (ID, USERNAME, PASSWORD, ENTITY_ID, DATE_CREATED, DATE_MODIFIED) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
@@ -46,12 +54,16 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setTimestamp(5, User.getDate_created());
             preparedStatement.setTimestamp(6, User.getDate_modified());
             preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return User;
     }
-
+    /**
+     * This is for getMaxUserId.
+     * */
     @Override
-    public long getMaxUserId() throws SQLException {
+    public long getMaxUserId(){
         String selectMaxIdQuery = "SELECT MAX(ID) AS MAX_ID FROM login";
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectMaxIdQuery);
@@ -59,12 +71,16 @@ public class UserDaoImpl implements UserDao {
             if (resultSet.next()) {
                 return resultSet.getLong("MAX_ID");
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
-
+    /**
+     * This is for get all user.
+     * */
     @Override
-    public List<User> getAllUsers() throws SQLException {
+    public List<User> getAllUsers(){
         List<User> userList = new ArrayList<>();
         String query = "SELECT * FROM LOGIN";
 
@@ -82,10 +98,15 @@ public class UserDaoImpl implements UserDao {
                 user.setDate_modified(resultSet.getTimestamp("DATE_MODIFIED"));
                 userList.add(user);
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         return userList;
     }
+    /**
+     * This is for get user by id.
+     * */
     @Override
     public User getUserById(int id) {
         String sql = "SELECT * FROM login WHERE id = ?";
@@ -104,16 +125,19 @@ public class UserDaoImpl implements UserDao {
                     System.err.println("No user found with ID: " + id);
                 }
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.err.println("Error retrieving user with ID " + id + ": " + ex.getMessage());
             ex.printStackTrace();
         }
         return null;
     }
-
+    /**
+     * This is for update user.
+     * */
     @Override
-    public boolean updateUser(User user) {
+    public boolean updateUser() {
         String sql = "UPDATE login SET username = ?, password = ?, entity_id = ?, date_modified = ? WHERE id = ?";
+        User user = new User();
         try (Connection con = ConnectionHelper.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, user.getUsername());
@@ -123,48 +147,57 @@ public class UserDaoImpl implements UserDao {
             stmt.setInt(5, user.getId());
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.err.println("Error updating user with ID " + user.getId() + ": " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
     }
-
+    /**
+     * This is for get username.
+     * */
     @Override
-    public User getUsername(String username) throws SQLException {
-        String selectUsernameQuery = "SELECT * FROM login WHERE username=?";
+    public User getUsername(String username) {
+        String selectByIdQuery = "SELECT * FROM login WHERE username=?";
         User login = null;
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectUsernameQuery)) {
 
+        try (Connection connection = ConnectionHelper.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
             preparedStatement.setString(1, username);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     login = new User();
-                    login.setId(resultSet.getInt("id"));
+                    login.setId((int) resultSet.getLong("id"));
                     login.setUsername(resultSet.getString("username"));
                     login.setPassword(resultSet.getString("password"));
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return login;
     }
-
+    /**
+     * This is for update password.
+     * */
     @Override
-    public User updatePassword(User login) throws SQLException {
+    public User updatePassword(User user) {
         String updateQuery = "UPDATE login SET password=?, date_modified=? WHERE username=?";
+
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
 
-            preparedStatement.setString(1, login.getPassword());
-            preparedStatement.setTimestamp(2, login.getDate_modified());
-            preparedStatement.setString(3, login.getUsername());
+            preparedStatement.setString(1, user.getPassword());
+            preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setString(3, user.getUsername());
             int affectedRows = preparedStatement.executeUpdate();
 
             if (affectedRows == 0) {
-                throw new SQLException("Password update failed.");
+                throw new RuntimeException("Password update failed.");
             }
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating password: " + e.getMessage(), e);
         }
-        return login;
+        return user;
     }
 }

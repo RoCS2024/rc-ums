@@ -4,17 +4,19 @@ import com.user.management.app.model.employee.Employee;
 import com.user.management.data.employee.dao.EmployeeDao;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLException;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
+/**
+ * This is the Employee Facade Impl Test.
+ * */
 class EmployeeFacadeImplTest {
 
+    private Employee employeeDao;
+
     @Test
-    void testSaveEmployee() throws SQLException {
+    void testSaveEmployee() {
         Employee employee = new Employee();
-        employee.setEmployeeNo("EMP21-0143");
+        employee.setEmployeeId("EMP21-0143");
         employee.setLastName("Magnaye");
         employee.setFirstName("Justine");
         EmployeeDao employeeDao = mock(EmployeeDao.class);
@@ -29,10 +31,10 @@ class EmployeeFacadeImplTest {
     }
 
     @Test
-    void testCheckEmployeeId() throws SQLException {
+    void testCheckEmployeeId() {
         String employeeId = "EMP21-0143";
         Employee expectedEmployee = new Employee();
-        expectedEmployee.setEmployeeNo(employeeId);
+        expectedEmployee.setEmployeeId(employeeId);
         expectedEmployee.setLastName("Magnaye");
         expectedEmployee.setFirstName("Justine");
         EmployeeDao employeeDao = mock(EmployeeDao.class);

@@ -5,9 +5,10 @@ import com.user.management.app.model.user.User;
 import com.user.management.data.user.dao.UserDao;
 import com.user.management.data.user.dao.impl.UserDaoImpl;
 
-import java.sql.SQLException;
 import java.util.List;
-
+/**
+ * This is the User Facade Impl.
+ * */
 public class UserFacadeImpl implements UserFacade {
     private final UserDao userDao;
 
@@ -20,22 +21,19 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public User findUserByUsernameAndPassword(String username, String password) throws SQLException {
+    public User findUserByUsernameAndPassword(String username, String password) {
         return userDao.findUserByUsernameAndPassword(username, password);
     }
-
     @Override
-    public User saveUser(User user) throws SQLException {
+    public User saveUser(User user) {
         return userDao.saveUser(user);
     }
-
-
     /**
      * Retrieves a list of all users from the database.
      * A List of User objects representing all users in the system.
      */
     @Override
-    public List<User> getAllUsers() throws SQLException {
+    public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
     @Override
@@ -49,7 +47,7 @@ public class UserFacadeImpl implements UserFacade {
             if(targetUser == null) {
                 throw new Exception("User to update not found. ");
             }
-            result = userDao.updateUser(user);
+            result = userDao.updateUser();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -57,12 +55,12 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public User getUsername(String username) throws SQLException {
+    public User getUsername(String username) {
         return userDao.getUsername(username);
     }
 
     @Override
-    public User updatePassword(User login) throws SQLException {
-        return userDao.updatePassword(login);
+    public User updatePassword(User user) {
+        return userDao.updatePassword(user);
     }
 }

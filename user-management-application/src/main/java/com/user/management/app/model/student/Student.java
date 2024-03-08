@@ -1,6 +1,11 @@
 package com.user.management.app.model.student;
-
+/**
+ * This is the Student Model.
+ * */
 public class Student {
+    /**
+     * This is the Student Field.
+     * */
     private String studentId;
     private String lastName;
     private String firstName;
@@ -12,7 +17,9 @@ public class Student {
     private String address;
     private String contactNumber;
 
-    // Setters and Getters
+    /**
+     * This is the Student getter and setter.
+     * */
 
     public String getStudentId() {
         return studentId;

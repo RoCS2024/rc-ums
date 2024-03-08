@@ -89,7 +89,7 @@ public class Main {
                 System.out.println("Date Modified: " + user.getDate_modified());
                 System.out.println();
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("Error occurred while retrieving user list: " + e.getMessage());
         }
     }
@@ -111,7 +111,7 @@ public class Main {
                 System.out.println("Login failed. Please check your username and password.");
                 return false;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("Error fetching login details. Please try again.");
             return false;
         }
@@ -245,7 +245,7 @@ public class Main {
                             employee.setSssNo(sssNo);
                             employee.setTinNo(tNumber);
                             employee.setPagibigNo(pagibigNo);
-                            employee.setEmployeeNo(eNo);
+                            employee.setEmployeeId(eNo);
                             employee = employeeFacade.saveEmployee(employee);
                             check = 1;
                             break;
@@ -263,7 +263,7 @@ public class Main {
             } else {
                 System.out.println("Username already taken!");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("Error registering user. Please try again.");
         }
     }
@@ -351,7 +351,7 @@ public class Main {
                     String newPassword = scanner.next();
 
                     if(newPasswordd.equals(newPassword)) {
-
+                        System.out.println("password");
                         existingUser.setPassword(newPassword);
                         Timestamp currentTimestamp = new Timestamp(new Date().getTime());
                         existingUser.setDate_modified(currentTimestamp);

@@ -8,11 +8,13 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
+/**
+ * This is the Student Facade Impl Test.
+ * */
 class StudentFacadeImplTest {
 
     @Test
-    void testCheckStudentId() throws SQLException {
+    void testCheckStudentId() {
 
         String studentId = "CT21-0143";
         Student expectedStudent = new Student();
@@ -34,7 +36,7 @@ class StudentFacadeImplTest {
     }
 
     @Test
-    void testSaveStudent() throws SQLException {
+    void testSaveStudent() {
 
         Student student = new Student();
         student.setStudentId("CT21-0143");

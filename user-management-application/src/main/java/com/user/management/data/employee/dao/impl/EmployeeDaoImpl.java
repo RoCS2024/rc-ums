@@ -2,6 +2,7 @@ package com.user.management.data.employee.dao.impl;
 
 
 import com.user.management.app.model.employee.Employee;
+import com.user.management.app.model.student.Student;
 import com.user.management.data.connection.ConnectionHelper;
 import com.user.management.data.employee.dao.EmployeeDao;
 
@@ -9,11 +10,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * This is the Employee Dao Impl.
+ * */
 public class EmployeeDaoImpl implements EmployeeDao {
-
+    /**
+     * This is for save employee.
+     * */
     @Override
-    public Employee saveEmployee(Employee employee) throws SQLException {
+    public Employee saveEmployee(Employee employee) {
         String insertQuery = "INSERT INTO EMPLOYEE VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
@@ -34,14 +39,19 @@ public class EmployeeDaoImpl implements EmployeeDao {
             preparedStatement.setString(15, employee.getSssNo());
             preparedStatement.setString(16, employee.getTinNo());
             preparedStatement.setString(17, employee.getPagibigNo());
-            preparedStatement.setString(18, employee.getEmployeeNo());
+            preparedStatement.setString(18, employee.getEmployeeId());
             preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return employee;
     }
+    /**
+     * This is for find employee by id.
+     * */
     @Override
-    public Employee findEmployeeById(String employeeId) throws SQLException {
-        String selectByIdQuery = "SELECT * FROM EMPLOYEE WHERE employee_no=?";
+    public Employee findEmployeeById(String employeeId) {
+        String selectByIdQuery = "SELECT * FROM EMPLOYEE WHERE employee_id=?";
         Employee employee = null;
 
         try (Connection connection = ConnectionHelper.getConnection();
@@ -66,9 +76,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     employee.setSssNo(resultSet.getString("sss_no"));
                     employee.setTinNo(resultSet.getString("tin_no"));
                     employee.setPagibigNo(resultSet.getString("pagibig_no"));
-                    employee.setEmployeeNo(resultSet.getString("employee_no"));
+                    employee.setEmployeeId(resultSet.getString("employee_id"));
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return employee;
     }
