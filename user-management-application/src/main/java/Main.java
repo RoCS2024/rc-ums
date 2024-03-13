@@ -83,6 +83,7 @@ public class Main {
             System.out.println("----- User List -----");
             for (User user : userList) {
                 System.out.println("User ID: " + user.getId());
+                System.out.println("Login: " + user.getId());
                 System.out.println("Username: " + user.getUsername());
                 System.out.println("Entity ID: " + user.getEntity_id());
                 System.out.println("Date Created: " + user.getDate_created());
@@ -108,11 +109,11 @@ public class Main {
                 System.out.println("Login Successful");
                 return true;
             } else {
-                System.out.println("Login failed. Please check your username and password.");
+                System.out.println("Login failed. Double check you're username and password.");
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Error fetching login details. Please try again.");
+            System.out.println("Error details. Try and try again.");
             return false;
         }
     }
@@ -123,8 +124,36 @@ public class Main {
         try {
             System.out.print("Enter Username: ");
             String username = scanner.next();
+                         if (userFacade.findUserByUsernameAndPassword(username) != null) {
+                            System.out.println("It is already used. Please choose a another one.");
+                            return;
+                        }
+
+                        // Validate username length and allowed characters
+                        if (!username.matches("^[a-zA-Z0-9_]{3,20}$")) {
+                            System.out.println("Username must be between 3 to 20 long only and contain alphanumeric and underscores.");
+                            return;
+                        }
+
+              System.out.print("Enter Email Address: ");
+                        String email = scanner.next();
+
+                        // Validate email format
+                        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                            System.out.println("Wromg Format. Enter a valid email address.");
+                            return;
+                        }
+
+               if (userFacade.findUserByEmail(email) != null) {
+                            System.out.println("Email address is already exists. Use different address.");
+                           return;
+                        }
             System.out.print("Enter Password: ");
             String password = scanner.next();
+                        if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")) {
+                            System.out.println("The minimum length of a password is eight characters, with at least one digit, one capital letter, one lowercase letter, a unique character, and no whitespaces..");
+                            return;
+                       }
             User currentUser = userFacade.findUserByUsernameAndPassword(username,password);
             if(currentUser == null){
                 int check = 0;
@@ -212,7 +241,7 @@ public class Main {
                             System.out.println("Enter Weight: ");
                             double weight = scanner.nextDouble();
                             System.out.println("Enter Email: ");
-                            String email = scanner.next();
+                            String Email = scanner.next();
                             System.out.println("Enter SSS No: ");
                             String sssNo = scanner.next();
                             System.out.println("Enter Tin Number: ");

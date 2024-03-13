@@ -82,4 +82,8 @@ public class User {
     public void setDate_modified(Timestamp date_modified) {
         this.date_modified = date_modified;
     }
+
+    public Object getEmail() {
+        return null;
+    }
 }

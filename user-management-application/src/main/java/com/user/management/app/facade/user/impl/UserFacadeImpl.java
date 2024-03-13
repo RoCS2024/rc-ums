@@ -5,12 +5,14 @@ import com.user.management.app.model.user.User;
 import com.user.management.data.user.dao.UserDao;
 import com.user.management.data.user.dao.impl.UserDaoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 /**
  * This is the User Facade Impl.
  * */
 public class UserFacadeImpl implements UserFacade {
     private final UserDao userDao;
+    private User[] userList;
 
     public UserFacadeImpl(UserDao userDao) {
         this.userDao = userDao;
@@ -20,9 +22,20 @@ public class UserFacadeImpl implements UserFacade {
         this.userDao = new UserDaoImpl();
     }
 
+    public void UserFacade() {this.userList = new ArrayList<>().toArray(new User[0]);}
+
     @Override
     public User findUserByUsernameAndPassword(String username, String password) {
         return userDao.findUserByUsernameAndPassword(username, password);
+    }
+
+    public User findUserByEmail(String email) {
+        for (User user : userList) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        return null; // User not found
     }
     @Override
     public User saveUser(User user) {
