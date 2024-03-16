@@ -104,7 +104,7 @@ public class Main {
             String username = scanner.next();
             System.out.print("Enter Password: ");
             String password = scanner.next();
-            User currentUser = userFacade.findUserByUsernameAndPassword(username, password);
+            User currentUser = userFacade.findUserByUsername(username);
             if (currentUser != null && password.equals(currentUser.getPassword())) {
                 System.out.println("Login Successful");
                 return true;
@@ -113,7 +113,7 @@ public class Main {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Error details. Try and try again.");
+            System.out.println("Error details. Please try again.");
             return false;
         }
     }
@@ -124,7 +124,7 @@ public class Main {
         try {
             System.out.print("Enter Username: ");
             String username = scanner.next();
-                         if (userFacade.findUserByUsernameAndPassword(username) != null) {
+                         if (userFacade.findUserByUsername(username) != null) {
                             System.out.println("It is already used. Please choose a another one.");
                             return;
                         }
@@ -135,26 +135,15 @@ public class Main {
                             return;
                         }
 
-              System.out.print("Enter Email Address: ");
-                        String email = scanner.next();
 
-                        // Validate email format
-                        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-                            System.out.println("Wromg Format. Enter a valid email address.");
-                            return;
-                        }
 
-               if (userFacade.findUserByEmail(email) != null) {
-                            System.out.println("Email address is already exists. Use different address.");
-                           return;
-                        }
             System.out.print("Enter Password: ");
             String password = scanner.next();
                         if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")) {
                             System.out.println("The minimum length of a password is eight characters, with at least one digit, one capital letter, one lowercase letter, a unique character, and no whitespaces..");
                             return;
                        }
-            User currentUser = userFacade.findUserByUsernameAndPassword(username,password);
+            User currentUser = userFacade.findUserByUsername(username);
             if(currentUser == null){
                 int check = 0;
                 do {
@@ -191,6 +180,16 @@ public class Main {
                             String studentReligion = scanner.next();
                             System.out.println("Enter Email Address: ");
                             String studentEmail = scanner.next();
+                            while (!studentEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                                System.out.println("Wrong Format. Enter a valid email address.");
+                                System.out.println("Enter Email: ");
+                                studentEmail = scanner.next();
+                            }
+                            while (studentFacade.findStudentByEmail(studentEmail) != null) {
+                                System.out.println("Email address is already exists. Use different email address.");
+                                System.out.println("Enter Email: ");
+                                studentEmail = scanner.next();
+                            }
                             System.out.println("Enter Address: ");
                             String studentAddress = scanner.next();
                             System.out.println("Enter Contact No: ");
@@ -241,7 +240,17 @@ public class Main {
                             System.out.println("Enter Weight: ");
                             double weight = scanner.nextDouble();
                             System.out.println("Enter Email: ");
-                            String Email = scanner.next();
+                            String email = scanner.next();
+                            while (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                                System.out.println("Wrong Format. Enter a valid email address.");
+                                System.out.println("Enter Email: ");
+                                email = scanner.next();
+                            }
+                            while (employeeFacade.findEmployeeByEmail(email) != null) {
+                                System.out.println("Email address is already exists. Use different email address.");
+                                System.out.println("Enter Email: ");
+                                email = scanner.next();
+                            }
                             System.out.println("Enter SSS No: ");
                             String sssNo = scanner.next();
                             System.out.println("Enter Tin Number: ");

@@ -8,7 +8,7 @@ import java.util.List;
  * This is the User Facade.
  * */
 public interface UserFacade {
-    User findUserByUsernameAndPassword(String username, String password);
+    User findUserByUsername(String username);
     User saveUser(User user) throws SQLException;
 
 
@@ -23,5 +23,4 @@ public interface UserFacade {
     User getUsername(String username);
     User updatePassword(User user);
 
-    boolean findUserByEmail(String email);
 }

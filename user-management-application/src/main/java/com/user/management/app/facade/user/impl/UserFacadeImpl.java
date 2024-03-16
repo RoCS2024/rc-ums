@@ -25,18 +25,11 @@ public class UserFacadeImpl implements UserFacade {
     public void UserFacade() {this.userList = new ArrayList<>().toArray(new User[0]);}
 
     @Override
-    public User findUserByUsernameAndPassword(String username, String password) {
-        return userDao.findUserByUsernameAndPassword(username, password);
+    public User findUserByUsername(String username) {
+        return userDao.findUserByUsername(username);
     }
 
-    public User findUserByEmail(String email) {
-        for (User user : userList) {
-            if (user.getEmail().equals(email)) {
-                return user;
-            }
-        }
-        return null; // User not found
-    }
+
     @Override
     public User saveUser(User user) {
         return userDao.saveUser(user);

@@ -77,5 +77,34 @@ public class StudentDaoImpl implements StudentDao {
         }
         return student;
     }
+
+    @Override
+    public Student findStudentByEmail(String studentEmail){
+        String selectByIdQuery = "SELECT * FROM STUDENT WHERE student_email=?";
+        Student student = null;
+
+        try (Connection connection = ConnectionHelper.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
+            preparedStatement.setString(1, studentEmail);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    student = new Student();
+                    student.setStudentId(resultSet.getString("student_id"));
+                    student.setLastName(resultSet.getString("last_name"));
+                    student.setFirstName(resultSet.getString("first_name"));
+                    student.setMiddleName(resultSet.getString("middle_name"));
+                    student.setSex(resultSet.getString("sex"));
+                    student.setBirthday(resultSet.getString("birthday"));
+                    student.setReligion(resultSet.getString("religion"));
+                    student.setEmail(resultSet.getString("email"));
+                    student.setAddress(resultSet.getString("address"));
+                    student.setContactNumber(resultSet.getString("contact_number"));
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return student;
+    }
 }
 
