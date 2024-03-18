@@ -16,11 +16,14 @@ public class UserDaoImpl implements UserDao {
      * */
     @Override
     public User findUserByUsernameAndPassword(String username, String password)  {
+
         String selectByIdQuery = "SELECT * FROM login WHERE username=?";
         User User = null;
+
         try (Connection connection = ConnectionHelper.getConnection();
                   PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
                 preparedStatement.setString(1, username);
+
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         User = new User();
@@ -42,7 +45,9 @@ public class UserDaoImpl implements UserDao {
      * */
     @Override
     public User saveUser(User User)  {
+
         String insertQuery = "INSERT INTO login (ID, USERNAME, PASSWORD, ENTITY_ID, DATE_CREATED, DATE_MODIFIED) VALUES (?, ?, ?, ?, ?, ?)";
+
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
             long MaxId = getMaxUserId();
@@ -64,7 +69,9 @@ public class UserDaoImpl implements UserDao {
      * */
     @Override
     public long getMaxUserId(){
+
         String selectMaxIdQuery = "SELECT MAX(ID) AS MAX_ID FROM login";
+
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectMaxIdQuery);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -81,6 +88,7 @@ public class UserDaoImpl implements UserDao {
      * */
     @Override
     public List<User> getAllUsers(){
+
         List<User> userList = new ArrayList<>();
         String query = "SELECT * FROM LOGIN";
 
@@ -109,10 +117,13 @@ public class UserDaoImpl implements UserDao {
      * */
     @Override
     public User getUserById(int id) {
+
         String sql = "SELECT * FROM login WHERE id = ?";
+
         try (Connection con = ConnectionHelper.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     int idNum = rs.getInt("id");
@@ -138,6 +149,7 @@ public class UserDaoImpl implements UserDao {
     public boolean updateUser() {
         String sql = "UPDATE login SET username = ?, password = ?, entity_id = ?, date_modified = ? WHERE id = ?";
         User user = new User();
+
         try (Connection con = ConnectionHelper.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, user.getUsername());
@@ -164,7 +176,9 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
             preparedStatement.setString(1, username);
+
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
                 if (resultSet.next()) {
                     login = new User();
                     login.setId((int) resultSet.getLong("id"));
