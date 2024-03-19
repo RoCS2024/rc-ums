@@ -9,4 +9,5 @@ import java.sql.SQLException;
 public interface EmployeeFacade {
     Employee saveEmployee(Employee employee);
     Employee findEmployeeById(String employeeId);
+    Employee findEmployeeByEmail(String email);
 }

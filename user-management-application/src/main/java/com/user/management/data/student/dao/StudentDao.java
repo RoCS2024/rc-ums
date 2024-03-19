@@ -10,4 +10,5 @@ import java.sql.SQLException;
 public interface StudentDao {
     Student saveStudent(Student student);
     Student findStudentById(String studentId);
+    Student findStudentByEmail(String studentEmail);
 }

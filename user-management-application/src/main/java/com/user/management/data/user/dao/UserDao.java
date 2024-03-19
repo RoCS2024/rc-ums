@@ -7,7 +7,7 @@ import java.util.List;
  * This is the User Dao.
  * */
 public interface UserDao {
-    User findUserByUsernameAndPassword(String username, String password);
+    User findUserByUsername(String username);
     User saveUser(User user);
     long getMaxUserId();
     /**

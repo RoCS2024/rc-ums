@@ -88,4 +88,40 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
         return employee;
     }
+
+    @Override
+    public Employee findEmployeeByEmail(String email) {
+        String selectByIdQuery = "SELECT * FROM EMPLOYEE WHERE email=?";
+        Employee employee = null;
+
+        try (Connection connection = ConnectionHelper.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    employee = new Employee();
+                    employee.setLastName(resultSet.getString("last_name"));
+                    employee.setFirstName(resultSet.getString("first_name"));
+                    employee.setMiddleName(resultSet.getString("middle_name"));
+                    employee.setPositionInRc(resultSet.getString("position_in_rc"));
+                    employee.setBirthdate(resultSet.getString("birthdate"));
+                    employee.setBirthplace(resultSet.getString("birthplace"));
+                    employee.setSex(resultSet.getString("sex"));
+                    employee.setCivilStatus(resultSet.getString("civil_status"));
+                    employee.setCitizenship(resultSet.getString("citizenship"));
+                    employee.setReligion(resultSet.getString("religion"));
+                    employee.setHeight(resultSet.getDouble("height"));
+                    employee.setWeight(resultSet.getDouble("weight"));
+                    employee.setEmail(resultSet.getString("email"));
+                    employee.setSssNo(resultSet.getString("sss_no"));
+                    employee.setTinNo(resultSet.getString("tin_no"));
+                    employee.setPagibigNo(resultSet.getString("pagibig_no"));
+                    employee.setEmployeeId(resultSet.getString("employee_id"));
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return employee;
+    }
 }

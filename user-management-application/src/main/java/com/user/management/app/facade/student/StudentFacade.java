@@ -9,6 +9,8 @@ import java.sql.SQLException;
  * */
 public interface StudentFacade {
     Student findStudentById(String studentId);
+    Student findStudentByEmail(String studentEmail);
 
     Student saveStudent(Student student);
+
 }

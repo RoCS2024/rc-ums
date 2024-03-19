@@ -15,7 +15,6 @@ public class UserDaoImpl implements UserDao {
      * This is for findUserByUsernameAndPassword.
      * */
     @Override
-    public User findUserByUsernameAndPassword(String username, String password)  {
 
         String selectByIdQuery = "SELECT * FROM login WHERE username=?";
         User User = null;

@@ -26,6 +26,11 @@ public class StudentFacadeImpl implements StudentFacade {
     }
 
     @Override
+    public Student findStudentByEmail(String studentEmail) {
+        return studentDao.findStudentByEmail(studentEmail);
+    }
+
+    @Override
     public Student saveStudent(Student student) {
         return studentDao.saveStudent(student);
     }
