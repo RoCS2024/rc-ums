@@ -35,9 +35,7 @@ public class User {
      * This is the User getter and setter.
      * */
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;

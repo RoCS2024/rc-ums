@@ -384,12 +384,17 @@ public class Main {
                 if(enteredPassword.equals(existingUser.getPassword())) {
 
                     System.out.print("Enter new password: ");
-                    String newPasswordd = scanner.next();
-                    System.out.print("Confirm new password: ");
                     String newPassword = scanner.next();
 
-                    if(newPasswordd.equals(newPassword)) {
-                        System.out.println("password");
+                    if (newPassword.equals(enteredPassword)) {
+                        System.out.println("New password is the same with the current password. Please try again.");
+                        return;
+                    }
+
+                    System.out.print("Confirm new password: ");
+                    String confirmPassword = scanner.next();
+
+                    if(newPassword.equals(confirmPassword)) {
                         existingUser.setPassword(newPassword);
                         Timestamp currentTimestamp = new Timestamp(new Date().getTime());
                         existingUser.setDate_modified(currentTimestamp);
@@ -397,14 +402,21 @@ public class Main {
 
                         System.out.println("Password updated successfully.");
 
-                    } else System.out.println("Password does not match.");
+                    } else {
+                        System.out.println("Password does not match.");
+                    }
 
-                } else System.out.println("Incorrect password. Password update failed.");
+                } else {
+                    System.out.println("Incorrect password. Password update failed.");
+                }
 
-            } else System.out.println(username + " not found. Please input a valid username.");
+            } else {
+                System.out.println(username + " not found. Please input a valid username.");
+            }
 
         } catch (Exception e) {
             System.out.println("Error updating password. Please try again.");
         }
     }
+
 }

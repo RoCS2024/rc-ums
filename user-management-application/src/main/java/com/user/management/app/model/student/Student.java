@@ -102,28 +102,32 @@ public class Student {
     }
 
     public static boolean isValidBirthday(String birthday) {
-        String[] parts = birthday.split("/");
-        if (parts.length != 3)
-            return false;
-
-        int month, day, year;
         try {
-            month = Integer.parseInt(parts[0]);
-            day = Integer.parseInt(parts[1]);
-            year = Integer.parseInt(parts[2]);
-        } catch (NumberFormatException e) {
-            return false;
+            String[] parts = birthday.split("/");
+            if (parts.length != 3)
+                return false;
+
+            int month, day, year;
+            try {
+                month = Integer.parseInt(parts[0]);
+                day = Integer.parseInt(parts[1]);
+                year = Integer.parseInt(parts[2]);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+
+            if (month < 1 || month > 12)
+                return false;
+
+            if (day < 1 || day > 31)
+                return false;
+
+            if (year < 1950 || year > 2100)
+                return false;
+
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        if (month < 1 || month > 12)
-            return false;
-
-        if (day < 1 || day > 31)
-            return false;
-
-        if (year < 1950 || year > 2100)
-            return false;
-
-        return true;
     }
 }

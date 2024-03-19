@@ -18,6 +18,7 @@ public class StudentDaoImpl implements StudentDao {
      * */
         @Override
         public Student saveStudent(Student student){
+
             String insertQuery = "INSERT INTO STUDENT VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             try (Connection connection = ConnectionHelper.getConnection();
@@ -43,7 +44,6 @@ public class StudentDaoImpl implements StudentDao {
                 System.out.println("Error inserting student: " + e.getMessage());
                 throw new RuntimeException(e); // rethrow the exception to indicate failure
             }
-
             return student;
         }
     /**
@@ -51,12 +51,14 @@ public class StudentDaoImpl implements StudentDao {
      * */
     @Override
     public Student findStudentById(String studentId){
+
         String selectByIdQuery = "SELECT * FROM STUDENT WHERE student_id=?";
         Student student = null;
 
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
             preparedStatement.setString(1, studentId);
+
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     student = new Student();

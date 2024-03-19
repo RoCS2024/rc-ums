@@ -19,7 +19,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
      * */
     @Override
     public Employee saveEmployee(Employee employee) {
+
         String insertQuery = "INSERT INTO EMPLOYEE VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
             preparedStatement.setString(1, employee.getLastName());
@@ -51,12 +53,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
      * */
     @Override
     public Employee findEmployeeById(String employeeId) {
+
         String selectByIdQuery = "SELECT * FROM EMPLOYEE WHERE employee_id=?";
         Employee employee = null;
 
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
             preparedStatement.setString(1, employeeId);
+
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     employee = new Employee();
