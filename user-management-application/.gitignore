@@ -1,7 +1,8 @@
 ### IntelliJ IDEA ###
 out/
-idea/
+.idea/
 build/
+*.iml
 doc/
 target/
 !**/src/main/**/out/

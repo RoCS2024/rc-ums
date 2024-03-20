@@ -1,5 +1,7 @@
 package com.user.management.app.facade.user.impl;
 
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import com.user.management.app.facade.user.UserFacade;
 import com.user.management.app.model.user.User;
 import com.user.management.data.user.dao.UserDao;
@@ -7,11 +9,16 @@ import com.user.management.data.user.dao.impl.UserDaoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * This is the User Facade Impl.
  * */
 public class UserFacadeImpl implements UserFacade {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(UserFacadeImpl.class);
+
     private final UserDao userDao;
+
     private User[] userList;
 
     public UserFacadeImpl(UserDao userDao) {
@@ -51,17 +58,22 @@ public class UserFacadeImpl implements UserFacade {
         try {
             User targetUser = getUserById(user.getId());
             if(targetUser == null) {
-                throw new Exception("User to update not found. ");
+                LOGGER.debug("User to update not found. ");
+
             }
             result = userDao.updateUser();
+
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            LOGGER.error("An SQL Exception occurred." + e.getMessage());
+
         }
+        LOGGER.debug("Updating user failed.");
         return result;
     }
 
     @Override
     public User getUsername(String username) {
+
         return userDao.getUsername(username);
     }
 
