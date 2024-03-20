@@ -10,8 +10,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.user.management.data.connection.ConnectionHelper.username;
-
 /**
  * This is the User Dao Impl.
  * */
