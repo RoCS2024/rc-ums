@@ -3,14 +3,21 @@ package com.user.management.data.user.dao.impl;
 import com.user.management.app.model.user.User;
 import com.user.management.data.connection.ConnectionHelper;
 import com.user.management.data.user.dao.UserDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.user.management.data.connection.ConnectionHelper.username;
+
 /**
  * This is the User Dao Impl.
  * */
 public class UserDaoImpl implements UserDao {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
     /**
      * This is for findUserByUsernameAndPassword.
      * */
@@ -35,10 +42,12 @@ public class UserDaoImpl implements UserDao {
                     }
                 }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+        LOGGER.error("An SQL Exception occurred." + e.getMessage());
         }
+       LOGGER.debug("Finding User failed.");
         return User;
     }
+
     /**
      * This is for save user.
      * */
@@ -59,8 +68,9 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setTimestamp(6, User.getDate_modified());
             preparedStatement.executeUpdate();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            LOGGER.error("An SQL Exception occurred." + e.getMessage());
         }
+        LOGGER.debug("Saving User failed.");
         return User;
     }
     /**
@@ -75,11 +85,14 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(selectMaxIdQuery);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
+                LOGGER.debug("MaxUser ID get successfully.");
                 return resultSet.getLong("MAX_ID");
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            LOGGER.error("An SQL Exception occurred." + e.getMessage());
+
         }
+        LOGGER.debug("Getting MaxUser ID failed.");
         return 0;
     }
     /**
@@ -106,9 +119,9 @@ public class UserDaoImpl implements UserDao {
                 userList.add(user);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            LOGGER.error("An SQL Exception occurred." + e.getMessage());
         }
-
+        LOGGER.debug("User database is empty.");
         return userList;
     }
     /**
@@ -125,6 +138,7 @@ public class UserDaoImpl implements UserDao {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
+                    LOGGER.debug("User retrieved successfully.");
                     int idNum = rs.getInt("id");
                     String username = rs.getString("username");
                     String password = rs.getString("password");
@@ -132,13 +146,14 @@ public class UserDaoImpl implements UserDao {
                     Timestamp date_modified = rs.getTimestamp("date_modified");
                     return new User(idNum, username, password, entity_id, null, date_modified);
                 } else {
-                    System.err.println("No user found with ID: " + id);
+                   LOGGER.error("No user found with ID: " + id);
                 }
             }
         } catch (Exception ex) {
-            System.err.println("Error retrieving user with ID " + id + ": " + ex.getMessage());
+            LOGGER.error("Error retrieving user with ID " + id + ": " + ex.getMessage());
             ex.printStackTrace();
         }
+        LOGGER.debug("User not found.");
         return null;
     }
     /**
@@ -158,8 +173,9 @@ public class UserDaoImpl implements UserDao {
             stmt.setInt(5, user.getId());
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
-        } catch (Exception ex) {
-            System.err.println("Error updating user with ID " + user.getId() + ": " + ex.getMessage());
+
+            } catch (Exception ex) {
+           LOGGER.error("Error updating user with ID " + user.getId() + ": " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
@@ -179,6 +195,7 @@ public class UserDaoImpl implements UserDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 if (resultSet.next()) {
+                    LOGGER.debug("Username get successfully.");
                     login = new User();
                     login.setId((int) resultSet.getLong("id"));
                     login.setUsername(resultSet.getString("username"));
@@ -186,8 +203,9 @@ public class UserDaoImpl implements UserDao {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            LOGGER.error("An SQL Exception occurred." + e.getMessage());
         }
+        LOGGER.debug("Getting username failed.");
         return login;
     }
     /**
@@ -206,11 +224,12 @@ public class UserDaoImpl implements UserDao {
             int affectedRows = preparedStatement.executeUpdate();
 
             if (affectedRows == 0) {
-                throw new RuntimeException("Password update failed.");
+                LOGGER.debug("Password update failed.");
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error updating password: " + e.getMessage(), e);
+            LOGGER.error("An SQL Exception occurred." + e.getMessage());
         }
+        LOGGER.debug("Updating password failed.");
         return user;
     }
 }
