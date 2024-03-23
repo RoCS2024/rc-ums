@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.integrated.user.management.data.connection","l":"ConnectionHelper"},{"p":"<Unnamed>","l":"Main"},{"p":"com.integrated.user.management.app.model","l":"User"}];updateSearchResults();
