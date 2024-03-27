@@ -1,12 +1,12 @@
-import com.user.management.app.facade.employee.Impl.EmployeeFacadeImpl;
-import com.user.management.app.facade.employee.EmployeeFacade;
-import com.user.management.app.facade.user.impl.UserFacadeImpl;
-import com.user.management.app.facade.user.UserFacade;
-import com.user.management.app.facade.student.Impl.StudentFacadeImpl;
-import com.user.management.app.facade.student.StudentFacade;
-import com.user.management.app.model.employee.Employee;
-import com.user.management.app.model.user.User;
-import com.user.management.app.model.student.Student;
+import com.user.management.appl.facade.employee.Impl.EmployeeFacadeImpl;
+import com.user.management.appl.facade.employee.EmployeeFacade;
+import com.user.management.appl.facade.user.impl.UserFacadeImpl;
+import com.user.management.appl.facade.user.UserFacade;
+import com.user.management.appl.facade.student.Impl.StudentFacadeImpl;
+import com.user.management.appl.facade.student.StudentFacade;
+import com.user.management.appl.model.employee.Employee;
+import com.user.management.appl.model.user.User;
+import com.user.management.appl.model.student.Student;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;

@@ -1,6 +1,6 @@
 package com.user.management.data.user.dao;
 
-import com.user.management.app.model.user.User;
+import com.user.management.appl.model.user.User;
 
 import java.util.List;
 /**
