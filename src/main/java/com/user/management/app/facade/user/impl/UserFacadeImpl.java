@@ -1,11 +1,11 @@
 package com.user.management.app.facade.user.impl;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import com.user.management.app.facade.user.UserFacade;
 import com.user.management.app.model.user.User;
 import com.user.management.data.user.dao.UserDao;
 import com.user.management.data.user.dao.impl.UserDaoImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;

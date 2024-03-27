@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class ConnectionHelper {
 
 
-    public static final String URL = "jdbc:oracle:thin:@localhost:1521:rcian";
+    public static final String URL = "jdbc:oracle:thin:@localhost:1521:rogate";
     public static final String ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
     public static final String username = "system";
     public static final String password = "Changeme0";
