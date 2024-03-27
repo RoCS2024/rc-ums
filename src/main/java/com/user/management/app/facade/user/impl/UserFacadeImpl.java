@@ -81,4 +81,9 @@ public class UserFacadeImpl implements UserFacade {
     public User updatePassword(User user) {
         return userDao.updatePassword(user);
     }
+
+    @Override
+    public User forgotPassword(User user) {
+        return userDao.updatePassword(user);
+    }
 }

@@ -251,4 +251,37 @@ class UserDaoImplTest {
 //        assertEquals(0, loginList.size());
 //        assertEquals(Optional.empty(), searchUsername);
 //    }
+
+//@Test
+//public void testForgotPassword(String username) {
+   //User user = new User();
+   //user.setId(1);
+   //user.setUsername("penggu");
+
+   //UserDao userDao = Mockito.mock(UserDao.class);
+
+   //Mockito.when(userDao.forgotPassword(user)).thenAnswer(new Answer<Boolean>() {
+      //@Override
+     // public Boolean answer(InvocationOnMock invocation) throws Throwable {
+         //Object[] arguments = invocation.getArguments();
+        // if (arguments != null && arguments.length > 0 && arguments[0] != null) {
+            //User userToUpdate = (User) arguments[0];
+            //if (userToUpdate.getId() == 1) {
+               // Assuming updatePassword just returns true if the user ID is 1
+              // return true;
+           // }
+        // }
+        // return false;
+     // }
+  // });
+
+   //User updateResult = userDao.updatePassword(user);
+   //List<User> loginList = (List<User>) userDao.getUsername(username);
+  // Optional<User> searchLogin = loginList.stream().filter(c -> c.getId() == 1).findAny();
+  // User expectedCustomer = searchLogin.get();
+
+   //assertEquals(true, updateResult);
+  // assertEquals(1, loginList.size());
+   //assertEquals("Joshua", expectedCustomer.getUsername());
+}
    }

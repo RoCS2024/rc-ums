@@ -22,5 +22,5 @@ public interface UserFacade {
     boolean updateUser(User user);
     User getUsername(String username);
     User updatePassword(User user);
-
+    User forgotPassword(User user);
 }

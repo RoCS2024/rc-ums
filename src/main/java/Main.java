@@ -420,4 +420,63 @@ public class Main {
         }
     }
 
+    private static void forgotPassword() {
+        try {
+            System.out.print("Enter username: ");
+            String username = scanner.next();
+
+            User existingUser = userFacade.getUsername(username);
+
+            if (existingUser != null) {
+
+                String temporaryPassword = temporaryPassword();
+                System.out.println("Enter the OTP to reset your password: " + temporaryPassword);
+                System.out.println("The OTP has been sent on your device");
+                System.out.println("Please Enter the OTP: ");
+                String enteredPassword = scanner.next();
+
+                if(enteredPassword.equals(temporaryPassword)){
+
+                    System.out.print("Enter new password: ");
+                    String newPassword = scanner.next();
+
+                    if (newPassword.equals(enteredPassword)) {
+                        System.out.println("New password is the same with the current password. Please try again.");
+                        return;
+                    }
+
+                    System.out.print("Confirm new password: ");
+                    String confirmPassword = scanner.next();
+
+                    if(newPassword.equals(confirmPassword)) {
+                        existingUser.setPassword(newPassword);
+                        Timestamp currentTimestamp = new Timestamp(new Date().getTime());
+                        existingUser.setDate_modified(currentTimestamp);
+                        userFacade.updatePassword(existingUser);
+
+                        System.out.println("Password updated successfully.");
+
+                    } else {
+                        System.out.println("Password does not match.");
+                    }
+
+                } else {
+                    System.out.println("Incorrect password. Password update failed.");
+                }
+
+
+            } else {
+                System.out.println(username + " not found. Please input a valid username.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error updating password. Please try again.");
+        }
+    }
+
+    private static String temporaryPassword(){
+        return "070719";
+    }
+
+
 }

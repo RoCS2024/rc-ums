@@ -233,4 +233,25 @@ public class UserDaoImpl implements UserDao {
         LOGGER.debug("Updating password failed.");
         return user;
     }
+    @Override
+    public User forgotPassword(User user) {
+        String updateQuery = "UPDATE login SET password=?, date_modified=? WHERE username=?";
+
+        try (Connection connection = ConnectionHelper.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+            preparedStatement.setString(1, user.getPassword());
+            preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setString(3, user.getUsername());
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                LOGGER.debug("Password update failed.");
+            }
+        } catch (Exception e) {
+            LOGGER.error("An SQL Exception occurred." + e.getMessage());
+        }
+        LOGGER.debug("Updating password failed.");
+        return user;
+    }
 }

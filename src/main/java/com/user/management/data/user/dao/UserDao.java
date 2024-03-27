@@ -19,5 +19,5 @@ public interface UserDao {
     boolean updateUser();
     User getUsername(String username);
     User updatePassword(User user);
-
+    User forgotPassword(User user);
 }

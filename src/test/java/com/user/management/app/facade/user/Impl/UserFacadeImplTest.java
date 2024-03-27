@@ -153,4 +153,18 @@ class UserFacadeImplTest {
 
 //        assertEquals(testLogin, result);
 //    }
+
+   // @Test
+   // public void testForgotPassword(User user) {
+
+        //User testLogin = new User();
+        //testLogin.setUsername("testuser");
+       // testLogin.setPassword("newpassword");
+
+       // when(userDao.updatePassword(user)).thenReturn(testLogin);
+
+       // User result = userFacade.updatePassword(testLogin);
+
+       // assertEquals(testLogin, result);
+    }
 }
