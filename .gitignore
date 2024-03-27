@@ -2,6 +2,7 @@
 out/
 .idea/
 build/
+logs/
 *.iml
 doc/
 target/
