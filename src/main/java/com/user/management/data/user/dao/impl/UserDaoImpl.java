@@ -1,6 +1,6 @@
 package com.user.management.data.user.dao.impl;
 
-import com.user.management.app.model.user.User;
+import com.user.management.appl.model.user.User;
 import com.user.management.data.connection.ConnectionHelper;
 import com.user.management.data.user.dao.UserDao;
 import org.slf4j.Logger;

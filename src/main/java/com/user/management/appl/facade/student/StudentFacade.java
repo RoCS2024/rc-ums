@@ -1,14 +1,16 @@
-package com.user.management.data.student.dao;
+package com.user.management.appl.facade.student;
 
 
 import com.user.management.appl.model.student.Student;
 
 import java.sql.SQLException;
 /**
- * This is the Student Dao.
+ * This is the Student Facade.
  * */
-public interface StudentDao {
-    Student saveStudent(Student student);
+public interface StudentFacade {
     Student findStudentById(String studentId);
     Student findStudentByEmail(String studentEmail);
+
+    Student saveStudent(Student student);
+
 }

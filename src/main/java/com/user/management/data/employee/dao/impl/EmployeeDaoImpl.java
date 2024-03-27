@@ -1,8 +1,7 @@
 package com.user.management.data.employee.dao.impl;
 
 
-import com.user.management.app.model.employee.Employee;
-import com.user.management.app.model.student.Student;
+import com.user.management.appl.model.employee.Employee;
 import com.user.management.data.connection.ConnectionHelper;
 import com.user.management.data.employee.dao.EmployeeDao;
 
