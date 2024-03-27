@@ -6,7 +6,10 @@ import com.user.management.data.user.dao.UserDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +23,7 @@ public class UserDaoImpl implements UserDao {
      * This is for findUserByUsernameAndPassword.
      * */
     @Override
-
+    public User findUserByUsername(String username){
         String selectByIdQuery = "SELECT * FROM login WHERE username=?";
         User User = null;
 
