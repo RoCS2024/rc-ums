@@ -177,7 +177,8 @@ public class Main {
                                 studentBirthday = scanner.next();
                             }
                             System.out.println("Enter Religion: ");
-                            String studentReligion = scanner.next();
+                            String studentReligion = scanner.nextLine();
+                            studentReligion = scanner.nextLine();
                             System.out.println("Enter Email Address: ");
                             String studentEmail = scanner.next();
                             while (!studentEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
