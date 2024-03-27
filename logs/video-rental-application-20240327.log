@@ -1,4 +1,0 @@
-2024-03-27 19:11:10.843 [main] ERROR com.user.management.data.user.dao.impl.UserDaoImpl - An SQL Exception occurred.Error connecting to the database
-2024-03-27 19:11:26.596 [main] ERROR com.user.management.data.user.dao.impl.UserDaoImpl - An SQL Exception occurred.Error connecting to the database
-2024-03-27 19:11:38.373 [main] ERROR com.user.management.data.user.dao.impl.UserDaoImpl - An SQL Exception occurred.Error connecting to the database
-2024-03-27 20:14:04.725 [main] ERROR com.user.management.data.user.dao.impl.UserDaoImpl - An SQL Exception occurred.Error connecting to the database
