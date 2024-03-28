@@ -82,7 +82,7 @@
                  sourcepath="${src.dir}"
                  destdir="${doc.dir}"
                  version="${version}"
-                 windowtitle="Prefect Office Record Management Application Documentation">
+                 windowtitle="User Management Application Documentation">
             <fileset dir="."></fileset>
             <doctitle><![CDATA[= Test Documentation =]]></doctitle>
             <bottom>
