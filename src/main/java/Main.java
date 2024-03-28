@@ -159,7 +159,7 @@ public class Main {
                             while (studentFacade.findStudentById(studentId) != null) {
                                 System.out.println("Student Id Already Exist!");
                                 System.out.println("Enter a new Student Id: ");
-                                studentId = scanner.nextLine();
+                                studentId = scanner.next();
                             }
                             scanner.nextLine();
                             System.out.println("Enter Last Name: ");
