@@ -23,4 +23,6 @@ public interface UserFacade {
     User getUsername(String username);
     User updatePassword(User user);
 
+    boolean forgotPassword(String username, String securityQuestionAnswer, String newPassword);
+
 }

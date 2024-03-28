@@ -20,4 +20,7 @@ public interface UserDao {
     User getUsername(String username);
     User updatePassword(User user);
 
+    String getPasswordByUsername(String username);
+    String forgotPassword(String username, String newPassword);
+
 }

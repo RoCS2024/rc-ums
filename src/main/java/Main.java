@@ -419,5 +419,52 @@ public class Main {
             System.out.println("Error updating password. Please try again.");
         }
     }
+    private static void forgotPassword() {
+        try {
+            System.out.print("Enter username: ");
+            String username = scanner.next();
+
+            User existingUser = userFacade.getUsername(username);
+
+            if (existingUser != null) {
+
+                System.out.println("What is your childhood nickname?: ");
+                System.out.println("Please Enter the Answer: ");
+                String questionAnswer = scanner.next();
+
+                if(questionAnswer.equals(securityQuestionAnswer())){
+
+                    System.out.print("Enter new password: ");
+                    String newPassword = scanner.next();
+
+                    if (newPassword.equals(existingUser.getPassword())) {
+                        System.out.println("New password is the same with the current password. Please try again.");
+                        return;
+                    }
+
+                    boolean passwordResetSuccess = userFacade.forgotPassword(username,securityQuestionAnswer(),newPassword);
+                    if (passwordResetSuccess){
+                        System.out.println("Your password had been successfully reset!");
+                    } else{
+                        System.out.println("Reset Failed. Check username and password, then try again!");
+                    }
+
+                } else {
+                    System.out.println("Incorrect Answer. Password update failed.");
+                }
+
+
+            } else {
+                System.out.println(username + " not found. Please input a valid username.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error updating password. Please try again.");
+        }
+    }
+
+    private static String securityQuestionAnswer(){
+        return "markian";
+    }
 
 }
