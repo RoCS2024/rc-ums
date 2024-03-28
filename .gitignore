@@ -6,6 +6,7 @@ logs/
 *.iml
 doc/
 target/
+lib/
 !**/src/main/**/out/
 !**/src/test/**/out/
 

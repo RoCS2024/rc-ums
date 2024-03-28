@@ -76,7 +76,7 @@ public class UserDaoImpl implements UserDao {
     }
     /**
      * This is for getMaxUserId.
-     * */
+     */
     @Override
     public long getMaxUserId(){
 

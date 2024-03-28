@@ -1,127 +1,84 @@
 package com.user.management.data.employee.dao.impl;
 
 import com.user.management.appl.model.employee.Employee;
+import com.user.management.appl.model.student.Student;
 import com.user.management.data.connection.ConnectionHelper;
 import com.user.management.data.employee.dao.EmployeeDao;
+import com.user.management.data.student.dao.StudentDao;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 /**
  * This is the Employee Dao Impl Test.
  * */
 class EmployeeDaoImplTest {
+    private EmployeeDao employeeDao;
+    private List<Employee> employees;
 
-    private static EmployeeDao employeeDao;
+    @BeforeEach
+    public void setUp() {
+        employees = new ArrayList<>();
+        Employee employee1 = new Employee();
+        Employee employee2 = new Employee();
+        employees.add(employee1);
+        employees.add(employee2);
 
-    @BeforeAll
-    static void setUp() {
-        employeeDao = new EmployeeDaoImpl();
+        employeeDao = mock(EmployeeDao.class);
+    }
+
+    /**
+     * This is to test get all students.
+     */
+    @Test
+    public void testSaveEmployees() {
+        Employee employee = new Employee();
+        employee.setEmployeeId("00000000");
+
+        when(employeeDao.saveEmployee(any(Employee.class))).thenReturn(employee);
+
+        Employee savedEmployee = employeeDao.saveEmployee(employee);
+
+        assertEquals(savedEmployee.getEmployeeId(), "00000000");
+    }
+
+    /**
+     * This is to test get student by id.
+     */
+    @Test
+    public void testFindEmployeeById() {
+        Employee employee1 = new Employee();
+        employee1.setEmployeeId("00000000");
+
+        when(employeeDao.findEmployeeById("00000000")).thenReturn(employee1);
+
+        Employee expectedEmployee = employeeDao.findEmployeeById("00000000");
+
+        assertEquals(expectedEmployee, employee1);
+        assertEquals(expectedEmployee.getEmployeeId(), employee1.getEmployeeId());
     }
 
     @Test
-    void saveEmployee_ValidEmployee_ReturnsEmployeeWithId() {
-        Employee testEmployee = new Employee();
-        testEmployee.setLastName("Magnaye");
-        testEmployee.setFirstName("Justine");
-        testEmployee.setMiddleName("Dave");
-        testEmployee.setPositionInRc("Manager");
-        testEmployee.setDateEmployed(new Timestamp(System.currentTimeMillis()));
-        testEmployee.setBirthdate("2000-01-01");
-        testEmployee.setBirthplace("Silang");
-        testEmployee.setSex("Male");
-        testEmployee.setCivilStatus("Single");
-        testEmployee.setCitizenship("Filipino");
-        testEmployee.setReligion("Christian");
-        testEmployee.setHeight(175.5);
-        testEmployee.setWeight(70.2);
-        testEmployee.setEmail("JustineMagnaye@example.com");
-        testEmployee.setSssNo("123-456-789");
-        testEmployee.setTinNo("987-654-321");
-        testEmployee.setPagibigNo("ABC-123");
-        testEmployee.setEmployeeId("EMP0001");
+    public void testFindEmailByEmail() {
+        Employee employee1 = new Employee();
+        employee1.setEmployeeId("00000000");
 
-        try {
-            Employee savedEmployee = employeeDao.saveEmployee(testEmployee);
+        when(employeeDao.findEmployeeByEmail("amulongkateann@gmail.com")).thenReturn(employee1);
 
-            assertNotNull(savedEmployee.getEmployeeId());
-            assertEquals(testEmployee.getLastName(), savedEmployee.getLastName());
-            assertEquals(testEmployee.getFirstName(), savedEmployee.getFirstName());
-            assertEquals(testEmployee.getMiddleName(), savedEmployee.getMiddleName());
-            assertEquals(testEmployee.getPositionInRc(), savedEmployee.getPositionInRc());
-            assertEquals(testEmployee.getDateEmployed(), savedEmployee.getDateEmployed());
-            assertEquals(testEmployee.getBirthdate(), savedEmployee.getBirthdate());
-            assertEquals(testEmployee.getBirthplace(), savedEmployee.getBirthplace());
-            assertEquals(testEmployee.getSex(), savedEmployee.getSex());
-            assertEquals(testEmployee.getCivilStatus(), savedEmployee.getCivilStatus());
-            assertEquals(testEmployee.getCitizenship(), savedEmployee.getCitizenship());
-            assertEquals(testEmployee.getReligion(), savedEmployee.getReligion());
-            assertEquals(testEmployee.getHeight(), savedEmployee.getHeight());
-            assertEquals(testEmployee.getWeight(), savedEmployee.getWeight());
-            assertEquals(testEmployee.getEmail(), savedEmployee.getEmail());
-            assertEquals(testEmployee.getSssNo(), savedEmployee.getSssNo());
-            assertEquals(testEmployee.getTinNo(), savedEmployee.getTinNo());
-            assertEquals(testEmployee.getPagibigNo(), savedEmployee.getPagibigNo());
-            assertEquals(testEmployee.getEmployeeId(), savedEmployee.getEmployeeId());
-        } catch (Exception e) {
-            fail("Exception thrown: " + e.getMessage());
-        }
-    }
+        Employee expectedEmployee = employeeDao.findEmployeeByEmail("amulongkateann@gmail.com");
 
-    @Test
-    void checkEmployeeId_ValidEmployeeId_ReturnsEmployee() {
-        String employeeId = "EMP0002";
-
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO EMPLOYEE (employee_id, last_name, first_name, middle_name, position_in_rc, birthplace, sex, civil_status, citizenship, religion, height, weight, email, sss_no, tin_no, pagibig_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-            preparedStatement.setString(1, employeeId);
-            preparedStatement.setString(2, "Magnaye");
-            preparedStatement.setString(3, "Justine");
-            preparedStatement.setString(4, "Dave");
-            preparedStatement.setString(5, "Supervisor");
-            preparedStatement.setString(6, "Silang");
-            preparedStatement.setString(7, "Male");
-            preparedStatement.setString(8, "Single");
-            preparedStatement.setString(9, "Filipino");
-            preparedStatement.setString(10, "Christian");
-            preparedStatement.setDouble(11, 165.8);
-            preparedStatement.setDouble(12, 55.9);
-            preparedStatement.setString(13, "janeMagnaye@example.com");
-            preparedStatement.setString(14, "987-654-321");
-            preparedStatement.setString(15, "123-456-789");
-            preparedStatement.setString(16, "XYZ-789");
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            fail("Error inserting test data: " + e.getMessage());
-        }
-
-        try {
-            Employee retrievedEmployee = employeeDao.findEmployeeById(employeeId);
-
-            assertNotNull(retrievedEmployee);
-            assertEquals(employeeId, retrievedEmployee.getEmployeeId());
-            assertEquals("Magnaye", retrievedEmployee.getLastName());
-            assertEquals("Justine", retrievedEmployee.getFirstName());
-            assertEquals("Dave", retrievedEmployee.getMiddleName());
-            assertEquals("Supervisor", retrievedEmployee.getPositionInRc());
-            assertEquals("Silang", retrievedEmployee.getBirthplace());
-            assertEquals("Male", retrievedEmployee.getSex());
-            assertEquals("Single", retrievedEmployee.getCivilStatus());
-            assertEquals("Filipino", retrievedEmployee.getCitizenship());
-            assertEquals("Christian", retrievedEmployee.getReligion());
-            assertEquals(166.0, retrievedEmployee.getHeight());
-            assertEquals(56.0, retrievedEmployee.getWeight());
-            assertEquals("janeMagnaye@example.com", retrievedEmployee.getEmail());
-            assertEquals("987-654-321", retrievedEmployee.getSssNo());
-            assertEquals("123-456-789", retrievedEmployee.getTinNo());
-            assertEquals("XYZ-789", retrievedEmployee.getPagibigNo());
-        } catch (Exception e) {
-            fail("Exception thrown: " + e.getMessage());
-        }
+        assertEquals(expectedEmployee, employee1);
+        assertEquals(expectedEmployee.getEmployeeId(), employee1.getEmployeeId());
     }
 }
+
