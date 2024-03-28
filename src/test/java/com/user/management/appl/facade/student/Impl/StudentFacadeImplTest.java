@@ -2,12 +2,14 @@ package com.user.management.appl.facade.student.Impl;
 
 import com.user.management.appl.model.student.Student;
 import com.user.management.data.student.dao.StudentDao;
+
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 /**
  * This is the Student Facade Impl Test.
  * */
@@ -54,4 +56,15 @@ class StudentFacadeImplTest {
         assertEquals(student, result, "Saved student should match input student.");
         verify(studentDao, times(1)).saveStudent(student);
     }
+
+    public void testFindStudentByEmail(){
+        Student student = new Student ();
+        student.setEmail("amulongkateann@gmail.com");
+
+        when(StudentDao.findStudentByEmail("amulongkateann@gmail.com")).thenReturn(student);
+
+        Student expectedStudent = StudentDao.findStudentByEmail("amulongkateann@gmail.com");
+
+        assertEquals(expectedStudent, student);
+        assertEquals(expectedStudent.getEmail(), student.getEmail());
 }
