@@ -429,39 +429,29 @@ public class Main {
 
             if (existingUser != null) {
 
-                String temporaryPassword = temporaryPassword();
-                System.out.println("Enter the OTP to reset your password: " + temporaryPassword);
-                System.out.println("The OTP has been sent on your device");
-                System.out.println("Please Enter the OTP: ");
-                String enteredPassword = scanner.next();
+                System.out.println("What is your childhood nickname?: ");
+                System.out.println("Please Enter the Answer: ");
+                String questionAnswer = scanner.next();
 
-                if(enteredPassword.equals(temporaryPassword)){
+                if(questionAnswer.equals(securityQuestionAnswer())){
 
                     System.out.print("Enter new password: ");
                     String newPassword = scanner.next();
 
-                    if (newPassword.equals(enteredPassword)) {
+                    if (newPassword.equals(existingUser.getPassword())) {
                         System.out.println("New password is the same with the current password. Please try again.");
                         return;
                     }
 
-                    System.out.print("Confirm new password: ");
-                    String confirmPassword = scanner.next();
-
-                    if(newPassword.equals(confirmPassword)) {
-                        existingUser.setPassword(newPassword);
-                        Timestamp currentTimestamp = new Timestamp(new Date().getTime());
-                        existingUser.setDate_modified(currentTimestamp);
-                        userFacade.updatePassword(existingUser);
-
-                        System.out.println("Password updated successfully.");
-
-                    } else {
-                        System.out.println("Password does not match.");
+                    boolean passwordResetSuccess = userFacade.forgotPassword(username,securityQuestionAnswer(),newPassword);
+                    if (passwordResetSuccess){
+                        System.out.println("Your password had been successfully reset!");
+                    } else{
+                        System.out.println("Reset Failed. Check username and password, then try again!");
                     }
 
                 } else {
-                    System.out.println("Incorrect password. Password update failed.");
+                    System.out.println("Incorrect Answer. Password update failed.");
                 }
 
 
@@ -474,9 +464,10 @@ public class Main {
         }
     }
 
-    private static String temporaryPassword(){
-        return "070719";
+    private static String securityQuestionAnswer(){
+        return "markian";
     }
+
 
 
 }

@@ -234,15 +234,37 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
     @Override
-    public User forgotPassword(User user) {
+    public String getPasswordByUsername(String username) {
+        String selectPasswordQuery = "SELECT password FROM login WHERE username=?";
+        try (Connection connection = ConnectionHelper.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectPasswordQuery)) {
+            preparedStatement.setString(1, username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    LOGGER.debug("Password get successfully.");
+                    return resultSet.getString("password");
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.error("An SQL Exception occurred." + e.getMessage());
+        }
+        LOGGER.debug("Getting username failed.");
+        return null;
+
+    }
+
+    @Override
+    public String forgotPassword(String username, String newPassword) {
         String updateQuery = "UPDATE login SET password=?, date_modified=? WHERE username=?";
 
         try (Connection connection = ConnectionHelper.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
 
-            preparedStatement.setString(1, user.getPassword());
+            preparedStatement.setString(1, newPassword);
             preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-            preparedStatement.setString(3, user.getUsername());
+            preparedStatement.setString(3, username);
             int affectedRows = preparedStatement.executeUpdate();
 
             if (affectedRows == 0) {
@@ -252,6 +274,6 @@ public class UserDaoImpl implements UserDao {
             LOGGER.error("An SQL Exception occurred." + e.getMessage());
         }
         LOGGER.debug("Updating password failed.");
-        return user;
+        return null;
     }
 }

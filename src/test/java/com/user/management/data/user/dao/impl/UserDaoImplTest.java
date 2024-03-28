@@ -283,5 +283,45 @@ class UserDaoImplTest {
    //assertEquals(true, updateResult);
   // assertEquals(1, loginList.size());
    //assertEquals("Joshua", expectedCustomer.getUsername());
-}
+   @Test
+   void testGetPasswordByUsername() {
+
+      Connection connection = mock(Connection.class);
+      PreparedStatement preparedStatement = mock(PreparedStatement.class);
+      ResultSet resultSet = mock(ResultSet.class);
+
+      try {
+
+         when(resultSet.next()).thenReturn(true);
+         when(resultSet.getString("password")).thenReturn("Rk1234567!");
+
+         UserDao userDAO = new UserDaoImpl();
+
+         String password = userDAO.getPasswordByUsername("penggu");
+
+         assertEquals("Rk1234567!", password);
+
+      } catch (Exception e) {
+         throw new RuntimeException(e);
+      }
+   }
+
+   @Test
+   void testForgotPassword() {
+      // Mock necessary objects
+      Connection connection = mock(Connection.class);
+      PreparedStatement preparedStatement = mock(PreparedStatement.class);
+
+      try {
+
+         UserDao userDAO = new UserDaoImpl();
+
+         String result = userDAO.forgotPassword("penggu", "Mr098765?");
+
+         assertNull(result);
+
+      } catch (Exception e) {
+         throw new RuntimeException(e);
+      }
+   }
    }

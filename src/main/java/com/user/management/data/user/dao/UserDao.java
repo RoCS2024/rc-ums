@@ -19,5 +19,6 @@ public interface UserDao {
     boolean updateUser();
     User getUsername(String username);
     User updatePassword(User user);
-    User forgotPassword(User user);
+    String getPasswordByUsername(String username);
+    String forgotPassword(String username, String newPassword);
 }
