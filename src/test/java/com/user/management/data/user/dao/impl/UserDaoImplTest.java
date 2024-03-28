@@ -27,7 +27,6 @@ import static org.mockito.Mockito.*;
  * This is the User Dao Impl Test.
  * */
 class UserDaoImplTest {
-
     private UserDao userDao;
     private List<User> users;
 
