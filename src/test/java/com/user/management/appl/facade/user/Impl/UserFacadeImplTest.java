@@ -1,4 +1,4 @@
-package java.com.user.management.app.facade.user.Impl;
+package com.user.management.appl.facade.user.Impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
