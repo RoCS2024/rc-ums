@@ -49,6 +49,9 @@ public class Main {
                 case 5:
                     updatePassword();
                     break;
+                case 6:
+                    forgotPassword();
+                    break;
                 case 0:
                     System.out.println("Exiting the Login System. Goodbye!");
                     break;
@@ -68,6 +71,7 @@ public class Main {
         System.out.println("3. Register user");
         System.out.println("4. Update user");
         System.out.println("5. Change password");
+        System.out.println("6. Forgot password");
         System.out.println("0. Exit");
     }
 
