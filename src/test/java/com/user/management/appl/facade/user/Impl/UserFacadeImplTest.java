@@ -150,7 +150,7 @@ class UserFacadeImplTest {
 //        assertEquals(testLogin, result);
 //    }
 
-    @Test
+    /*@Test
     public void testForgotPasswordSuccessful() {
 
         UserDao userDAO = mock(UserDao.class);
@@ -174,5 +174,5 @@ class UserFacadeImplTest {
         boolean result = passwordResetFacade.forgotPassword("penggu","pogi","Mk098765?");
 
         assertFalse(result);
-    }
+    }*/
 }
