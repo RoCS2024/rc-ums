@@ -12,7 +12,6 @@ public interface UserDao {
     long getMaxUserId();
     /**
      * Retrieves a list of all users from the database.
-     *
      */
     List<User> getAllUsers() ;
     User getUserById(int id);

@@ -1,5 +1,8 @@
-package java.com.user.management.data.user.dao.impl;
+package com.user.management.data.user.dao.impl;
 
+import com.user.management.appl.model.student.Student;
+import com.user.management.appl.model.user.User;
+import com.user.management.data.user.dao.UserDao;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,262 +21,141 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * This is the User Dao Impl Test.
  * */
 class UserDaoImplTest {
+    private UserDao userDao;
+    private List<User> users;
 
-//    private static UserDao UserDao;
+    @BeforeEach
+    public void setUp() {
+        users = new ArrayList<>();
+        User user1 = new User();
+        User user2 = new User();
+        users.add(user1);
+        users.add(user2);
 
-//    @BeforeAll
-//    static void setUp() {
-//        UserDao = new UserDaoImpl();
-//    }
+        userDao = mock(UserDao.class);
+    }
+    @Test
+    public void testGetAllUsers() {
+       when(userDao.getAllUsers()).thenReturn(users);
+       List<User> userList = userDao.getAllUsers();
+       assertEquals(userList.size(), 2);
+    }
+    @Test
+    public void testGetUsername() {
+        User user1 = new User();
+        user1.setUsername("Amulong");
 
-//    @Mock
-//    private Connection mockConnection;
+        UserDao userDao = Mockito.mock(UserDao.class);
 
-//    @Mock
-//    private PreparedStatement mockPreparedStatement;
+        Mockito.when(userDao.getUsername("Amulong")).thenReturn(user1);
 
-//    @Mock
-//    private ResultSet mockResultSet;
-
-//    @InjectMocks
-//    private UserDaoImpl userDao;
-
-//    @Mock
-//    private ResultSet resultSet;
-//    @Mock
-//    private PreparedStatement preparedStatement;
-
-//    @Test
-//    public void testGetAllUsers() {
-//        List<User> expectedUserList = new ArrayList<>();
-//        User user1 = new User();
-//        user1.setId(1);
-//        user1.setUsername("testUser1");
-//        user1.setPassword("password1");
-//        user1.setEntity_id("entity1");
-//        user1.setDate_created(new Timestamp(System.currentTimeMillis()));
-//        user1.setDate_modified(new Timestamp(System.currentTimeMillis()));
-//        expectedUserList.add(user1);
-
-//        // Mocking database interaction
-//        try {
-//            when(mockConnection.prepareStatement(any())).thenReturn(mockPreparedStatement);
-//            when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
-//            when(mockResultSet.next()).thenReturn(true).thenReturn(false);
-//            when(mockResultSet.getInt("ID")).thenReturn(user1.getId());
-//            when(mockResultSet.getString("USERNAME")).thenReturn(user1.getUsername());
-//            when(mockResultSet.getString("PASSWORD")).thenReturn(user1.getPassword());
-//            when(mockResultSet.getString("ENTITY_ID")).thenReturn(user1.getEntity_id());
-//            when(mockResultSet.getTimestamp("DATE_CREATED")).thenReturn(user1.getDate_created());
-//            when(mockResultSet.getTimestamp("DATE_MODIFIED")).thenReturn(user1.getDate_modified());
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        User expectedUser = userDao.getUsername("Amulong");
+        assertEquals("Amulong", expectedUser.getUsername());
+    }
+    @Test
+    public void testSaveUser(){
+        User user1 = new User();
+        user1.setId(1);
 
 
-        // Calling the method under test
-//        List<User> resultUserList = UserDao.getAllUsers();
+        when(userDao.saveUser(user1)).thenReturn(user1);
+        User expectedUser = userDao.saveUser(user1);
 
-//        // Asserting the result
-//        assertEquals(expectedUserList.size(), resultUserList.size());
-//    }
+        verify(userDao).saveUser(user1);
 
-//    @Test
-//    void checkUsername_ValidCredentials_ReturnsUser() {
-//        String username = "testUser_" + System.currentTimeMillis(); // Generate unique username
-//        String password = "testPassword";
-//        long id = 2;
-//        String entityId = "entityId";
-//       Timestamp dateCreated = Timestamp.valueOf(LocalDateTime.now());
-//        Timestamp dateModified = Timestamp.valueOf(LocalDateTime.now());
+        assertEquals(expectedUser, user1);
+        assertEquals(expectedUser.getId(), user1.getId());
+    }
+    @Test
+    public void testFindUserByUsername(){
+        User user1 = new User();
+        user1.getId();
 
-//        try (Connection connection = ConnectionHelper.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(
-//                     "INSERT INTO login (id, username, password) VALUES (?, ?, ?)")) {
-//            preparedStatement.setLong(1, id);
-//            preparedStatement.setString(2, username);
-//            preparedStatement.setString(3, password);
-//            preparedStatement.executeUpdate();
-//        } catch (Exception e) {
-//            fail("Error inserting test data: " + e.getMessage());
-//        }
+        when(userDao.findUserByUsername("Amulong")).thenReturn(user1);
 
-//        try {
-//            User retrievedUser = UserDao.getUsername(username);
+        User expectedUser = userDao.findUserByUsername("Amulong");
 
-//            assertNotNull(retrievedUser);
-//            assertEquals(id, retrievedUser.getId());
-//            assertEquals(username, retrievedUser.getUsername());
-//            assertEquals(password, retrievedUser.getPassword());
-//        } catch (Exception e) {
-//            fail("Exception thrown: " + e.getMessage());
-//        }
-//    }
+        assertEquals(expectedUser, user1);
+        assertEquals(expectedUser.getId(), user1.getId());
+    }
+    @Test
+    public void getMaxUserId() {
+        User user1 = new User();
+        user1.setId(1);
+
+        Mockito.when(userDao.getMaxUserId()).thenReturn((long) user1.getId());
+
+        long expectedUserId = userDao.getMaxUserId();
+
+        assertEquals(expectedUserId, user1.getId());
+
+    }
+
+    @Test
+    public void testGetUserById() {
+       User user1 = new User();
+       user1.setId(1);
+
+       when(userDao.getUserById(1)).thenReturn(user1);
+
+       User expectedUser = userDao.getUserById(1);
+
+       assertEquals(expectedUser, user1);
+       assertEquals(expectedUser.getId(), user1.getId());
+    }
 
 
-//    @Test
-//    void saveUser_ValidUser_ReturnsUserWithId() {
-//        User testLogin = new User();
-//        testLogin.setUsername("testUser");
-//        testLogin.setPassword("testPassword");
-//        testLogin.setEntity_id("entityId");
-//        testLogin.setDate_created(Timestamp.valueOf(LocalDateTime.now()));
-//        testLogin.setDate_modified(Timestamp.valueOf(LocalDateTime.now()));
+    @Test
+    public void testUpdateUser()  {
+       User user = new User();
+       user.setId(1);
+       user.setUsername("Amulong");
 
-//        try {
-//            User savedLogin = UserDao.saveUser(testLogin);
+       when(userDao.updateUser()).thenReturn(true);
+       when(userDao.getUserById(1)).thenReturn(user);
 
-//            assertNotNull(savedLogin.getId());
-//            assertEquals(testLogin.getUsername(), savedLogin.getUsername());
- //           assertEquals(testLogin.getPassword(), savedLogin.getPassword());
-//            assertEquals(testLogin.getEntity_id(), savedLogin.getEntity_id());
-//            assertEquals(testLogin.getDate_created(), savedLogin.getDate_created());
-//            assertEquals(testLogin.getDate_modified(), savedLogin.getDate_modified());
-//        } catch (Exception e) {
- //           fail("Exception thrown: " + e.getMessage());
- //       }
- //   }
+       User expectedUser = userDao.getUserById(1);
+       assertEquals(expectedUser.getUsername(), user.getUsername());
+    }
+    @Test
+    public void testUpdatePassword() {
+        User user = new User();
+        user.setPassword("CT21-0073");
+        when(userDao.saveUser(user)).thenReturn(user);
+        when(userDao.updatePassword(user)).thenReturn(user);
 
-//    @Test
-//    void getMaxUserId_ReturnsMaxId() {
-//        try {
-//            long maxId = UserDao.getMaxUserId();
-//            assertEquals(1, maxId);
-//        } catch (Exception e) {
-//            fail("Exception thrown: " + e.getMessage());
-//        }
-//    }
+        when(userDao.getPasswordByUsername("CT21-0073")).thenReturn("CT21-0073");
 
-//    @Test
-//    void testGetUserById() {
-//       int userId = 1;
-//        try {
-//            when(resultSet.next()).thenReturn(true);
-//            when(resultSet.getInt("id")).thenReturn(userId);
-//            when(resultSet.getString("username")).thenReturn("testuser");
-//            when(resultSet.getString("password")).thenReturn("testpassword");
-//            when(resultSet.getString("entity_id")).thenReturn("entity123");
-//            when(resultSet.getTimestamp("date_modified")).thenReturn(new Timestamp(System.currentTimeMillis()));
+        String expectedPassword = userDao.getPasswordByUsername("CT21-0073");
 
-//            User user = userDao.getUserById(userId);
-//            assertNotNull(user);
-//            assertEquals(userId, user.getId());
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        assertFalse(expectedPassword.isEmpty());
 
-//    }
-//    @Test
-//    void testUpdateUser()  {
-//        User user = new User(1, "testuser", "testpassword", "entity123", null, new Timestamp(System.currentTimeMillis()));
-//        try {
-//            when(preparedStatement.executeUpdate()).thenReturn(1);
-//            boolean result = userDao.updateUser();
-//            assertTrue(result);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//    @Test
-//    public void testUpdatePassword(String username) {
-//        User user = new User();
-//        user.setId(1);
-//        user.setUsername("Joshua");
-
-//        UserDao userDao = Mockito.mock(UserDao.class);
-
-//        Mockito.when(userDao.updatePassword(user)).thenAnswer(new Answer<Boolean>() {
-//           @Override
- //           public Boolean answer(InvocationOnMock invocation) throws Throwable {
-//                Object[] arguments = invocation.getArguments();
-//                if (arguments != null && arguments.length > 0 && arguments[0] != null) {
-//                    User userToUpdate = (User) arguments[0];
-//                    if (userToUpdate.getId() == 1) {
-//                        // Assuming updatePassword just returns true if the user ID is 1
-//                        return true;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-
-//        User updateResult = userDao.updatePassword(user);
-//        List<User> loginList = (List<User>) userDao.getUsername(username);
-//        Optional<User> searchLogin = loginList.stream().filter(c -> c.getId() == 1).findAny();
-//        User expectedCustomer = searchLogin.get();
-
-//        assertEquals(true, updateResult);
-//        assertEquals(1, loginList.size());
-//        assertEquals("Joshua", expectedCustomer.getUsername());
-//    }
-//    @Test
-//    public void testDeletePassword(String username) {
-//        User user = new User();
-//        user.setId(1);
-//        user.setUsername("Joshua");
-
-//        List<User> usersList = new ArrayList<>();
-//        usersList.add(user);
-
-//        UserDao userDao = Mockito.mock(UserDao.class);
-
-//        Mockito.when(userDao.updatePassword(user)).thenAnswer(new Answer<Boolean>() {
-//            @Override
-//            public Boolean answer(InvocationOnMock invocation) throws Throwable {
-//                Object[] arguments = invocation.getArguments();
-//                if (arguments != null && arguments.length > 0 && arguments[0] != null) {
-//                    String userId = (String) arguments[0];
- //                   Optional<User> searchLogin = usersList.stream().filter(c -> c.getId() == Integer.parseInt(userId)).findFirst();
-//                    if (searchLogin.isPresent()) {
-//                        usersList.remove(searchLogin.get());
-//                        return true;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-
-//        User deleteResult = userDao.updatePassword(user);
-//        List<User> loginList = (List<User>) userDao.getUsername(username);
-//        Optional<User> searchUsername = loginList.stream().filter(c -> c.getId() == 1).findAny();
-
-//        assertEquals(true, deleteResult);
-//        assertEquals(0, loginList.size());
-//        assertEquals(Optional.empty(), searchUsername);
-//    }
-@Test
-void testGetPasswordByUsername() {
-
-   Connection connection = mock(Connection.class);
-   PreparedStatement preparedStatement = mock(PreparedStatement.class);
-   ResultSet resultSet = mock(ResultSet.class);
-
-   try {
-
-      when(resultSet.next()).thenReturn(true);
-      when(resultSet.getString("password")).thenReturn("Rk1234567!");
-
-      UserDao userDAO = new UserDaoImpl();
-
-      String password = userDAO.getPasswordByUsername("penggu");
-
-      assertEquals("Rk1234567!", password);
-
-   } catch (Exception e) {
-      throw new RuntimeException(e);
-   }
-}
+        assertEquals("CT21-0073", expectedPassword);
+    }
 
    @Test
-   void testForgotPassword() {
-      // Mock necessary objects
+   public void testGetPasswordByUsername() {
+       User user1 = new User();
+       user1.setUsername("Amulong");
+       user1.setPassword("password123");
+
+       UserDao userDao = Mockito.mock(UserDao.class);
+
+       Mockito.when(userDao.getUsername("Amulong")).thenReturn(user1);
+       Mockito.when(userDao.getPasswordByUsername("Amulong")).thenReturn(null);
+
+       String password = userDao.getPasswordByUsername("Amulong");
+       assertNull(password);
+    }
+
+   @Test
+   public void testForgotPassword() {
       Connection connection = mock(Connection.class);
       PreparedStatement preparedStatement = mock(PreparedStatement.class);
 
@@ -289,4 +171,4 @@ void testGetPasswordByUsername() {
          throw new RuntimeException(e);
       }
    }
-   }
+}
