@@ -116,7 +116,7 @@ class UserDaoImplTest {
        User user = new User();
        user.setId(1);
        user.setUsername("Amulong");
-;
+
        when(userDao.updateUser()).thenReturn(true);
        when(userDao.getUserById(1)).thenReturn(user);
 

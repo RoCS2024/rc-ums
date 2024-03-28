@@ -20,7 +20,6 @@ import static org.mockito.Mockito.*;
  * This is the Student Dao Impl Test.
  * */
 class StudentDaoImplTest {
-
     private StudentDao studentDao;
     private List<Student> students;
 
@@ -34,7 +33,6 @@ class StudentDaoImplTest {
 
         studentDao = mock(StudentDao.class);
     }
-
 
     @Test
     public void testSaveStudent(){

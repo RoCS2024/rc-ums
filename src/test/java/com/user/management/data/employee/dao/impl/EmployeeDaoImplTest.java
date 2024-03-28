@@ -72,5 +72,4 @@ class EmployeeDaoImplTest {
         assertEquals(expectedEmployee, employee1);
         assertEquals(expectedEmployee.getEmail(), employee1.getEmail());
     }
-
 }
