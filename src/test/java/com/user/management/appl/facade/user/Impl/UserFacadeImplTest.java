@@ -149,4 +149,30 @@ class UserFacadeImplTest {
 
 //        assertEquals(testLogin, result);
 //    }
+
+    @Test
+    public void testForgotPasswordSuccessful() {
+
+        UserDao userDAO = mock(UserDao.class);
+        when(userDAO.getPasswordByUsername("penggu")).thenReturn("Rk1234567!");
+
+        UserFacade passwordResetFacade = new UserFacadeImpl(userDAO);
+
+        boolean result = passwordResetFacade.forgotPassword("penggu", "markian", "Mr098765?");
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void testForgotPasswordIncorrectSecurityAnswer() {
+
+        UserDao userDAO = mock(UserDao.class);
+        when(userDAO.getPasswordByUsername("penggu")).thenReturn("RK1234567!");
+
+        UserFacade passwordResetFacade = new UserFacadeImpl(userDAO);
+
+        boolean result = passwordResetFacade.forgotPassword("penggu","pogi","Mk098765?");
+
+        assertFalse(result);
+    }
 }

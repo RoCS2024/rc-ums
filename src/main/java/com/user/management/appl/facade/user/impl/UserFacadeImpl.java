@@ -81,4 +81,16 @@ public class UserFacadeImpl implements UserFacade {
     public User updatePassword(User user) {
         return userDao.updatePassword(user);
     }
+
+    @Override
+    public boolean forgotPassword(String username, String securityQuestionAnswer, String newPassword) {
+        String getPassword = userDao.getPasswordByUsername(username);
+        if(getPassword != null){
+            if(securityQuestionAnswer.equalsIgnoreCase("markian")){
+                userDao.forgotPassword(username,newPassword);
+                return true;
+            }
+        }
+        return false;
+    }
 }
