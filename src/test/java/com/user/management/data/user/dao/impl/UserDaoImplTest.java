@@ -113,7 +113,7 @@ class UserDaoImplTest {
 
 
     @Test
-    void testUpdateUser()  {
+    public void testUpdateUser()  {
        User user = new User();
        user.setId(1);
        user.setUsername("Amulong");
@@ -156,7 +156,7 @@ class UserDaoImplTest {
     }
 
    @Test
-   void testForgotPassword() {
+   public void testForgotPassword() {
       Connection connection = mock(Connection.class);
       PreparedStatement preparedStatement = mock(PreparedStatement.class);
 
