@@ -167,7 +167,7 @@ public class Main {
                             System.out.println("Enter First Name: ");
                             String firstName = scanner.nextLine();
                             System.out.println("Enter Middle Initial: ");
-                            String middleName = scanner.nextLine();
+                            String middleName = scanner.next();
                             System.out.println("Enter Sex: ");
                             String studentSex = scanner.next();
                             System.out.println("Enter Birthday (MM/DD/YYYY): ");
