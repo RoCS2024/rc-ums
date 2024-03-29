@@ -8,7 +8,7 @@ import com.user.management.data.student.dao.StudentDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 /**
  * This is the Student Dao Impl.
  * */
@@ -17,7 +17,8 @@ public class StudentDaoImpl implements StudentDao {
      * This is for save student.
      * */
         @Override
-        public Student saveStudent(Student student){
+        public boolean saveStudent(Student student){
+            boolean result = false;
 
             String insertQuery = "INSERT INTO STUDENT VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -35,7 +36,9 @@ public class StudentDaoImpl implements StudentDao {
                 preparedStatement.setString(10, student.getContactNumber());
 
                 int rowsAffected = preparedStatement.executeUpdate();
+                result = (rowsAffected > 0);
                 if (rowsAffected > 0) {
+
                     System.out.println("Student inserted successfully.");
                 } else {
                     System.out.println("Failed to insert student.");
@@ -44,7 +47,7 @@ public class StudentDaoImpl implements StudentDao {
                 System.out.println("Error inserting student: " + e.getMessage());
                 throw new RuntimeException(e); // rethrow the exception to indicate failure
             }
-            return student;
+            return result;
         }
     /**
      * This is for find student by id.

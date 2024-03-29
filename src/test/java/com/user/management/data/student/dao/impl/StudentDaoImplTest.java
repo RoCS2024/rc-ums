@@ -1,15 +1,9 @@
 package com.user.management.data.student.dao.impl;
 
-import com.user.management.appl.model.employee.Employee;
 import com.user.management.appl.model.student.Student;
-import com.user.management.data.connection.ConnectionHelper;
-import com.user.management.data.employee.dao.EmployeeDao;
 import com.user.management.data.student.dao.StudentDao;
 import org.junit.jupiter.api.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,13 +34,12 @@ class StudentDaoImplTest {
         student1.setStudentId("CT21-0073");
 
 
-        when(studentDao.saveStudent(student1)).thenReturn(student1);
-        Student expectedStudent = studentDao.saveStudent(student1);
+        when(studentDao.saveStudent(student1)).thenReturn(true);
+        boolean result = studentDao.saveStudent(student1);
 
         verify(studentDao).saveStudent(student1);
 
-        assertEquals(expectedStudent, student1);
-        assertEquals(expectedStudent.getStudentId(), student1.getStudentId());
+        assertEquals(result, true);
     }
     @Test
     public void testFindStudentById(){
