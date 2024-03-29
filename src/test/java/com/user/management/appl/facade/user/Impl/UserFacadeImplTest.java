@@ -1,5 +1,11 @@
 package com.user.management.appl.facade.user.Impl;
 
+import com.user.management.appl.facade.user.UserFacade;
+import com.user.management.appl.facade.user.impl.UserFacadeImpl;
+import com.user.management.appl.model.user.User;
+import com.user.management.data.user.dao.UserDao;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -19,138 +26,138 @@ import static org.mockito.Mockito.*;
  * */
 class UserFacadeImplTest {
 
-//    @Mock
-//    private UserDao mockUserDao;
+ @Mock
+    private UserDao mockUserDao;
 
-//    @InjectMocks
-//    private UserFacadeImpl userFacade;
-
-
-//    /**
-//     * Initializes mock objects and the UserFacadeImpl instance before each test.
-//     */
-//    @BeforeEach
-//    public void setUp() {
-//        MockitoAnnotations.initMocks(this);
-//    }
+    @InjectMocks
+    private UserFacadeImpl userFacade;
 
 
-//    private UserDao userDao;
+    /**
+     * Initializes mock objects and the UserFacadeImpl instance before each test.
+     */
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
-//    /**
-//     * Tests the getAllUsers method of UserFacadeImpl.
-//     *
-//     */
-//    @Test
-//    public void testGetAllUsers() {
 
-//        List<User> expectedUsers = new ArrayList<>();
-//        User user1 = new User();
-//        user1.setId(1);
-//        user1.setUsername("testUser1");
-//        expectedUsers.add(user1);
+    private UserDao userDao;
 
-//        when(mockUserDao.getAllUsers()).thenReturn(expectedUsers);
+    /**
+     * Tests the getAllUsers method of UserFacadeImpl.
+     *
+     */
+    @Test
+    public void testGetAllUsers() {
 
-//        List<User> actualUsers = userFacade.getAllUsers();
+        List<User> expectedUsers = new ArrayList<>();
+        User user1 = new User();
+        user1.setId(1);
+        user1.setUsername("testUser1");
+        expectedUsers.add(user1);
 
-//        assertEquals(expectedUsers.size(), actualUsers.size());
-//    }
+        when(mockUserDao.getAllUsers()).thenReturn(expectedUsers);
 
-//    @Test
-//    void checkUsername_Returns_User() {
-//        String username = "testUser";
-//       String password = "testPassword";
-//        String entityId = "entityId";
-//        Timestamp dateCreated = new Timestamp(new Date().getTime());
-//        Timestamp dateModified = new Timestamp(new Date().getTime());
-//        User expectedUser= new User(1, username, password, entityId, dateCreated, dateModified);
+        List<User> actualUsers = userFacade.getAllUsers();
 
-//        UserDao mockUserDao = mock(UserDao.class);
-//        when(mockUserDao.findUserByUsernameAndPassword(username, password)).thenReturn(expectedUser);
+        assertEquals(expectedUsers.size(), actualUsers.size());
+    }
 
-//        UserFacadeImpl UserFacade = new UserFacadeImpl(mockUserDao);
+    @Test
+    void checkUsername_Returns_User() {
+        String username = "penggu";
+        String password = "Rk1234567!";
+        String entityId = "entityId";
+        Timestamp dateCreated = new Timestamp(new Date().getTime());
+        Timestamp dateModified = new Timestamp(new Date().getTime());
+        User expectedUser= new User(1, username, password, entityId, dateCreated, dateModified);
 
-//        User result = UserFacade.findUserByUsernameAndPassword(username, password);
+        UserDao mockUserDao = mock(UserDao.class);
+        when(mockUserDao.findUserByUsernameAndPassword(username, password)).thenReturn(expectedUser);
 
-//        assertEquals(expectedUser, result);
-//        verify(mockUserDao, times(1)).findUserByUsernameAndPassword(username, password);
-//    }
+        UserFacadeImpl UserFacade = new UserFacadeImpl(mockUserDao);
 
-//    @Test
-//    void saveUser_Returns_Login() {
-//        String username = "testUser";
-//        String password = "testPassword";
-//        String entityId = "entityId";
-//        Timestamp dateCreated = new Timestamp(new Date().getTime());
-//        Timestamp dateModified = new Timestamp(new Date().getTime());
-//        User user = new User(1, username, password, entityId, dateCreated, dateModified);
-//        User expectedSavedUser = new User(1, username, password, entityId, dateCreated, dateModified);
+        User result = UserFacade.findUserByUsernameAndPassword(username, password);
 
-//        UserDao mockUserDao = mock(UserDao.class);
-//        when(mockUserDao.saveUser(user)).thenReturn(expectedSavedUser);
+        assertEquals(expectedUser, result);
+        verify(mockUserDao, times(1)).findUserByUsernameAndPassword(username, password);
+    }
 
-//        UserFacadeImpl UserFacade = new UserFacadeImpl(mockUserDao);
+    @Test
+    void saveUser_Returns_Login() {
+        String username = "penggu";
+        String password = "Rk1234567!";
+        String entityId = "entityId";
+        Timestamp dateCreated = new Timestamp(new Date().getTime());
+        Timestamp dateModified = new Timestamp(new Date().getTime());
+        User user = new User(1, username, password, entityId, dateCreated, dateModified);
+        User expectedSavedUser = new User(1, username, password, entityId, dateCreated, dateModified);
 
-//        User result = UserFacade.saveUser(user);
+        UserDao mockUserDao = mock(UserDao.class);
+        when(mockUserDao.saveUser(user)).thenReturn(expectedSavedUser);
 
-//        assertEquals(expectedSavedUser, result);
-//        verify(mockUserDao, times(1)).saveUser(user);
-//    }
+        UserFacadeImpl UserFacade = new UserFacadeImpl(mockUserDao);
 
-//    @Test
-//    void testGetUserById() {
-//        int userId = 1;
-//        User mockedUser = new User(userId, "testuser", "testpassword", "entity123", null, null);
-//        when(userDao.getUserById(userId)).thenReturn(mockedUser);
+        User result = UserFacade.saveUser(user);
 
-//        User resultUser = userFacade.getUserById(userId);
-//        assertEquals(mockedUser, resultUser);
-//    }
+        assertEquals(expectedSavedUser, result);
+        verify(mockUserDao, times(1)).saveUser(user);
+    }
 
-//    @Test
-//    void testUpdateUser() {
+    @Test
+    void testGetUserById() {
+        int userId = 1;
+        User mockedUser = new User(userId, "penggu", "Rk1234567!", "entity123", null, null);
+        when(userDao.getUserById(userId)).thenReturn(mockedUser);
 
-//        User userToUpdate = new User(1, "testuser", "testpassword", "entity123", null, null);
+        User resultUser = userFacade.getUserById(userId);
+        assertEquals(mockedUser, resultUser);
+    }
 
-//        when(userDao.getUserById(userToUpdate.getId())).thenReturn(userToUpdate);
+    @Test
+    void testUpdateUser() {
 
-//        when(userDao.updateUser()).thenReturn(true);
+        User userToUpdate = new User(1, "penggu", "Rk1234567!", "entity123", null, null);
 
-//        boolean result = userFacade.updateUser(userToUpdate);
-//        assertTrue(result);
-//    }
+        when(userDao.getUserById(userToUpdate.getId())).thenReturn(userToUpdate);
 
-//    @Test
-//    public void testGetUsername(String username) {
+        when(userDao.updateUser()).thenReturn(true);
 
-//        User testLogin = new User();
-//        testLogin.setId(1);
-//        testLogin.setUsername("testuser");
-//        testLogin.setPassword("testpassword");
+        boolean result = userFacade.updateUser(userToUpdate);
+        assertTrue(result);
+    }
 
-//        when(userDao.getUsername(username)).thenReturn(testLogin);
+    @Test
+    public void testGetUsername(String username) {
 
-//        User result = userFacade.getUsername("testuser");
+        User testLogin = new User();
+        testLogin.setId(1);
+        testLogin.setUsername("penggu");
+        testLogin.setPassword("Rk1234567!");
 
-//        assertEquals(testLogin, result);
-//    }
+        when(userDao.getUsername(username)).thenReturn(testLogin);
 
-//    @Test
-//    public void testUpdatePassword(User user) {
+      User result = userFacade.getUsername("penggu");
 
-//        User testLogin = new User();
-//        testLogin.setUsername("testuser");
-//        testLogin.setPassword("newpassword");
+        assertEquals(testLogin, result);
+    }
 
-//        when(userDao.updatePassword(user)).thenReturn(testLogin);
+    @Test
+    public void testUpdatePassword(User user) {
 
-//        User result = userFacade.updatePassword(testLogin);
+        User testLogin = new User();
+        testLogin.setUsername("penggu");
+        testLogin.setPassword("Mk098765?");
 
-//        assertEquals(testLogin, result);
-//    }
+        when(userDao.updatePassword(user)).thenReturn(testLogin);
 
-    /*@Test
+        User result = userFacade.updatePassword(testLogin);
+
+        assertEquals(testLogin, result);
+    }
+
+    @Test
     public void testForgotPasswordSuccessful() {
 
         UserDao userDAO = mock(UserDao.class);
@@ -174,5 +181,5 @@ class UserFacadeImplTest {
         boolean result = passwordResetFacade.forgotPassword("penggu","pogi","Mk098765?");
 
         assertFalse(result);
-    }*/
+    }
 }
