@@ -211,7 +211,7 @@ public class Main {
                             student.setEmail(studentEmail);
                             student.setAddress(studentAddress);
                             student.setContactNumber(studentContactNo);
-                            student = studentFacade.saveStudent(student);
+                            studentFacade.saveStudent(student);
                             check = 1;
                             break;
                         case "employee":

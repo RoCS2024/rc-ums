@@ -5,7 +5,6 @@ import com.user.management.appl.model.student.Student;
 import com.user.management.data.student.dao.StudentDao;
 import com.user.management.data.student.dao.impl.StudentDaoImpl;
 
-import java.sql.SQLException;
 /**
  * This is the Student Facade Impl.
  * */
@@ -31,7 +30,7 @@ public class StudentFacadeImpl implements StudentFacade {
     }
 
     @Override
-    public Student saveStudent(Student student) {
+    public boolean saveStudent(Student student) {
         return studentDao.saveStudent(student);
     }
 }
