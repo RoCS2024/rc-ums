@@ -17,7 +17,7 @@ public class UserFacadeImpl implements UserFacade {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserFacadeImpl.class);
 
-    private final UserDao userDao;
+    private UserDao userDao;
 
     private User[] userList;
 
