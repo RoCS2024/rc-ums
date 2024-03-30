@@ -40,7 +40,7 @@ class EmployeeFacadeImplTest {
         MockitoAnnotations.initMocks(this);
         employee.setEmployeeId("EMP21-0143");
         getEmployee.getEmployeeId ();
-        when(employeeDao.findEmployeeById()).thenReturn(employee);
+        when(employeeDao.findEmployeeById("EMP21-0143")).thenReturn(employee);
     }
 
     @AfterEach
@@ -79,14 +79,14 @@ class EmployeeFacadeImplTest {
         expectedEmployee.setLastName("Guapo");
         expectedEmployee.setFirstName("Mister");
         EmployeeDao employeeDao = mock(EmployeeDao.class);
-        when(employeeDao.findEmployeeById()).thenReturn(expectedEmployee);
+        when(employeeDao.findEmployeeById("EMP21-0143")).thenReturn(expectedEmployee);
 
         EmployeeFacadeImpl employeeFacade = new EmployeeFacadeImpl(employeeDao);
         Employee result = employeeFacade.findEmployeeById(employeeId);
 
         assertNotNull(result, "Returned employee should not be null.");
         assertEquals(expectedEmployee, result, "Returned employee should match expected employee.");
-        verify(employeeDao, times(1)).findEmployeeById();
+        verify(employeeDao, times(1)).findEmployeeById("EMP21-0143");
     }
 
     @Test
