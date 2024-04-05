@@ -185,23 +185,29 @@ public class Main {
                             System.out.println("Enter Religion: ");
                             String studentReligion = scanner.nextLine();
                             studentReligion = scanner.nextLine();
+
+                            
                             System.out.println("Enter Email Address: ");
-                            String studentEmail = scanner.next();
+                            String studentEmail = scanner.nextLine();
+
                             while (!studentEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
                                 System.out.println("Wrong Format. Enter a valid email address.");
                                 System.out.println("Enter Email: ");
-                                studentEmail = scanner.next();
+                                studentEmail = scanner.nextLine();
                             }
                             while (studentFacade.findStudentByEmail(studentEmail) != null) {
                                 System.out.println("Email address is already exists. Use different email address.");
                                 System.out.println("Enter Email: ");
-                                studentEmail = scanner.next();
+                                studentEmail = scanner.nextLine();
                             }
                             System.out.println("Enter Address: ");
                             String studentAddress = scanner.nextLine();
-                            studentAddress = scanner.nextLine();
+
+
                             System.out.println("Enter Contact No: ");
-                            String studentContactNo = scanner.next();
+                            String studentContactNo = scanner.nextLine();
+
+
                             Student student = new Student();
                             student.setStudentId(studentId);
                             student.setLastName(lastName);
@@ -310,6 +316,7 @@ public class Main {
                 System.out.println("Username already taken!");
             }
         } catch (Exception e) {
+
             System.out.println("Error registering user. Please try again.");
         }
     }
