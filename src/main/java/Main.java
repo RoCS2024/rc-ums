@@ -11,6 +11,7 @@ import com.user.management.appl.model.student.Student;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 /**
@@ -359,7 +360,7 @@ public class Main {
                     if (updated) {
                         System.out.println("User information updated successfully!");
                     } else {
-                        System.out.println("Failed to update user information.");
+                        System.out.println("Failed to update user information. Please try again later.");
                     }
                 } else {
                     System.out.println("User with ID " + userId + " does not exist.");
@@ -367,10 +368,15 @@ public class Main {
 
             } while (userId != 0);
 
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid integer for User-ID.");
+            scanner.next();
         } catch (Exception e) {
             System.err.println("An error occurred while updating user information: " + e.getMessage());
+            e.printStackTrace(); 
         }
     }
+
     private static void updatePassword() {
         try {
             System.out.print("Enter username: ");
