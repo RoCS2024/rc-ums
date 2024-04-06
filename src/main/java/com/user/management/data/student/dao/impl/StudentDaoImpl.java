@@ -85,7 +85,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public Student findStudentByEmail(String studentEmail){
-        String selectByIdQuery = "SELECT * FROM STUDENT WHERE student_email=?";
+        String selectByIdQuery = "SELECT * FROM STUDENT WHERE email=?";
         Student student = null;
 
         try (Connection connection = ConnectionHelper.getConnection();
