@@ -4,35 +4,26 @@ package com.user.management.appl.model.student;
  * */
 public class Student {
 
-    /** A unique id of the Student. */
     private String studentId;
 
-    /** The last name of the Student. */
     private String lastName;
 
-    /** The first name of the Student. */
     private String firstName;
 
-    /** The middle name of the Student. */
     private String middleName;
 
-    /** The gender of the Student. */
     private String sex;
 
-    /** The birthday of the Student. */
     private String birthday;
 
-    /** The religion of the Student. */
     private String religion;
 
-    /** The email of the Student. */
     private String email;
 
-    /** The address of the Student. */
     private String address;
 
-    /** The contact number of the Student. */
     private String contactNumber;
+
 
     /**
      * This is the Student getter and setter.
