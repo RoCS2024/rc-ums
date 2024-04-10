@@ -9,17 +9,11 @@ import java.sql.Timestamp;
  * POJO class for User objects. This class represents the User information.
  * */
 public class User {
-    /** A unique user id of the user. */
     private int id;
-    /** A username of the user. */
     private String username;
-    /** A password of the user. */
     private String password;
-    /** A unique entity id of the user. */
     private String entity_id;
-    /** The date of the creation of the user */
     private Timestamp date_created;
-    /** If the information update the date changes */
     private Timestamp date_modified;
     /***
      * Default constructor of the User class.
