@@ -26,11 +26,6 @@ public class Student {
 
 
     /**
-     * This is the Student getter and setter.
-     * */
-
-
-    /**
      * Retrieves the unique identifier of the student.
      * @return The unique identifier of the student.
      */
