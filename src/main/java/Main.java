@@ -21,6 +21,7 @@ public class Main {
     private static final UserFacade userFacade = new UserFacadeImpl();
     private static final EmployeeFacade employeeFacade = new EmployeeFacadeImpl();
     private static final StudentFacade studentFacade = new StudentFacadeImpl();
+
     /**
      * The entry point of the application.
      * param args The command line arguments.
@@ -36,7 +37,7 @@ public class Main {
                     viewUserList(userFacade);
                     break;
                 case 2:
-                    if(login()){
+                    if (login()) {
                         choice = 0;
                     }
                     break;
@@ -61,6 +62,7 @@ public class Main {
             }
         } while (choice != 0);
     }
+
     /**
      * Displays the main menu options.
      */
@@ -98,6 +100,7 @@ public class Main {
             System.out.println("Error occurred while retrieving user list: " + e.getMessage());
         }
     }
+
     /**
      * Handles the login functionality.
      * return True if login is successful, otherwise false.
@@ -121,6 +124,7 @@ public class Main {
             return false;
         }
     }
+
     /**
      * Handles the user registration process.
      */
@@ -128,34 +132,33 @@ public class Main {
         try {
             System.out.print("Enter Username: ");
             String username = scanner.next();
-                         if (userFacade.findUserByUsername(username) != null) {
-                            System.out.println("It is already used. Please choose a another one.");
-                            return;
-                        }
+            if (userFacade.findUserByUsername(username) != null) {
+                System.out.println("It is already used. Please choose a another one.");
+                return;
+            }
 
-                        // Validate username length and allowed characters
-                        if (!username.matches("^[a-zA-Z0-9_]{3,20}$")) {
-                            System.out.println("Username must be between 3 to 20 long only and contain alphanumeric and underscores.");
-                            return;
-                        }
-
+            // Validate username length and allowed characters
+            if (!username.matches("^[a-zA-Z0-9_]{3,20}$")) {
+                System.out.println("Username must be between 3 to 20 long only and contain alphanumeric and underscores.");
+                return;
+            }
 
 
             System.out.print("Enter Password: ");
             String password = scanner.next();
-                        if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")) {
-                            System.out.println("The minimum length of a password is eight characters, with at least one digit, one capital letter, one lowercase letter, a unique character, and no whitespaces..");
-                            return;
-                       }
+            if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")) {
+                System.out.println("The minimum length of a password is eight characters, with at least one digit, one capital letter, one lowercase letter, a unique character, and no whitespaces..");
+                return;
+            }
             User currentUser = userFacade.findUserByUsername(username);
-            if(currentUser == null){
+            if (currentUser == null) {
                 int check = 0;
                 do {
                     System.out.println("Are you a student or employee?");
                     System.out.println("Type (\"Student\" or \"Employee\")");
                     String type = scanner.next();
                     String ltype = type.toLowerCase();
-                    switch(ltype){
+                    switch (ltype) {
                         case "student":
                             System.out.println("Student Form: ");
                             System.out.println("Enter Student Id: ");
@@ -171,8 +174,7 @@ public class Main {
                             System.out.println("Enter First Name: ");
                             String firstName = scanner.nextLine();
                             System.out.println("Enter Middle Initial: ");
-                            String middleName = scanner.nextLine()
-                                    ;
+                            String middleName = scanner.nextLine();
                             System.out.println("Enter Sex: ");
                             String studentSex = scanner.next();
                             System.out.println("Enter Birthday (MM/DD/YYYY): ");
@@ -186,7 +188,7 @@ public class Main {
                             String studentReligion = scanner.nextLine();
                             studentReligion = scanner.nextLine();
 
-                            
+
                             System.out.println("Enter Email Address: ");
                             String studentEmail = scanner.nextLine();
 
@@ -305,7 +307,7 @@ public class Main {
                             System.out.println("Invalid Input! Please re-enter your input");
                             break;
                     }
-                }while(check == 0);
+                } while (check == 0);
                 User user = new User();
                 user.setUsername(username);
                 user.setPassword(password);
@@ -320,6 +322,7 @@ public class Main {
             System.out.println("Error registering user. Please try again.");
         }
     }
+
     private static void updateUserInformation() {
         try {
             int userId = 0;
@@ -382,8 +385,10 @@ public class Main {
 
         } catch (Exception e) {
             System.err.println("An error occurred while updating user information: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
     private static void updatePassword() {
         try {
             System.out.print("Enter username: ");
@@ -396,7 +401,7 @@ public class Main {
                 System.out.print("Enter current password: ");
                 String enteredPassword = scanner.next();
 
-                if(enteredPassword.equals(existingUser.getPassword())) {
+                if (enteredPassword.equals(existingUser.getPassword())) {
 
                     System.out.print("Enter new password: ");
                     String newPassword = scanner.next();
@@ -409,7 +414,7 @@ public class Main {
                     System.out.print("Confirm new password: ");
                     String confirmPassword = scanner.next();
 
-                    if(newPassword.equals(confirmPassword)) {
+                    if (newPassword.equals(confirmPassword)) {
                         existingUser.setPassword(newPassword);
                         Timestamp currentTimestamp = new Timestamp(new Date().getTime());
                         existingUser.setDate_modified(currentTimestamp);
@@ -433,6 +438,7 @@ public class Main {
             System.out.println("Error updating password. Please try again.");
         }
     }
+
     private static void forgotPassword() {
         try {
             System.out.print("Enter username: ");
@@ -446,7 +452,7 @@ public class Main {
                 System.out.println("Please Enter the Answer: ");
                 String questionAnswer = scanner.next();
 
-                if(questionAnswer.equals(securityQuestionAnswer())){
+                if (questionAnswer.equals(securityQuestionAnswer())) {
 
                     System.out.print("Enter new password: ");
                     String newPassword = scanner.next();
@@ -456,10 +462,10 @@ public class Main {
                         return;
                     }
 
-                    boolean passwordResetSuccess = userFacade.forgotPassword(username,securityQuestionAnswer(),newPassword);
-                    if (passwordResetSuccess){
+                    boolean passwordResetSuccess = userFacade.forgotPassword(username, securityQuestionAnswer(), newPassword);
+                    if (passwordResetSuccess) {
                         System.out.println("Your password had been successfully reset!");
-                    } else{
+                    } else {
                         System.out.println("Reset Failed. Check username and password, then try again!");
                     }
 
@@ -477,7 +483,7 @@ public class Main {
         }
     }
 
-    private static String securityQuestionAnswer(){
+    private static String securityQuestionAnswer() {
         return "markian";
     }
 
