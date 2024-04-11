@@ -11,24 +11,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is the User Facade Impl.
- * */
+ * This is an implementation class of the UserFacade
+ */
 public class UserFacadeImpl implements UserFacade {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserFacadeImpl.class);
 
     private UserDao userDao;
-
     private User[] userList;
+
+    /**
+     * This is a constructor for the UserFacadeImpl with a custom UserDao implementation.
+     *
+     * @param userDao is the UserDao implementation used for database.
+    */
 
     public UserFacadeImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
+
+    /**
+     * This is a constructor for the UserFacadeImpl with the default UserDaoImpl implementation.
+     * This initializes the UserDao
+     */
+
     public UserFacadeImpl() {
         this.userDao = new UserDaoImpl();
     }
 
+
+    /**
+     * This is a constructor for initializing the UserFacadeImpl .
+     * This initializes the UserDao.
+     */
     public void UserFacade() {this.userList = new ArrayList<>().toArray(new User[0]);}
 
     @Override
@@ -42,8 +58,8 @@ public class UserFacadeImpl implements UserFacade {
         return userDao.saveUser(user);
     }
     /**
-     * Retrieves a list of all users from the database.
-     * A List of User objects representing all users in the system.
+     * This retrieves a list of all users from the database.
+     * A List of User representing all users in the system.
      */
     @Override
     public List<User> getAllUsers() {
