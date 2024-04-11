@@ -79,7 +79,7 @@ public class User {
         this.password = password;
     }
     /**
-     * This gets the User entity id.
+     * This gets the User entity id
      * @return the user's entity id.
      */
     public String getEntity_id() {
