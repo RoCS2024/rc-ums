@@ -39,7 +39,7 @@ public class User {
         this.date_modified = date_modified;
     }
     /**
-     * This gets the User Id.
+     * This gets the User Id
      * @return the user's Id.
      */
     public int getId() { return id; }
@@ -65,7 +65,7 @@ public class User {
         this.username = username;
     }
     /**
-     * This gets the User password.
+     * This gets the User password
      * @return the user's password.
      */
     public String getPassword() {
@@ -107,7 +107,7 @@ public class User {
         this.date_created = date_created;
     }
     /**
-     * This gets the User date modified.
+     * This gets the User date modified
      * @return the user's date modified.
      */
     public Timestamp getDate_modified() {
