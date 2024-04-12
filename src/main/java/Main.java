@@ -163,6 +163,12 @@ public class Main {
                             System.out.println("Student Form: ");
                             System.out.println("Enter Student Id: ");
                             String studentId = scanner.next();
+
+                            while (!studentId.matches("CT\\d{2}-\\d{4}")) {
+                                System.out.println("Invalid student ID format or out of range. Please enter again: ");
+                                studentId = scanner.next();
+                            }
+
                             while (studentFacade.findStudentById(studentId) != null) {
                                 System.out.println("Student Id Already Exist!");
                                 System.out.println("Enter a new Student Id: ");
