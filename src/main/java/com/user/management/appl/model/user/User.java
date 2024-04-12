@@ -93,7 +93,7 @@ public class User {
         this.entity_id = entity_id;
     }
     /**
-     * This gets the User date created.
+     * This gets the User date created
      * @return the user's date created.
      */
     public Timestamp getDate_created() {
