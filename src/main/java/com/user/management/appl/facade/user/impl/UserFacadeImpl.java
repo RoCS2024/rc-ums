@@ -10,9 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This is the User Facade Impl.
- * */
+
 public class UserFacadeImpl implements UserFacade {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserFacadeImpl.class);
@@ -29,7 +27,6 @@ public class UserFacadeImpl implements UserFacade {
         this.userDao = new UserDaoImpl();
     }
 
-    public void UserFacade() {this.userList = new ArrayList<>().toArray(new User[0]);}
 
     @Override
     public User findUserByUsername(String username) {
@@ -41,10 +38,7 @@ public class UserFacadeImpl implements UserFacade {
     public User saveUser(User user) {
         return userDao.saveUser(user);
     }
-    /**
-     * Retrieves a list of all users from the database.
-     * A List of User objects representing all users in the system.
-     */
+
     @Override
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
