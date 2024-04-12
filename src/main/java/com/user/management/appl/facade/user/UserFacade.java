@@ -65,7 +65,6 @@ public interface UserFacade {
      */
     User updatePassword(User user);
 
-
     /**
      * This handles the process of resetting a user's password.
      *

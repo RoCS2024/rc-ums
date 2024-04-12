@@ -16,7 +16,6 @@ public interface StudentFacade {
      * @return student ID from the database
      */
     Student findStudentById(String studentId);
-
     /**
      * This finds a student by their email.
      *
@@ -24,7 +23,6 @@ public interface StudentFacade {
      * @return student email from the database
      */
     Student findStudentByEmail(String studentEmail);
-
     /**
      * This saves a new student in the database.
      *
@@ -32,5 +30,4 @@ public interface StudentFacade {
      * @return True if the student was successfully saved.
      */
     boolean saveStudent(Student student);
-
 }
