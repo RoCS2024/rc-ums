@@ -14,8 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.user.management.data.connection.ConnectionHelper.password;
-
 /**
  * This class represents the main class for the login and registration system.
  */
@@ -414,7 +412,7 @@ public class Main {
                         return;
                     }
 
-                    if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")) {
+                    if (!newPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")) {
                         System.out.println("The minimum length of a password is eight characters, with at least one digit, one capital letter, one lowercase letter, a unique character, and no whitespaces..");
                         return;
                     }
