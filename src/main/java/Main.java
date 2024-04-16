@@ -439,6 +439,15 @@ public class Main {
         }
     }
 
+    private static boolean isValidPassword(String password) {
+        return password.length() >= 8
+                && password.matches(".*\\d.*")
+                && password.matches(".*[A-Z].*")
+                && password.matches(".*[a-z].*")
+                && password.matches(".*[^\\w\\s].*")
+                && !password.contains(" ");
+    }
+
     private static void forgotPassword() {
         try {
             System.out.print("Enter username: ");
@@ -452,10 +461,15 @@ public class Main {
                 System.out.println("Please Enter the Answer: ");
                 String questionAnswer = scanner.next();
 
-                if (questionAnswer.equals(securityQuestionAnswer())) {
+                if(questionAnswer.equals(securityQuestionAnswer())){
 
                     System.out.print("Enter new password: ");
                     String newPassword = scanner.next();
+
+                    if (!isValidPassword(newPassword)) {
+                        System.out.println("Password does not meet requirements. Please try again.");
+                        return;
+                    }
 
                     if (newPassword.equals(existingUser.getPassword())) {
                         System.out.println("New password is the same with the current password. Please try again.");
@@ -463,16 +477,15 @@ public class Main {
                     }
 
                     boolean passwordResetSuccess = userFacade.forgotPassword(username, securityQuestionAnswer(), newPassword);
-                    if (passwordResetSuccess) {
+                    if (passwordResetSuccess){
                         System.out.println("Your password had been successfully reset!");
-                    } else {
+                    } else{
                         System.out.println("Reset Failed. Check username and password, then try again!");
                     }
 
                 } else {
                     System.out.println("Incorrect Answer. Password update failed.");
                 }
-
 
             } else {
                 System.out.println(username + " not found. Please input a valid username.");
