@@ -461,7 +461,10 @@ public class Main {
                         System.out.println("New password is the same with the current password. Please try again.");
                         return;
                     }
-
+                    if (!newPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")) {
+                        System.out.println("The minimum length of a password is eight characters, with at least one digit, one capital letter, one lowercase letter, a unique character, and no whitespaces..");
+                        return;
+                    }
                     boolean passwordResetSuccess = userFacade.forgotPassword(username, securityQuestionAnswer(), newPassword);
                     if (passwordResetSuccess) {
                         System.out.println("Your password had been successfully reset!");
