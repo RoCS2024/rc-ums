@@ -2,11 +2,11 @@
 out/
 .idea/
 build/
-logs/
-*.iml
 doc/
+*.iml
 target/
 lib/
+logs/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
