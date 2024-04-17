@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
 /**
  * This class represents the main class for the login and registration system.
  */
@@ -410,6 +411,12 @@ public class Main {
                         System.out.println("New password is the same with the current password. Please try again.");
                         return;
                     }
+
+                    if (!newPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")) {
+                        System.out.println("The minimum length of a password is eight characters, with at least one digit, one capital letter, one lowercase letter, a unique character, and no whitespaces..");
+                        return;
+                    }
+
 
                     System.out.print("Confirm new password: ");
                     String confirmPassword = scanner.next();
