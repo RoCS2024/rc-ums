@@ -28,6 +28,14 @@ public class Main {
      * param args The command line arguments.
      */
     public static void main(String[] args) {
+        UserInfoMgtApplication app = new UserInfoMgtApplication();
+
+        UserFacade userFacade = app.UserInfoMgtApplication();
+
+        StudentFacade studentFacade = app.getStudentFacade();
+
+        EmployeeFacade employeeFacade = app.getEmployeeFacade();
+
         int choice;
         do {
             displayMenu();
