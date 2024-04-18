@@ -182,11 +182,6 @@ public class Main {
                             String studentSex = scanner.next();
                             System.out.println("Enter Birthday (MM/DD/YYYY): ");
                             String studentBirthday = scanner.next();
-//                            while (!Student.isValidBirthday(studentBirthday)) {
-//                                System.out.println("Invalid birthday format!");
-//                                System.out.println("Enter Birthday (MM/DD/YYYY): ");
-//                                studentBirthday = scanner.next();
-//                            }
                             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                             Timestamp date;
                             try {
@@ -249,11 +244,6 @@ public class Main {
                             String rcPos = scanner.next();
                             System.out.println("Enter Birthdate (MM/DD/YYYY): ");
                             String birthDate = scanner.next();
-//                            while (!Student.isValidBirthday(birthDate)) {
-//                                System.out.println("Invalid birthday format!");
-//                                System.out.println("Enter Birthday (MM/DD/YYYY): ");
-//                                birthDate = scanner.next();
-//                            }
                             SimpleDateFormat dateFrmt = new SimpleDateFormat("MM/dd/yyyy");
                             Timestamp edate;
                             try {
