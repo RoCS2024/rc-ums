@@ -16,13 +16,9 @@ import java.util.List;
 /**
  * An implementation class of the User Data Access Object.
  * */
-
 public class UserDaoImpl implements UserDao {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
-    /**
-     * This is for findUserByUsernameAndPassword.
-     * */
     @Override
     public User findUserByUsername(String username){
         String selectByIdQuery = "SELECT * FROM login WHERE username=?";
@@ -50,9 +46,6 @@ public class UserDaoImpl implements UserDao {
         return User;
     }
 
-    /**
-     * This is for save user.
-     * */
     @Override
     public User saveUser(User User)  {
 
@@ -75,9 +68,7 @@ public class UserDaoImpl implements UserDao {
         LOGGER.debug("Saving User failed.");
         return User;
     }
-    /**
-     * This is for getMaxUserId.
-     * */
+
     @Override
     public long getMaxUserId(){
 
@@ -97,9 +88,6 @@ public class UserDaoImpl implements UserDao {
         LOGGER.debug("Getting MaxUser ID failed.");
         return 0;
     }
-    /**
-     * This is for get all user.
-     * */
     @Override
     public List<User> getAllUsers(){
 
@@ -126,9 +114,7 @@ public class UserDaoImpl implements UserDao {
         LOGGER.debug("User database is empty.");
         return userList;
     }
-    /**
-     * This is for get user by id.
-     * */
+
     @Override
     public User getUserById(int id) {
 
@@ -158,9 +144,7 @@ public class UserDaoImpl implements UserDao {
         LOGGER.debug("User not found.");
         return null;
     }
-    /**
-     * This is for update user.
-     * */
+
     @Override
     public boolean updateUser() {
         String sql = "UPDATE login SET username = ?, password = ?, entity_id = ?, date_modified = ? WHERE id = ?";
@@ -182,9 +166,7 @@ public class UserDaoImpl implements UserDao {
             return false;
         }
     }
-    /**
-     * This is for get username.
-     * */
+
     @Override
     public User getUsername(String username) {
         String selectByIdQuery = "SELECT * FROM login WHERE username=?";
@@ -210,9 +192,7 @@ public class UserDaoImpl implements UserDao {
         LOGGER.debug("Getting username failed.");
         return login;
     }
-    /**
-     * This is for update password.
-     * */
+
     @Override
     public User updatePassword(User user) {
         String updateQuery = "UPDATE login SET password=?, date_modified=? WHERE username=?";
