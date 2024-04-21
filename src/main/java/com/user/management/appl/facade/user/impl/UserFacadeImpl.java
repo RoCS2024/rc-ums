@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * This is the implementation class for the UserFacade
+ */
 
 public class UserFacadeImpl implements UserFacade {
 
@@ -18,10 +21,18 @@ public class UserFacadeImpl implements UserFacade {
 
     private User[] userList;
 
+
+    /**
+     * Constructs a new UserFacadeImpl with the UserDao.
+     * @param userDao The data access object for user operations.
+     */
     public UserFacadeImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
+    /**
+     * Default constructor for UserDaoImpl.
+     */
     public UserFacadeImpl() {
         this.userDao = new UserDaoImpl();
     }
