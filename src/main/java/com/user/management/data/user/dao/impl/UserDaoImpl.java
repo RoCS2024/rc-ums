@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is the User Dao Impl.
+ * An implementation class of the User Data Access Object.
  * */
+
 public class UserDaoImpl implements UserDao {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
