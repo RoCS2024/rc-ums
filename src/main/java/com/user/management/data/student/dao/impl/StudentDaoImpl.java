@@ -4,6 +4,9 @@ package com.user.management.data.student.dao.impl;
 import com.user.management.appl.model.student.Student;
 import com.user.management.data.connection.ConnectionHelper;
 import com.user.management.data.student.dao.StudentDao;
+import com.user.management.data.user.dao.impl.UserDaoImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +16,8 @@ import java.sql.ResultSet;
  * This is the Student Dao Impl.
  * */
 public class StudentDaoImpl implements StudentDao {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(StudentDaoImpl.class);
     /**
      * This is for save student.
      * */
@@ -39,13 +44,12 @@ public class StudentDaoImpl implements StudentDao {
                 result = (rowsAffected > 0);
                 if (rowsAffected > 0) {
 
-                    System.out.println("Student inserted successfully.");
+                    LOGGER.info("Student inserted successfully.");
                 } else {
-                    System.out.println("Failed to insert student.");
+                    LOGGER.warn("Failed to insert student.");
                 }
             } catch (Exception e) {
-                System.out.println("Error inserting student: " + e.getMessage());
-                throw new RuntimeException(e); // rethrow the exception to indicate failure
+                LOGGER.error("Error saving student.", e);
             }
             return result;
         }
@@ -78,7 +82,7 @@ public class StudentDaoImpl implements StudentDao {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            LOGGER.error("Error finding student by id.", e);
         }
         return student;
     }
@@ -107,7 +111,7 @@ public class StudentDaoImpl implements StudentDao {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            LOGGER.error("Error finding student by email.", e);
         }
         return student;
     }
