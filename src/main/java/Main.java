@@ -21,15 +21,21 @@ import java.util.Scanner;
  */
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final UserFacade userFacade = new UserFacadeImpl();
-    private static final EmployeeFacade employeeFacade = new EmployeeFacadeImpl();
-    private static final StudentFacade studentFacade = new StudentFacadeImpl();
+    private static final UserInfoMgtApplication app = new UserInfoMgtApplication();
+//    private static final UserFacade userFacade = new UserFacadeImpl();
+//    private static final EmployeeFacade employeeFacade = new EmployeeFacadeImpl();
+//    private static final StudentFacade studentFacade = new StudentFacadeImpl();
 
     /**
      * The entry point of the application.
      * param args The command line arguments.
      */
     public static void main(String[] args) {
+        UserFacade userFacade = app.getUserFacade();
+
+        StudentFacade studentFacade = app.getStudentFacade();
+
+        EmployeeFacade employeeFacade = app.getEmployeeFacade();
         int choice;
         do {
             displayMenu();
@@ -109,6 +115,7 @@ public class Main {
      * return True if login is successful, otherwise false.
      */
     private static boolean login() {
+        UserFacade userFacade = app.getUserFacade();
         try {
             System.out.print("Enter Username: ");
             String username = scanner.next();
@@ -132,6 +139,9 @@ public class Main {
      * Handles the user registration process.
      */
     private static void registerUser() {
+        UserFacade userFacade = app.getUserFacade();
+        StudentFacade studentFacade = app.getStudentFacade();
+        EmployeeFacade employeeFacade = app.getEmployeeFacade();
         try {
             System.out.print("Enter Username: ");
             String username = scanner.next();
@@ -338,6 +348,7 @@ public class Main {
     }
 
     private static void updateUserInformation() {
+        UserFacade userFacade = app.getUserFacade();
         try {
             int userId = 0;
             do {
@@ -404,6 +415,7 @@ public class Main {
     }
 
     private static void updatePassword() {
+        UserFacade userFacade = app.getUserFacade();
         try {
             System.out.print("Enter username: ");
             String username = scanner.next();
@@ -469,6 +481,7 @@ public class Main {
     }
 
     private static void forgotPassword() {
+        UserFacade userFacade = app.getUserFacade();
         try {
             System.out.print("Enter username: ");
             String username = scanner.next();

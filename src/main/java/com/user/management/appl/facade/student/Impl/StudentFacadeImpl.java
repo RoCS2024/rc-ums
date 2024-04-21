@@ -5,19 +5,13 @@ import com.user.management.appl.model.student.Student;
 import com.user.management.data.student.dao.StudentDao;
 import com.user.management.data.student.dao.impl.StudentDaoImpl;
 
-/**
- * This is the Student Facade Impl.
- * */
 public class StudentFacadeImpl implements StudentFacade {
-    private final StudentDao studentDao;
+    private StudentDao studentDao;
 
     public StudentFacadeImpl(StudentDao studentDao) {
         this.studentDao = studentDao;
     }
 
-    public StudentFacadeImpl() {
-        this.studentDao = new StudentDaoImpl();
-    }
 
     @Override
     public Student findStudentById(String studentId) {
