@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 /**
  * This is the Student Dao Impl.
@@ -34,7 +35,7 @@ public class StudentDaoImpl implements StudentDao {
                 preparedStatement.setString(3, student.getFirstName());
                 preparedStatement.setString(4, student.getMiddleName());
                 preparedStatement.setString(5, student.getSex());
-                preparedStatement.setString(6, student.getBirthday());
+                preparedStatement.setTimestamp(6, student.getBirthday());
                 preparedStatement.setString(7, student.getReligion());
                 preparedStatement.setString(8, student.getEmail());
                 preparedStatement.setString(9, student.getAddress());
@@ -74,7 +75,7 @@ public class StudentDaoImpl implements StudentDao {
                     student.setFirstName(resultSet.getString("first_name"));
                     student.setMiddleName(resultSet.getString("middle_name"));
                     student.setSex(resultSet.getString("sex"));
-                    student.setBirthday(resultSet.getString("birthday"));
+                    student.setBirthday(Timestamp.valueOf(resultSet.getString("birthday")));
                     student.setReligion(resultSet.getString("religion"));
                     student.setEmail(resultSet.getString("email"));
                     student.setAddress(resultSet.getString("address"));
@@ -103,7 +104,7 @@ public class StudentDaoImpl implements StudentDao {
                     student.setFirstName(resultSet.getString("first_name"));
                     student.setMiddleName(resultSet.getString("middle_name"));
                     student.setSex(resultSet.getString("sex"));
-                    student.setBirthday(resultSet.getString("birthday"));
+                    student.setBirthday(Timestamp.valueOf(resultSet.getString("birthday")));
                     student.setReligion(resultSet.getString("religion"));
                     student.setEmail(resultSet.getString("email"));
                     student.setAddress(resultSet.getString("address"));

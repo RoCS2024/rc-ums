@@ -24,7 +24,7 @@ public class Employee {
     private Timestamp dateEmployed;
 
     /** The birthdate of the employee. */
-    private String birthdate;
+    private Timestamp birthdate;
 
     /** The birthplace of the employee. */
     private String birthplace;
@@ -151,7 +151,7 @@ public class Employee {
      * Retrieves the birthdate of the employee.
      * @return The birthdate of the employee.
      */
-    public String getBirthdate() {
+    public Timestamp getBirthdate() {
         return birthdate;
     }
 
@@ -159,7 +159,7 @@ public class Employee {
      * Sets the birthdate of the employee.
      * @param birthdate The birthdate of the employee.
      */
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(Timestamp birthdate) {
         this.birthdate = birthdate;
     }
 
