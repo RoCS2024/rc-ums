@@ -24,7 +24,7 @@ class EmployeeFacadeImplTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeFacadeImplTest.class);
 
     @InjectMocks
-    private EmployeeFacade employeeFacade = new EmployeeFacadeImpl();
+    private EmployeeFacadeImpl employeeFacade;
 
     @Mock
     private EmployeeDao employeeDao;
