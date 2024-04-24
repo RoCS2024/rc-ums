@@ -28,7 +28,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             preparedStatement.setString(3, employee.getMiddleName());
             preparedStatement.setString(4, employee.getPositionInRc());
             preparedStatement.setTimestamp(5, employee.getDateEmployed());
-            preparedStatement.setString(6, employee.getBirthdate());
+            preparedStatement.setTimestamp(6, employee.getBirthdate());
             preparedStatement.setString(7, employee.getBirthplace());
             preparedStatement.setString(8, employee.getSex());
             preparedStatement.setString(9, employee.getCivilStatus());
@@ -67,7 +67,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     employee.setFirstName(resultSet.getString("first_name"));
                     employee.setMiddleName(resultSet.getString("middle_name"));
                     employee.setPositionInRc(resultSet.getString("position_in_rc"));
-                    employee.setBirthdate(resultSet.getString("birthdate"));
+                    employee.setBirthdate(resultSet.getTimestamp("birthdate"));
                     employee.setBirthplace(resultSet.getString("birthplace"));
                     employee.setSex(resultSet.getString("sex"));
                     employee.setCivilStatus(resultSet.getString("civil_status"));
@@ -103,7 +103,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     employee.setFirstName(resultSet.getString("first_name"));
                     employee.setMiddleName(resultSet.getString("middle_name"));
                     employee.setPositionInRc(resultSet.getString("position_in_rc"));
-                    employee.setBirthdate(resultSet.getString("birthdate"));
+                    employee.setBirthdate(resultSet.getTimestamp("birthdate"));
                     employee.setBirthplace(resultSet.getString("birthplace"));
                     employee.setSex(resultSet.getString("sex"));
                     employee.setCivilStatus(resultSet.getString("civil_status"));

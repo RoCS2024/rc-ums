@@ -10,23 +10,30 @@ import com.user.management.appl.model.student.Student;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
 /**
  * This class represents the main class for the login and registration system.
  */
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final UserFacade userFacade = new UserFacadeImpl();
-    private static final EmployeeFacade employeeFacade = new EmployeeFacadeImpl();
-    private static final StudentFacade studentFacade = new StudentFacadeImpl();
+
+    private static final UserInfoMgtApplication app = new UserInfoMgtApplication();
+//    private static final UserFacade userFacade = new UserFacadeImpl();
+//    private static final EmployeeFacade employeeFacade = new EmployeeFacadeImpl();
+//    private static final StudentFacade studentFacade = new StudentFacadeImpl();
 
     /**
      * The entry point of the application.
      * param args The command line arguments.
      */
     public static void main(String[] args) {
+
+        UserFacade userFacade = app.getUserFacade();
         int choice;
         do {
             displayMenu();
@@ -106,6 +113,7 @@ public class Main {
      * return True if login is successful, otherwise false.
      */
     private static boolean login() {
+        UserFacade userFacade = app.getUserFacade();
         try {
             System.out.print("Enter Username: ");
             String username = scanner.next();
@@ -129,6 +137,9 @@ public class Main {
      * Handles the user registration process.
      */
     private static void registerUser() {
+        UserFacade userFacade = app.getUserFacade();
+        StudentFacade studentFacade = app.getStudentFacade();
+        EmployeeFacade employeeFacade = app.getEmployeeFacade();
         try {
             System.out.print("Enter Username: ");
             String username = scanner.next();
@@ -179,11 +190,16 @@ public class Main {
                             String studentSex = scanner.next();
                             System.out.println("Enter Birthday (MM/DD/YYYY): ");
                             String studentBirthday = scanner.next();
-                            while (!Student.isValidBirthday(studentBirthday)) {
-                                System.out.println("Invalid birthday format!");
-                                System.out.println("Enter Birthday (MM/DD/YYYY): ");
-                                studentBirthday = scanner.next();
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                            Timestamp date;
+                            try {
+                                Date parsedDate = dateFormat.parse(studentBirthday);
+                                date = new Timestamp(parsedDate.getTime());
+                            } catch (ParseException ex) {
+                                System.out.println("Invalid date format. Please enter the date in MM/DD/YYYY format.");
+                                return;
                             }
+
                             System.out.println("Enter Religion: ");
                             String studentReligion = scanner.nextLine();
                             studentReligion = scanner.nextLine();
@@ -216,7 +232,7 @@ public class Main {
                             student.setFirstName(firstName);
                             student.setMiddleName(middleName);
                             student.setSex(studentSex);
-                            student.setBirthday(studentBirthday);
+                            student.setBirthday(date);
                             student.setReligion(studentReligion);
                             student.setEmail(studentEmail);
                             student.setAddress(studentAddress);
@@ -236,10 +252,14 @@ public class Main {
                             String rcPos = scanner.next();
                             System.out.println("Enter Birthdate (MM/DD/YYYY): ");
                             String birthDate = scanner.next();
-                            while (!Student.isValidBirthday(birthDate)) {
-                                System.out.println("Invalid birthday format!");
-                                System.out.println("Enter Birthday (MM/DD/YYYY): ");
-                                birthDate = scanner.next();
+                            SimpleDateFormat dateFrmt = new SimpleDateFormat("MM/dd/yyyy");
+                            Timestamp edate;
+                            try {
+                                Date parsedDate = dateFrmt.parse(birthDate);
+                                edate = new Timestamp(parsedDate.getTime());
+                            } catch (ParseException ex) {
+                                System.out.println("Invalid date format. Please enter the date in MM/DD/YYYY format.");
+                                return;
                             }
                             System.out.println("Enter Birthplace: ");
                             String birthPlace = scanner.next();
@@ -287,7 +307,7 @@ public class Main {
                             employee.setPositionInRc(rcPos);
                             Timestamp currentTimestamp = new Timestamp(new Date().getTime());
                             employee.setDateEmployed(currentTimestamp);
-                            employee.setBirthdate(birthDate);
+                            employee.setBirthdate(edate);
                             employee.setBirthplace(birthPlace);
                             employee.setSex(sex);
                             employee.setCivilStatus(civilStatus);
@@ -300,7 +320,7 @@ public class Main {
                             employee.setTinNo(tNumber);
                             employee.setPagibigNo(pagibigNo);
                             employee.setEmployeeId(eNo);
-                            employee = employeeFacade.saveEmployee(employee);
+                            employeeFacade.saveEmployee(employee);
                             check = 1;
                             break;
                         default:
@@ -311,6 +331,8 @@ public class Main {
                 User user = new User();
                 user.setUsername(username);
                 user.setPassword(password);
+                Timestamp currentTimestamp = new Timestamp(new Date().getTime());
+                user.setDate_created(currentTimestamp);
                 user = userFacade.saveUser(user);
                 System.out.println("Registered Successfully");
 
@@ -324,6 +346,7 @@ public class Main {
     }
 
     private static void updateUserInformation() {
+        UserFacade userFacade = app.getUserFacade();
         try {
             int userId = 0;
             do {
@@ -390,6 +413,7 @@ public class Main {
     }
 
     private static void updatePassword() {
+        UserFacade userFacade = app.getUserFacade();
         try {
             System.out.print("Enter username: ");
             String username = scanner.next();
@@ -410,6 +434,12 @@ public class Main {
                         System.out.println("New password is the same with the current password. Please try again.");
                         return;
                     }
+
+                    if (!newPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")) {
+                        System.out.println("The minimum length of a password is eight characters, with at least one digit, one capital letter, one lowercase letter, a unique character, and no whitespaces..");
+                        return;
+                    }
+
 
                     System.out.print("Confirm new password: ");
                     String confirmPassword = scanner.next();
@@ -439,7 +469,17 @@ public class Main {
         }
     }
 
+    private static boolean isValidPassword(String password) {
+        return password.length() >= 8
+                && password.matches(".*\\d.*")
+                && password.matches(".*[A-Z].*")
+                && password.matches(".*[a-z].*")
+                && password.matches(".*[^\\w\\s].*")
+                && !password.contains(" ");
+    }
+
     private static void forgotPassword() {
+        UserFacade userFacade = app.getUserFacade();
         try {
             System.out.print("Enter username: ");
             String username = scanner.next();
@@ -452,10 +492,15 @@ public class Main {
                 System.out.println("Please Enter the Answer: ");
                 String questionAnswer = scanner.next();
 
-                if (questionAnswer.equals(securityQuestionAnswer())) {
+                if(questionAnswer.equals(securityQuestionAnswer())){
 
                     System.out.print("Enter new password: ");
                     String newPassword = scanner.next();
+
+                    if (!isValidPassword(newPassword)) {
+                        System.out.println("Password does not meet requirements. Please try again.");
+                        return;
+                    }
 
                     if (newPassword.equals(existingUser.getPassword())) {
                         System.out.println("New password is the same with the current password. Please try again.");
@@ -466,16 +511,15 @@ public class Main {
                         return;
                     }
                     boolean passwordResetSuccess = userFacade.forgotPassword(username, securityQuestionAnswer(), newPassword);
-                    if (passwordResetSuccess) {
+                    if (passwordResetSuccess){
                         System.out.println("Your password had been successfully reset!");
-                    } else {
+                    } else{
                         System.out.println("Reset Failed. Check username and password, then try again!");
                     }
 
                 } else {
                     System.out.println("Incorrect Answer. Password update failed.");
                 }
-
 
             } else {
                 System.out.println(username + " not found. Please input a valid username.");

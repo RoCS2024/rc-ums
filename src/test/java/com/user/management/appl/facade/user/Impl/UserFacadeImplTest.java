@@ -32,7 +32,7 @@ class UserFacadeImplTest {
     private User user;
 
     @InjectMocks
-    private UserFacade userFacade = new UserFacadeImpl();
+    private UserFacadeImpl userFacade;
 
 
     /**
