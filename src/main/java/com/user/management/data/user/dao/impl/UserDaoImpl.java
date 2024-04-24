@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * An implementation class of the User Data Access Object.
  * */
+
 public class UserDaoImpl implements UserDao {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
