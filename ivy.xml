@@ -32,7 +32,5 @@
         <dependency org="org.apache.logging.log4j" name="log4j-api" rev="2.23.0"/>
         <dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.23.0"/>
         <dependency org="org.apache.logging.log4j" name="log4j-slf4j2-impl" rev="2.23.0"/>
-
-
     </dependencies>
 </ivy-module>

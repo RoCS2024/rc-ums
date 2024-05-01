@@ -33,7 +33,13 @@
     <!--Compile-->
     <target name="compile" depends="init">
         <javac srcdir="${src.dir}" destdir="${classes.dir}"
-               includeantruntime="false" debug="true" classpathref="compile.path"/>
+               includeantruntime="false" debug="true" classpathref="compile.path">
+            <classpath>
+                <fileset dir = "lib">
+                    <include name = "**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
     </target>
 
     <target name="compile-tests" depends="compile">
@@ -41,6 +47,9 @@
             <classpath>
                 <path refid="test.path"/>
                 <pathelement path="${classes.dir}"/>
+                <fileset dir = "lib">
+                    <include name = "**/*.jar"/>
+                </fileset>
             </classpath>
         </javac>
     </target>
