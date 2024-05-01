@@ -16,7 +16,7 @@ import java.util.Scanner;
 /**
  * This class represents the main class for the login and registration system.
  */
-public class Mainjavabak {
+public class Main {
     private static final Scanner scanner = new Scanner(System.in);
 
     private static final UserInfoMgtApplication app = new UserInfoMgtApplication();

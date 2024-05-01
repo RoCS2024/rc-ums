@@ -25,9 +25,10 @@ public class UserDaoImpl implements UserDao {
     public User findUserByUsername(String username) {
         User user = null;
 
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_USERNAME_STATEMENT)) {
-            preparedStatement.setString(1, username);
+        try (Connection connection = ConnectionHelper.getConnection())
+            {
+                PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_USERNAME_STATEMENT);
+                preparedStatement.setString(1, username);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -50,9 +51,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User saveUser(User user) {
 
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER_STATEMENT)) {
-            long maxId = getMaxUserId();
+        try (Connection connection = ConnectionHelper.getConnection())
+            {
+                PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER_STATEMENT);
+                long maxId = getMaxUserId();
 
             preparedStatement.setLong(1, maxId + 1);
             preparedStatement.setString(2, user.getUsername());
@@ -71,9 +73,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public long getMaxUserId() {
 
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_MAX_USER_ID_STATEMENT);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (Connection connection = ConnectionHelper.getConnection())
+            {
+                PreparedStatement preparedStatement = connection.prepareStatement(GET_MAX_USER_ID_STATEMENT);
+                ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 LOGGER.debug("MaxUser ID get successfully.");
                 return resultSet.getLong("MAX_ID");
@@ -89,9 +92,10 @@ public class UserDaoImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
 
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_USER_STATEMENT);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (Connection connection = ConnectionHelper.getConnection())
+            {
+                PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_USER_STATEMENT);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 User user = new User();
@@ -113,9 +117,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserById(int id) {
 
-        try (Connection con = ConnectionHelper.getConnection();
-             PreparedStatement stmt = con.prepareStatement(GET_USER_BY_ID_STATEMENT)) {
-            stmt.setInt(1, id);
+        try (Connection con = ConnectionHelper.getConnection())
+            {
+                PreparedStatement stmt = con.prepareStatement(GET_USER_BY_ID_STATEMENT);
+                stmt.setInt(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -142,14 +147,16 @@ public class UserDaoImpl implements UserDao {
     public boolean updateUser() {
         User user = new User();
 
-        try (Connection con = ConnectionHelper.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UPDATE_USER_STATEMENT)) {
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getPassword());
-            stmt.setString(3, user.getEntity_id());
-            stmt.setTimestamp(4, user.getDate_modified());
-            stmt.setInt(5, user.getId());
-            int affectedRows = stmt.executeUpdate();
+        try (Connection con = ConnectionHelper.getConnection())
+            {
+                PreparedStatement stmt = con.prepareStatement(UPDATE_USER_STATEMENT);
+
+                stmt.setString(1, user.getUsername());
+                stmt.setString(2, user.getPassword());
+                stmt.setString(3, user.getEntity_id());
+                stmt.setTimestamp(4, user.getDate_modified());
+                stmt.setInt(5, user.getId());
+                int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
 
         } catch (Exception ex) {
@@ -163,9 +170,10 @@ public class UserDaoImpl implements UserDao {
     public User getUsername(String username) {
         User login = null;
 
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_USERNAME_STATEMENT)) {
-            preparedStatement.setString(1, username);
+        try (Connection connection = ConnectionHelper.getConnection())
+            {
+                PreparedStatement preparedStatement = connection.prepareStatement(GET_USERNAME_STATEMENT);
+                preparedStatement.setString(1, username);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -187,8 +195,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User updatePassword(User user) {
 
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PASSWORD_STATEMENT)) {
+        try (Connection connection = ConnectionHelper.getConnection())
+            {
+                  PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PASSWORD_STATEMENT);
 
             preparedStatement.setString(1, user.getPassword());
             preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
@@ -207,8 +216,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public String getPasswordByUsername(String username) {
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_PASSWORD_BY_USERNAME_STATEMENT)) {
+        try (Connection connection = ConnectionHelper.getConnection())
+            {
+                PreparedStatement preparedStatement = connection.prepareStatement(GET_PASSWORD_BY_USERNAME_STATEMENT);
+
             preparedStatement.setString(1, username);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -229,8 +240,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public String forgotPassword(String username, String newPassword) {
 
-        try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FORGOT_PASSWORD_STATEMENT)) {
+        try (Connection connection = ConnectionHelper.getConnection())
+            {
+                PreparedStatement preparedStatement = connection.prepareStatement(FORGOT_PASSWORD_STATEMENT);
 
             preparedStatement.setString(1, newPassword);
             preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
