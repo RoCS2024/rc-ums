@@ -3,8 +3,8 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info
-            organisation="com.rogationist.college"
-            module="ivy-test"
+            organisation="com.rocs"
+            module="rc-ums"
             status="integration">
     </info>
 

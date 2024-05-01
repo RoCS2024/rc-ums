@@ -2,7 +2,6 @@ package com.user.management.appl.facade.user;
 
 import com.user.management.appl.model.user.User;
 
-import java.sql.SQLException;
 import java.util.List;
 /**
  * This is the interface to the User Facade.
@@ -26,7 +25,7 @@ public interface UserFacade {
      * @param user is the user to be saved.
      * @return True if the user was successfully saved.
      */
-    User saveUser(User user) throws SQLException;
+    User saveUser(User user);
 
 
     /**

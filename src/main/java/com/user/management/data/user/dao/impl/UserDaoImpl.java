@@ -6,6 +6,7 @@ import com.user.management.data.user.dao.UserDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.user.management.data.utils.QueryConstant.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,68 +16,63 @@ import java.util.List;
 
 /**
  * An implementation class of the User Data Access Object.
- * */
-
+ */
 public class UserDaoImpl implements UserDao {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
+
     @Override
-    public User findUserByUsername(String username){
-        String selectByIdQuery = "SELECT * FROM login WHERE username=?";
-        User User = null;
+    public User findUserByUsername(String username) {
+        User user = null;
 
         try (Connection connection = ConnectionHelper.getConnection();
-                  PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
-                preparedStatement.setString(1, username);
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_USERNAME_STATEMENT)) {
+            preparedStatement.setString(1, username);
 
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        User = new User();
-                        User.setId((int) resultSet.getLong("id"));
-                        User.setUsername(resultSet.getString("username"));
-                        User.setPassword(resultSet.getString("password"));
-                        User.setEntity_id(resultSet.getString("entity_id"));
-                        User.setDate_created(resultSet.getTimestamp("date_created"));
-                        User.setDate_modified(resultSet.getTimestamp("date_modified"));
-                    }
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setEntity_id(resultSet.getString("entity_id"));
+                    user.setDate_created(resultSet.getTimestamp("date_created"));
+                    user.setDate_modified(resultSet.getTimestamp("date_modified"));
                 }
+            }
         } catch (Exception e) {
-        LOGGER.error("An SQL Exception occurred." + e.getMessage());
+            LOGGER.error("An SQL Exception occurred." + e.getMessage());
         }
-       LOGGER.debug("Finding User failed.");
-        return User;
+        LOGGER.debug("Finding User failed.");
+        return user;
     }
 
     @Override
-    public User saveUser(User User)  {
-
-        String insertQuery = "INSERT INTO login (ID, USERNAME, PASSWORD, ENTITY_ID, DATE_CREATED, DATE_MODIFIED) VALUES (?, ?, ?, ?, ?, ?)";
+    public User saveUser(User user) {
 
         try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-            long MaxId = getMaxUserId();
+             PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER_STATEMENT)) {
+            long maxId = getMaxUserId();
 
-            preparedStatement.setLong(1, MaxId + 1);
-            preparedStatement.setString(2, User.getUsername());
-            preparedStatement.setString(3, User.getPassword());
-            preparedStatement.setString(4, User.getEntity_id());
-            preparedStatement.setTimestamp(5, User.getDate_created());
-            preparedStatement.setTimestamp(6, User.getDate_modified());
+            preparedStatement.setLong(1, maxId + 1);
+            preparedStatement.setString(2, user.getUsername());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setString(4, user.getEntity_id());
+            preparedStatement.setTimestamp(5, user.getDate_created());
+            preparedStatement.setTimestamp(6, user.getDate_modified());
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             LOGGER.error("An SQL Exception occurred." + e.getMessage());
         }
         LOGGER.debug("Saving User failed.");
-        return User;
+        return user;
     }
 
     @Override
-    public long getMaxUserId(){
-
-        String selectMaxIdQuery = "SELECT MAX(ID) AS MAX_ID FROM login";
+    public long getMaxUserId() {
 
         try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectMaxIdQuery);
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_MAX_USER_ID_STATEMENT);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
                 LOGGER.debug("MaxUser ID get successfully.");
@@ -84,19 +80,17 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (Exception e) {
             LOGGER.error("An SQL Exception occurred." + e.getMessage());
-
         }
         LOGGER.debug("Getting MaxUser ID failed.");
         return 0;
     }
-    @Override
-    public List<User> getAllUsers(){
 
+    @Override
+    public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        String query = "SELECT * FROM LOGIN";
 
         try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_USER_STATEMENT);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -119,10 +113,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserById(int id) {
 
-        String sql = "SELECT * FROM login WHERE id = ?";
-
         try (Connection con = ConnectionHelper.getConnection();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+             PreparedStatement stmt = con.prepareStatement(GET_USER_BY_ID_STATEMENT)) {
             stmt.setInt(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -135,7 +127,7 @@ public class UserDaoImpl implements UserDao {
                     Timestamp date_modified = rs.getTimestamp("date_modified");
                     return new User(idNum, username, password, entity_id, null, date_modified);
                 } else {
-                   LOGGER.error("No user found with ID: " + id);
+                    LOGGER.error("No user found with ID: " + id);
                 }
             }
         } catch (Exception ex) {
@@ -148,11 +140,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updateUser() {
-        String sql = "UPDATE login SET username = ?, password = ?, entity_id = ?, date_modified = ? WHERE id = ?";
         User user = new User();
 
         try (Connection con = ConnectionHelper.getConnection();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+             PreparedStatement stmt = con.prepareStatement(UPDATE_USER_STATEMENT)) {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getEntity_id());
@@ -161,8 +152,8 @@ public class UserDaoImpl implements UserDao {
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
 
-            } catch (Exception ex) {
-           LOGGER.error("Error updating user with ID " + user.getId() + ": " + ex.getMessage());
+        } catch (Exception ex) {
+            LOGGER.error("Error updating user with ID " + user.getId() + ": " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
@@ -170,11 +161,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUsername(String username) {
-        String selectByIdQuery = "SELECT * FROM login WHERE username=?";
         User login = null;
 
         try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectByIdQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USERNAME_STATEMENT)) {
             preparedStatement.setString(1, username);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -196,10 +186,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User updatePassword(User user) {
-        String updateQuery = "UPDATE login SET password=?, date_modified=? WHERE username=?";
 
         try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PASSWORD_STATEMENT)) {
 
             preparedStatement.setString(1, user.getPassword());
             preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
@@ -215,11 +204,11 @@ public class UserDaoImpl implements UserDao {
         LOGGER.debug("Updating password failed.");
         return user;
     }
+
     @Override
     public String getPasswordByUsername(String username) {
-        String selectPasswordQuery = "SELECT password FROM login WHERE username=?";
         try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectPasswordQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_PASSWORD_BY_USERNAME_STATEMENT)) {
             preparedStatement.setString(1, username);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -239,10 +228,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public String forgotPassword(String username, String newPassword) {
-        String updateQuery = "UPDATE login SET password=?, date_modified=? WHERE username=?";
 
         try (Connection connection = ConnectionHelper.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FORGOT_PASSWORD_STATEMENT)) {
 
             preparedStatement.setString(1, newPassword);
             preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));

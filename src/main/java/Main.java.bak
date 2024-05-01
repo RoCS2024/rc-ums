@@ -1,14 +1,11 @@
-import com.user.management.appl.facade.employee.Impl.EmployeeFacadeImpl;
+import com.user.management.UserInfoMgtApplication;
 import com.user.management.appl.facade.employee.EmployeeFacade;
-import com.user.management.appl.facade.user.impl.UserFacadeImpl;
 import com.user.management.appl.facade.user.UserFacade;
-import com.user.management.appl.facade.student.Impl.StudentFacadeImpl;
-import com.user.management.appl.facade.student.StudentFacade;
+import com.student.information.management.appl.facade.student.StudentFacade;
 import com.user.management.appl.model.employee.Employee;
 import com.user.management.appl.model.user.User;
-import com.user.management.appl.model.student.Student;
+import com.student.information.management.appl.model.student.Student;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +16,7 @@ import java.util.Scanner;
 /**
  * This class represents the main class for the login and registration system.
  */
-public class Main {
+public class Mainjavabak {
     private static final Scanner scanner = new Scanner(System.in);
 
     private static final UserInfoMgtApplication app = new UserInfoMgtApplication();
@@ -174,7 +171,7 @@ public class Main {
                             System.out.println("Student Form: ");
                             System.out.println("Enter Student Id: ");
                             String studentId = scanner.next();
-                            while (studentFacade.findStudentById(studentId) != null) {
+                            while (studentFacade.getStudentById(studentId) != null) {
                                 System.out.println("Student Id Already Exist!");
                                 System.out.println("Enter a new Student Id: ");
                                 studentId = scanner.next();
@@ -237,7 +234,7 @@ public class Main {
                             student.setEmail(studentEmail);
                             student.setAddress(studentAddress);
                             student.setContactNumber(studentContactNo);
-                            studentFacade.saveStudent(student);
+                            studentFacade.updateStudent(student);
                             check = 1;
                             break;
                         case "employee":
