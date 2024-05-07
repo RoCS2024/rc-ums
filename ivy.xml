@@ -3,8 +3,8 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info
-            organisation="com.rogationist.college"
-            module="ivy-test"
+            organisation="com.rocs"
+            module="rc-ums"
             status="integration">
     </info>
 
@@ -32,7 +32,5 @@
         <dependency org="org.apache.logging.log4j" name="log4j-api" rev="2.23.0"/>
         <dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.23.0"/>
         <dependency org="org.apache.logging.log4j" name="log4j-slf4j2-impl" rev="2.23.0"/>
-
-
     </dependencies>
 </ivy-module>

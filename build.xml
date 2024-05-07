@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="User Management" default="build" xmlns:ivy = "antlib:org.apache.ivy.ant">
+<project name="rc-ums" default="build" xmlns:ivy = "antlib:org.apache.ivy.ant">
     <!--Build properties -->
     <property name="src.dir" location="src/main/java"/>
     <property name="test.src.dir" location="src/test/java"/>
@@ -33,7 +33,13 @@
     <!--Compile-->
     <target name="compile" depends="init">
         <javac srcdir="${src.dir}" destdir="${classes.dir}"
-               includeantruntime="false" debug="true" classpathref="compile.path"/>
+               includeantruntime="false" debug="true" classpathref="compile.path">
+            <classpath>
+                <fileset dir = "lib">
+                    <include name = "**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
     </target>
 
     <target name="compile-tests" depends="compile">
@@ -41,6 +47,9 @@
             <classpath>
                 <path refid="test.path"/>
                 <pathelement path="${classes.dir}"/>
+                <fileset dir = "lib">
+                    <include name = "**/*.jar"/>
+                </fileset>
             </classpath>
         </javac>
     </target>

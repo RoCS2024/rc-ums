@@ -1,6 +1,6 @@
 package com.user.management.data.user.dao.impl;
 
-import com.user.management.appl.model.student.Student;
+import com.student.information.management.appl.model.student.Student;
 import com.user.management.appl.model.user.User;
 import com.user.management.data.user.dao.UserDao;
 import org.junit.jupiter.api.*;

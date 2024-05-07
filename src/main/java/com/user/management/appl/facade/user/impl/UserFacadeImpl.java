@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * This is the implementation class for the UserFacade
  */
-
 public class UserFacadeImpl implements UserFacade {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserFacadeImpl.class);
@@ -20,7 +19,6 @@ public class UserFacadeImpl implements UserFacade {
     private UserDao userDao;
 
     private User[] userList;
-
 
     /**
      * Constructs a new UserFacadeImpl with the UserDao.
@@ -30,19 +28,10 @@ public class UserFacadeImpl implements UserFacade {
         this.userDao = userDao;
     }
 
-    /**
-     * Default constructor for UserDaoImpl.
-     */
-    public UserFacadeImpl() {
-        this.userDao = new UserDaoImpl();
-    }
-
-
     @Override
     public User findUserByUsername(String username) {
         return userDao.findUserByUsername(username);
     }
-
 
     @Override
     public User saveUser(User user) {
@@ -53,8 +42,11 @@ public class UserFacadeImpl implements UserFacade {
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
+
     @Override
-    public User getUserById(int id) { return userDao.getUserById(id);}
+    public User getUserById(int id) {
+        return userDao.getUserById(id);
+    }
 
     @Override
     public boolean updateUser(User user) {
@@ -62,14 +54,11 @@ public class UserFacadeImpl implements UserFacade {
         try {
             User targetUser = getUserById(user.getId());
             if(targetUser == null) {
-                LOGGER.debug("User to update not found. ");
-
+                LOGGER.debug("User to update not found.");
             }
             result = userDao.updateUser();
-
         } catch (Exception e) {
             LOGGER.error("An SQL Exception occurred." + e.getMessage());
-
         }
         LOGGER.debug("Updating user failed.");
         return result;
@@ -77,7 +66,6 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     public User getUsername(String username) {
-
         return userDao.getUsername(username);
     }
 
